@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ProyectoFinal.Application
+namespace Cervantes.Application
 {
     /// <summary>
     /// Clase genérica de Manager
