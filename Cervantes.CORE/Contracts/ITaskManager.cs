@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cervantes.CORE
+namespace Cervantes.CORE.Contracts
 {
-    public class TargetServices
+    public interface ITaskManager: IGenericManager<Task>
     {
     }
 }

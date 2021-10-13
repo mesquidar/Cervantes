@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Cervantes.CORE
 {
-    public class TargetServices
+    public enum ProjectStatus
     {
+        Active = 0,
+        Archived = 1,
+        Waiting = 2
     }
 }

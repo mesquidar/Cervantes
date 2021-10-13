@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cervantes.CORE
 {
-    public class Oragnization
+    public class Organization
     {
         /// <summary>
         /// Organization Id

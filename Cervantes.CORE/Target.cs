@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cervantes.CORE
 {
-    internal class Target
+    public class Target
     {
     }
 }

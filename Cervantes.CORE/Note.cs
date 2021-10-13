@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cervantes.CORE
 {
-    internal class Note
+    public class Note
     {
     }
 }
