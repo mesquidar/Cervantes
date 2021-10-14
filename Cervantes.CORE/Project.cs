@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace Cervantes.CORE
         /// <summary>
         /// Project Id
         /// </summary>
+        ///
+        [Key]
         public int Id {  get; set; }
         /// <summary>
         /// Project Name
@@ -51,6 +54,10 @@ namespace Cervantes.CORE
         /// </summary>
         [ForeignKey("Client")]
         public string ClientId { get; set; }
+        /// <summary>
+        /// Is project a template
+        /// </summary>
+        public bool Template { get; set; }
 
 
     }

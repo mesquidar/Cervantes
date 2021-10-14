@@ -8,16 +8,24 @@ using System.Threading.Tasks;
 
 namespace Cervantes.CORE
 {
-    public class ProjectUser
+    public class TaskNote
     {
         /// <summary>
-        /// Id Project User
+        /// Task Note Id
         /// </summary>
         [Key]
         public int Id { get; set; }
+        /// <summary>
+        /// Task Name
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// Task Note description
+        /// </summary>
+        public string Description { get; set; }
 
         /// <summary>
-        /// User associated
+        /// User who created project
         /// </summary>
         public virtual ApplicationUser User { get; set; }
 
@@ -28,14 +36,14 @@ namespace Cervantes.CORE
         public string UserId { get; set; }
 
         /// <summary>
-        /// Project Associated
+        /// Task Associated
         /// </summary>
-        public virtual Project Project { get; set; }
+        public virtual Task Task { get; set; }
 
         /// <summary>
         /// Id Project
         /// </summary>
-        [ForeignKey("Project")]
-        public int ProjectId { get; set; }
+        [ForeignKey("Task")]
+        public int TaskId { get; set; }
     }
 }
