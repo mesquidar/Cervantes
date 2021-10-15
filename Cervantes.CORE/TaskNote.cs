@@ -45,5 +45,9 @@ namespace Cervantes.CORE
         /// </summary>
         [ForeignKey("Task")]
         public int TaskId { get; set; }
+        /// <summary>
+        /// Visibility of the task note
+        /// </summary>
+        public Visibility Visibility { get; set; }
     }
 }

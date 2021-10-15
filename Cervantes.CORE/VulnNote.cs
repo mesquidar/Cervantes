@@ -45,5 +45,9 @@ namespace Cervantes.CORE
         /// </summary>
         [ForeignKey("Vuln")]
         public int VulnId { get; set; }
+        /// <summary>
+        /// Visibility of the vuln note
+        /// </summary>
+        public Visibility Visibility { get; set; }
     }
 }

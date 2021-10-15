@@ -45,5 +45,9 @@ namespace Cervantes.CORE
         /// </summary>
         [ForeignKey("Project")]
         public int ProjectId { get; set; }
+        /// <summary>
+        /// Visibility of the project note
+        /// </summary>
+        public Visibility Visibility { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Cervantes.CORE;
-using Cervantes.CORE.Contracts;
+using Cervantes.Contracts;
 
 namespace Cervantes.DAL
 {
@@ -22,6 +22,7 @@ namespace Cervantes.DAL
         /// <returns></returns>
         public Task<int> SaveChangesAsync() => base.SaveChangesAsync();
 
+        //public DbSet<ApplicationUser> Users { get; set; }
 
     }
 }

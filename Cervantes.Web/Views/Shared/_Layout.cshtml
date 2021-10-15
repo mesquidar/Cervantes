@@ -37,8 +37,13 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="row">
+        <div class="col-md-6">
             &copy; 2021 - Cervantes.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        <div class="col-md-6 text-right">
+                        @await Html.PartialAsync("_SelectLanguagePartial")
+                    </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Cervantes.CORE;
-using Cervantes.CORE.Contracts;
+using Cervantes.Contracts;
 using Cervantes.DAL;
 
 namespace Cervantes.Application
