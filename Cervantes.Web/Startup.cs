@@ -2,6 +2,8 @@ using Cervantes.Application;
 using Cervantes.Contracts;
 using Cervantes.CORE;
 using Cervantes.DAL;
+using Cervantes.Web.LocalizationResources;
+using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,6 +38,19 @@ namespace Cervantes.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // Add the localization services to the services container
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AuthorizeFilter());
+            });
+
+            services.AddRazorPages();
+
+            
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -49,42 +64,55 @@ namespace Cervantes.Web
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IClientManager, ClientManager>();
 
-            services.AddControllersWithViews();
 
-            // Add the localization services to the services container
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(new AuthorizeFilter());
-            }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+            var cultures = new[]
+             {
+                new CultureInfo("en"),
+                new CultureInfo("es"),
+            };
 
-            // Configure supported cultures and localization options
-        services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new[]
+            services.AddControllersWithViews()
+                .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
                 {
-                    new CultureInfo("en"),
-                    new CultureInfo("es")
-                };
+                    // When using all the culture providers, the localization process will
+                    // check all available culture providers in order to detect the request culture.
+                    // If the request culture is found it will stop checking and do localization accordingly.
+                    // If the request culture is not found it will check the next provider by order.
+                    // If no culture is detected the default culture will be used.
 
-                options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
+                    // Checking order for request culture:
+                    // 1) RouteSegmentCultureProvider
+                    //      e.g. http://localhost:1234/tr
+                    // 2) QueryStringCultureProvider
+                    //      e.g. http://localhost:1234/?culture=tr
+                    // 3) CookieCultureProvider
+                    //      Determines the culture information for a request via the value of a cookie.
+                    // 4) AcceptedLanguageHeaderRequestCultureProvider
+                    //      Determines the culture information for a request via the value of the Accept-Language header.
+                    //      See the browsers language settings
 
-                
-            });
+                    // Uncomment and set to true to use only route culture provider
+                    ops.UseAllCultureProviders = false;
+                    ops.ResourcesPath = "LocalizationResources";
+                    ops.RequestLocalizationOptions = o =>
+                    {
+                        o.SupportedCultures = cultures;
+                        o.SupportedUICultures = cultures;
+                        o.DefaultRequestCulture = new RequestCulture("en");
+                    };
+                }); ;
 
-  
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(locOptions.Value);
 
+      
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,14 +129,18 @@ namespace Cervantes.Web
 
             app.UseRouting();
 
+
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseRequestLocalization();
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{culture=en}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
 

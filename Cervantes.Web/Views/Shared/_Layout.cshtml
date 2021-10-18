@@ -1,17 +1,21 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, LazZiya.TagHelpers
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Cervantes.Web</title>
+    <title>@ViewData["Title"] - Cervantes</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cervantes.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/logo.png" alt="Logo" width=130 height=30>
+</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,36 +23,44 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index" localize-content>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Workspace" asp-action="Privacy" localize-content>Workspace</a>
                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link text-light" asp-area="" asp-controller="Project" asp-action="Privacy" localize-content>Projects</a>
+                         </li>
+                          <li class="nav-item">
+                             <a class="nav-link text-light" asp-area="" asp-controller="Client" asp-action="Index" localize-content>Clients</a>
+                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
+                <language-nav language-label="NativeName" cookie-handler-url="@(Url.Action("OnGetSetCultureCookie", "", new { area= "", cltr="{0}", returnUrl="{1}" }))"></language-nav>
+
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <br />
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="row">
-        <div class="col-md-6">
-            &copy; 2021 - Cervantes.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-        <div class="col-md-6 text-right">
-                        @await Html.PartialAsync("_SelectLanguagePartial")
-                    </div>
+        <div>
+
+            &copy; 2021 - Cervantes.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy" localize-content>Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <link href="~/lib/DataTables/datatables.min.css" rel="stylesheet">
+    <script src="~/lib/DataTables/datatables.min.js"></script>
+    <link href="~/lib/fontawesome/css/all.css" rel="stylesheet">
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

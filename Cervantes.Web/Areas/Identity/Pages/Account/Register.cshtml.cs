@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using LazZiya.ExpressLocalization.DataAnnotations;
 
 namespace Cervantes.Web.Areas.Identity.Pages.Account
 {

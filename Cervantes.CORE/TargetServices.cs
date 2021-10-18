@@ -35,7 +35,7 @@ namespace Cervantes.CORE
         /// Id taregt
         /// </summary>
         [ForeignKey("Target")]
-        public string TargetId { get; set; }
+        public int TargetId { get; set; }
         /// <summary>
         /// Name of the service
         /// </summary>

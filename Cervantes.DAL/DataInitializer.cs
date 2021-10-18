@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 using Cervantes.CORE;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cervantes.DAL
 {
@@ -15,13 +16,13 @@ namespace Cervantes.DAL
 
         private static void SeedUsers(UserManager<ApplicationUser> userManager)
         {
-            if (userManager.FindByEmailAsync("admin").Result == null)
+            if (userManager.FindByEmailAsync("admin@cervantes.com").Result == null)
             {
                 ApplicationUser user = new ApplicationUser();
-                user.UserName = "admin";
-                user.Email = "admin";
+                user.UserName = "admin@cervantes.com";
+                user.Email = "admin@cervantes.com";
 
-                IdentityResult result = userManager.CreateAsync(user, "admin123").Result;
+                IdentityResult result = userManager.CreateAsync(user, "Admin123.").Result;
 
                 if (result.Succeeded)
                 {
@@ -30,6 +31,7 @@ namespace Cervantes.DAL
             }
 
         }
+
 
         private static void SeedRoles(RoleManager<IdentityRole> roleManager)
         {
@@ -42,32 +44,34 @@ namespace Cervantes.DAL
             }
 
 
-            if (!roleManager.RoleExistsAsync("Registered").Result)
+            if (!roleManager.RoleExistsAsync("SuperUser").Result)
             {
                 IdentityRole role = new IdentityRole();
-                role.Name = "Registered";
+                role.Name = "SuperUser";
                 IdentityResult roleResult = roleManager.
                 CreateAsync(role).Result;
             }
 
 
-            if (!roleManager.RoleExistsAsync("Professional").Result)
+            if (!roleManager.RoleExistsAsync("User").Result)
             {
                 IdentityRole role = new IdentityRole();
-                role.Name = "Professional";
+                role.Name = "User";
                 IdentityResult roleResult = roleManager.
                 CreateAsync(role).Result;
             }
 
 
-            if (!roleManager.RoleExistsAsync("Business").Result)
+            if (!roleManager.RoleExistsAsync("Client").Result)
             {
                 IdentityRole role = new IdentityRole();
-                role.Name = "Business";
+                role.Name = "Client";
                 IdentityResult roleResult = roleManager.
                 CreateAsync(role).Result;
             }
         }
+
+
     }
 }
 

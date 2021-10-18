@@ -53,7 +53,7 @@ namespace Cervantes.CORE
         /// Client ID
         /// </summary>
         [ForeignKey("Client")]
-        public string ClientId { get; set; }
+        public int ClientId { get; set; }
         /// <summary>
         /// Is project a template
         /// </summary>
