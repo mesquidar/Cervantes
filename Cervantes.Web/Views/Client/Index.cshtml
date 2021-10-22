@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Clients";
 }
-
 @{
     if (TempData["deleted"] != null)
     {
@@ -16,53 +15,51 @@
 
     if (TempData["created"] != null)
     {
-        <div class="alert alert-dismissible alert-success fade show" role="alert">
+        <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong localize-content>Client created successfully!</strong>
-            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-              </button>
+            
         </div>
     }
 
     if (TempData["edited"] != null)
     {
-        <div class="alert alert-dismissible alert-success fade show" role="alert">
+        <div class="alert alert-success alert-dismissible">
             <strong localize-content>Client edited successfully!</strong>
-            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-              </button>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }
-}
 
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-  <li class="breadcrumb-item active" localize-content>Clients</li>
-</ol>
-
-<div class="row">
-            <div class="col-sm-10 col-12">
-                <h1 localize-content><i class="fas fa-briefcase"></i> Clients</h1>
-            </div>
-            <div class="col-sm-2 col-12">
-        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-        {
-            <a class="btn btn-outline-dark" asp-area="" asp-controller="Client" asp-action="Create" localize-content><i class="fas fa-plus"></i> Create</a>
-        }
-    </div>
-            <hr />
-        </div>
-    
-
-
-@if (TempData["vacio"] != null)
+    if (TempData["vacio"] != null)
 {
     <div class="alert alert-danger" role="alert">
         @Html.Encode(TempData["empty"])
     </div>
 }
+}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 localize-content><i class="fas fa-briefcase"></i> Clients</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
+              <li class="breadcrumb-item active" localize-content>Clients</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+      <hr />
+    </section>
 
-<div class="row">
-    <div class="col-md-12">
-        @if(Model.FirstOrDefault() != null){
+    <!-- Main content -->
+    <section class="content">
+        
+
+         @if(Model.FirstOrDefault() != null){
         <!--Table-->
         <table id="clientResults" class="table table-bordered table-hover" width="100%">
             <!--Table head-->
@@ -121,10 +118,12 @@
             </div>
         }
 
-    </div>
 
-</div>
-@section Scripts{
+    </section>
+    <!-- /.content -->
+  <!-- /.content-wrapper -->
+
+  @section Scripts{
 <script>
 
     $(document).ready(function () {
@@ -137,3 +136,17 @@
 
 </script>
 }
+
+
+
+
+
+
+
+
+    
+
+
+
+
+

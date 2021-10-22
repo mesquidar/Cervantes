@@ -671,4 +671,34 @@
   <data name="Client deleted successfully!" xml:space="preserve">
     <value>Cliente eliminado correctamente!</value>
   </data>
+  <data name="Are you sure you want to delete this?" xml:space="preserve">
+    <value>Estas seguro de que quieres eliminar esto?</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-briefcase&quot;&gt;&lt;/i&gt; Delete Client" xml:space="preserve">
+    <value>&lt;i class="fas fa-briefcase"&gt;&lt;/i&gt; Eliminar Cliente</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-list nav-icon&quot;&gt;&lt;/i&gt;&lt;p&gt;List&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="fas fa-list nav-icon"&gt;&lt;/i&gt;&lt;p&gt;Lista&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-plus nav-icon&quot;&gt;&lt;/i&gt;&lt;p&gt;Create&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="fas fa-plus nav-icon"&gt;&lt;/i&gt;&lt;p&gt;Crear&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-home&quot;&gt;&lt;/i&gt;&lt;p&gt;Home&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-home"&gt;&lt;/i&gt;&lt;p&gt;Inicio&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-folder&quot;&gt;&lt;/i&gt;&lt;p&gt;Projects&lt;i class=&quot;right fas fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-folder"&gt;&lt;/i&gt;&lt;p&gt;Proyectos&lt;i class="right fas fa-angle-left"&gt;&lt;/i&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-briefcase&quot;&gt;&lt;/i&gt;&lt;p&gt;Clients&lt;i class=&quot;right fas fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-briefcase"&gt;&lt;/i&gt;&lt;p&gt;Clientes&lt;i class="right fas fa-angle-left"&gt;&lt;/i&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="Select Image" xml:space="preserve">
+    <value>Seleccionar Imagen</value>
+  </data>
+  <data name="Choose File" xml:space="preserve">
+    <value>Elegir Archivo</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Subir</value>
+  </data>
 </root>

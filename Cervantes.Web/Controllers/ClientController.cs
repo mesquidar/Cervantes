@@ -1,23 +1,29 @@
 ﻿using Cervantes.Contracts;
 using Cervantes.CORE;
+using Cervantes.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace Cervantes.Web.Controllers
 {
     public class ClientController : Controller
     {
+        private readonly IHostingEnvironment _appEnvironment;
         IClientManager clientManager = null;
 
         /// <summary>
         /// Client Controller Constructor
         /// </summary>
-        public ClientController(IClientManager clientManager)
+        public ClientController(IClientManager clientManager, IHostingEnvironment _appEnvironment)
         {
             this.clientManager = clientManager;
+            this._appEnvironment = _appEnvironment;
         }
 
 
@@ -60,6 +66,31 @@ namespace Cervantes.Web.Controllers
         // GET: ClientController/Details/5
         public ActionResult Details(int id)
         {
+            try
+            {
+                var client = clientManager.GetById(id);
+                if (client != null)
+                {
+                    Client model = new Client
+                    {
+                        Id = client.Id,
+                        Name = client.Name,
+                        Description = client.Description,
+                        ContactEmail = client.ContactEmail,
+                        ContactName = client.ContactName,
+                        ContactPhone = client.ContactPhone,
+                        Url = client.Url,
+
+                    };
+                    return View(model);
+                }
+            }
+            catch (Exception e)
+            {
+                // guarda log si ocurre excepcion
+                Redirect("Error");
+            }
+
             return View();
         }
 
@@ -74,10 +105,18 @@ namespace Cervantes.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Create(Client model)
+        public ActionResult Create(ClientViewModel model, IFormFile upload)
         {
             try
             {
+                var file = Request.Form.Files["upload"];
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Clients");
+                var uniqueName = Guid.NewGuid().ToString()+"_"+file.FileName;
+                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+
+                }
 
                 Client client = new Client
                 {
@@ -87,6 +126,7 @@ namespace Cervantes.Web.Controllers
                     ContactName= model.ContactName,
                     ContactEmail= model.ContactEmail,
                     Url = model.Url,
+                    ImagePath = Path.Combine(uploads, uniqueName),
                 };
                 clientManager.Add(client);
                 clientManager.Context.SaveChanges();

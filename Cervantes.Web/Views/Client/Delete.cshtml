@@ -5,17 +5,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-  <li class="breadcrumb-item"><a asp-controller="Client" asp-action="Index" localize-content>Clients</a></li>
-  <li class="breadcrumb-item active" localize-content>Delete</li>
-</ol>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 localize-content><i class="fas fa-briefcase"></i> Delete Client</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
+              <li class="breadcrumb-item"><a asp-controller="Client" asp-action="Index" localize-content>Home</a></li>
+              <li class="breadcrumb-item active" localize-content>Delete</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+      <hr />
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
 
-<h1 localize-content><i class="fas fa-briefcase"></i> Delete Client</h1>
-<hr />
+<h3 localize-content>Are you sure you want to delete this?</h3>
 
-<h3>Are you sure you want to delete this?</h3>
-<hr />
 <div>
  
     <dl class="row">
@@ -60,6 +73,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
          <a class="btn btn-light" asp-action="Index" localize-content>Back</a>
-        <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm" localize-content/>
+        <button type="submit" class="btn btn-outline-danger" localize-content>Delete</button>
     </form>
 </div>
+</section>

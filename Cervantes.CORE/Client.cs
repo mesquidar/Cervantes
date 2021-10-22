@@ -39,6 +39,10 @@ namespace Cervantes.CORE
         /// Note description
         /// </summary>
         public string ContactPhone { get; set; }
+        /// <summary>
+        /// Client Image
+        /// </summary>
+        public string ImagePath { get; set; }
 
 
     }
