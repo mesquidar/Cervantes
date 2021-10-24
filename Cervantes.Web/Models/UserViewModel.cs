@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Cervantes.CORE;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
-namespace Cervantes.CORE
+namespace Cervantes.Web.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class UserViewModel : IdentityUser
     {
         /// <summary>
         /// User full name
@@ -17,12 +18,15 @@ namespace Cervantes.CORE
         /// <summary>
         /// user Bio description
         /// </summary>
-        public string Description{ get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// User Position
         /// </summary>
         public string Position { get; set; }
 
+        public List<string> Role { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }

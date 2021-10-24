@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using static System.Net.WebRequestMethods;
 
 namespace Cervantes.Web.Controllers
@@ -16,13 +17,15 @@ namespace Cervantes.Web.Controllers
     {
         private readonly IHostingEnvironment _appEnvironment;
         IClientManager clientManager = null;
+        IUserManager userManager = null;
 
         /// <summary>
         /// Client Controller Constructor
         /// </summary>
-        public ClientController(IClientManager clientManager, IHostingEnvironment _appEnvironment)
+        public ClientController(IClientManager clientManager, IUserManager userManager, IHostingEnvironment _appEnvironment)
         {
             this.clientManager = clientManager;
+            this.userManager = userManager;
             this._appEnvironment = _appEnvironment;
         }
 
@@ -69,9 +72,10 @@ namespace Cervantes.Web.Controllers
             try
             {
                 var client = clientManager.GetById(id);
+                var user = userManager.GetByUserId(client.UserId);
                 if (client != null)
                 {
-                    Client model = new Client
+                    ClientViewModel model = new ClientViewModel
                     {
                         Id = client.Id,
                         Name = client.Name,
@@ -80,6 +84,9 @@ namespace Cervantes.Web.Controllers
                         ContactName = client.ContactName,
                         ContactPhone = client.ContactPhone,
                         Url = client.Url,
+                        ImagePath = client.ImagePath,
+                        CreatedDate = client.CreatedDate,
+                        UserName = user.UserName,
 
                     };
                     return View(model);
@@ -126,9 +133,11 @@ namespace Cervantes.Web.Controllers
                     ContactName= model.ContactName,
                     ContactEmail= model.ContactEmail,
                     Url = model.Url,
-                    ImagePath = Path.Combine(uploads, uniqueName),
+                    ImagePath = "/Attachments/Images/Clients"+uniqueName,
+                    CreatedDate = DateTime.Now,
+                    UserId= User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
-                clientManager.Add(client);
+                clientManager.AddAsync(client);
                 clientManager.Context.SaveChanges();
                 TempData["created"] = "created";
                 return RedirectToAction("Index");

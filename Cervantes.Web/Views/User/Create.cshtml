@@ -1,0 +1,66 @@
+﻿@model Cervantes.CORE.ApplicationUser
+
+@{
+    ViewData["Title"] = "Create User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 localize-content><i class="fas fa-briefcase"></i> Create User</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
+              <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index" localize-content>User</a></li>
+              <li class="breadcrumb-item active" localize-content>Create</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+      <hr />
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
+
+
+<div class="row justify-content-center">
+    <div class="col-md-12">
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea id="description" asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+ 
+            
+
+              <div class="form-group">
+                  <a class="btn btn-default" asp-action="Index" localize-content>Back</a>
+                <input type="submit" class="btn btn-dark" localize-content></input>
+            </div>
+        </form>
+        </div>
+        </div>
+</section>

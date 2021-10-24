@@ -1,37 +1,33 @@
-﻿using System;
+﻿using Cervantes.CORE;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Cervantes.CORE
+namespace Cervantes.Web.Models
 {
-    public class Project
+    public class ProjectViewModel
     {
         /// <summary>
         /// Project Id
         /// </summary>
         ///
-        [Key]
-        public int Id {  get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Project Name
         /// </summary>
-        public string Name {  get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Project Description
         /// </summary>
-        public string Description {  get; set; }
+        public string Description { get; set; }
         /// <summary>
         /// Project Start Date
         /// </summary>
-        public DateTime StartDate {  get; set; }
+        public DateTime StartDate { get; set; }
         /// <summary>
         /// Project End Date
         /// </summary>
-        public DateTime EndDate {  get; set; }
+        public DateTime EndDate { get; set; }
 
         /// <summary>
         /// User who created project
@@ -41,7 +37,6 @@ namespace Cervantes.CORE
         /// <summary>
         /// Id user
         /// </summary>
-        [ForeignKey("User")]
         public string UserId { get; set; }
 
         /// <summary>
@@ -52,12 +47,14 @@ namespace Cervantes.CORE
         /// <summary>
         /// Client ID
         /// </summary>
-        [ForeignKey("Client")]
         public int ClientId { get; set; }
         /// <summary>
         /// Is project a template
         /// </summary>
         public bool Template { get; set; }
+        public IList<SelectListItem> ItemList { get; set; }
+        public IList<SelectListItem> StatusList { get; set; }
+        public IList<SelectListItem> TypeList { get; set; }
         /// <summary>
         /// Project Status
         /// </summary>
@@ -66,8 +63,6 @@ namespace Cervantes.CORE
         /// Project Type
         /// </summary>
         public ProjectType ProjectType { get; set; }
-
-
 
     }
 }

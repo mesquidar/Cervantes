@@ -64,7 +64,9 @@ namespace Cervantes.Web
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IRoleManager, RoleManager>();
             services.AddScoped<IClientManager, ClientManager>();
+            services.AddScoped<IProjectManager, ProjectManager>();
 
 
 

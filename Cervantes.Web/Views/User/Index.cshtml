@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cervantes.CORE.Client>
+﻿@model IEnumerable<Cervantes.Web.Models.UserViewModel>
 
 @{
     ViewData["Title"] = "Clients";
@@ -65,11 +65,10 @@
             <!--Table head-->
             <thead>
                 <tr>
-                    <th localize-content>Name</th>
-                    <th localize-content>URL</th>
-                    <th localize-content>Contact Name</th>
-                    <th localize-content>Contact Email</th>
-                    <th localize-content>Contact Phone</th>
+                    <th localize-content>Full Name</th>
+                    <th localize-content>User Name</th>
+                    <th localize-content>Email Confirmed</th>
+                    <th localize-content>2FA Enabled</th>
                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                         {
                             <th localize-content>Options</th>
@@ -80,21 +79,20 @@
             <!--Table body-->
             <tbody>
 
-                @foreach (var client in Model)
+                @foreach (var user in Model)
                 {
                     <tr>
+                        <td>@user.FullName</td>
                         <td>                  
-                            <a asp-controller="Client" asp-action="Details" asp-route-id="@client.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @client.Name</span></a>                       
+                            <a asp-controller="Client" asp-action="Details" asp-route-id="@user.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @user.UserName</span></a>                       
                         </td>
-                        <td><a href="@client.Url">@client.Url</a></td>
-                        <td>@client.ContactName</td>
-                        <td><a href="mailto:@client.ContactEmail">@client.ContactEmail</a></td>
-                        <td>@client.ContactPhone</td>
+                        <td>@user.EmailConfirmed</td>
+                        <td>@user.TwoFactorEnabled</td>
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
                                 <td>
-                                    <a class="btn btn-outline-warning btn-sm" asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
-                                    <a class="btn btn-outline-danger btn-sm" asp-controller="Client" asp-action="Delete" asp-route-id="@client.Id" localize-content ><i class="fas fa-trash"></i> Delete</a>
+                                    <a class="btn btn-outline-warning btn-sm" asp-controller="Client" asp-action="Edit" asp-route-id="@user.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
+                                    <a class="btn btn-outline-danger btn-sm" asp-controller="Client" asp-action="Delete" asp-route-id="@user.Id" localize-content ><i class="fas fa-trash"></i> Delete</a>
                                 </td>
 
                             }

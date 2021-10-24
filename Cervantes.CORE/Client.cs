@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,20 @@ namespace Cervantes.CORE
         /// </summary>
         [Key]
         public int Id { get; set; }
+        /// <summary>
+        /// User who created project
+        /// </summary>
+        public virtual ApplicationUser User { get; set; }
+
+        /// <summary>
+        /// Id user
+        /// </summary>
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        /// <summary>
+        /// Created Date
+        /// </summary>
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// Note Name
         /// </summary>

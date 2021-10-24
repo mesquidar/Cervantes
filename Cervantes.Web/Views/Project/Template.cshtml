@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Cervantes.CORE.Client>
+﻿@model IEnumerable<Cervantes.Web.Models.ProjectViewModel>
 
 @{
-    ViewData["Title"] = "Clients";
+    ViewData["Title"] = "Projects";
 }
 @{
     if (TempData["deleted"] != null)
@@ -42,7 +42,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-briefcase"></i> Clients</h1>
+            <h1 localize-content><i class="fas fa-folder"></i> Project Templates</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -61,15 +61,16 @@
 
          @if(Model.FirstOrDefault() != null){
         <!--Table-->
-        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+        <table id="projectResults" class="table table-bordered table-hover" width="100%">
             <!--Table head-->
             <thead>
                 <tr>
                     <th localize-content>Name</th>
-                    <th localize-content>URL</th>
-                    <th localize-content>Contact Name</th>
-                    <th localize-content>Contact Email</th>
-                    <th localize-content>Contact Phone</th>
+                    <th localize-content>Client</th>
+                    <th localize-content>Type</th>
+                    <th localize-content>Status</th>
+                    <th localize-content>Start Date</th>
+                    <th localize-content>End Date</th>
                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                         {
                             <th localize-content>Options</th>
@@ -80,21 +81,22 @@
             <!--Table body-->
             <tbody>
 
-                @foreach (var client in Model)
+                @foreach (var project in Model)
                 {
                     <tr>
                         <td>                  
-                            <a asp-controller="Client" asp-action="Details" asp-route-id="@client.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @client.Name</span></a>                       
+                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-folder"></i> @project.Name</span></a>                       
                         </td>
-                        <td><a href="@client.Url">@client.Url</a></td>
-                        <td>@client.ContactName</td>
-                        <td><a href="mailto:@client.ContactEmail">@client.ContactEmail</a></td>
-                        <td>@client.ContactPhone</td>
+                        <td><a asp-controller="Client" asp-action="Details" asp-route-id="@project.ClientId" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @project.Client.Name</span></a></td>
+                        <td>@project.ProjectType</td>
+                        <td>@project.Status</td>
+                        <td>@project.StartDate</td>
+                        <td>@project.EndDate</td>
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
                                 <td>
-                                    <a class="btn btn-outline-warning btn-sm" asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
-                                    <a class="btn btn-outline-danger btn-sm" asp-controller="Client" asp-action="Delete" asp-route-id="@client.Id" localize-content ><i class="fas fa-trash"></i> Delete</a>
+                                    <a class="btn btn-outline-warning btn-sm" asp-controller="Client" asp-action="Edit" asp-route-id="@project.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
+                                    <a class="btn btn-outline-danger btn-sm" asp-controller="Client" asp-action="Delete" asp-route-id="@project.Id" localize-content ><i class="fas fa-trash"></i> Delete</a>
                                 </td>
 
                             }
@@ -125,7 +127,7 @@
 <script>
 
     $(document).ready(function () {
-        $('#clientResults').DataTable({
+        $('#projectResults').DataTable({
             "responsive": true
         });
         $('.dataTables_length').addClass('bs-select');
@@ -134,15 +136,6 @@
 
 </script>
 }
-
-
-
-
-
-
-
-
-    
 
 
 

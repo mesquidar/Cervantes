@@ -701,4 +701,13 @@
   <data name="Upload" xml:space="preserve">
     <value>Subir</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalles</value>
+  </data>
+  <data name="Created by" xml:space="preserve">
+    <value>Creado por</value>
+  </data>
+  <data name="Created on" xml:space="preserve">
+    <value>Creado el</value>
+  </data>
 </root>

@@ -34,7 +34,7 @@ namespace Cervantes.Application
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _userManager.Dispose();
         }
 
         public Task<ApplicationUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
@@ -49,7 +49,7 @@ namespace Cervantes.Application
 
         public ApplicationUser GetByUserId(string id)
         {
-            throw new NotImplementedException();
+            return Context.Set<ApplicationUser>().Find(id);
         }
 
         public Task<string> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)

@@ -31,7 +31,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\Attachments\Images\Clients\" />
     <Folder Include="Views\Workspace\" />
-    <Folder Include="Views\Project\" />
   </ItemGroup>
 
 </Project>

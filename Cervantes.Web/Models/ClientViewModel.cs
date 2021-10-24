@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Cervantes.Web.Models
 {
@@ -42,7 +43,16 @@ namespace Cervantes.Web.Models
         /// Client Image
         /// </summary>
         public string ImagePath { get; set; }
-        
+        /// <summary>
+        /// Client created by
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// Creation Date
+        /// </summary>
+        public DateTime CreatedDate { get; set; }
+
 
     }
 }

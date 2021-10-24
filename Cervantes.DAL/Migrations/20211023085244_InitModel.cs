@@ -47,25 +47,6 @@ namespace Cervantes.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Organization",
                 columns: table => new
                 {
@@ -201,6 +182,33 @@ namespace Cervantes.DAL.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Clients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Clients_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -670,6 +678,11 @@ namespace Cervantes.DAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Clients_UserId",
+                table: "Clients",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Documents_UserId",
                 table: "Documents",
                 column: "UserId");
@@ -889,10 +902,10 @@ namespace Cervantes.DAL.Migrations
                 name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "AspNetUsers");
         }
     }
 }
