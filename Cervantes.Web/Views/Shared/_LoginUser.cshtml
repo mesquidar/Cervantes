@@ -4,14 +4,14 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-    @{
-    var culture = CultureInfo.CurrentCulture.Name;
+	@{
+	var culture = CultureInfo.CurrentCulture.Name;
 }
 
 
 @if (SignInManager.IsSignedIn(User))
 {
-    
+	
 	  <li class="nav-item dropdown show">
 				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action" aria-expanded="true">
 				 <img src="https://www.tutorialrepublic.com/examples/images/avatar/3.jpg" class="img-circle elevation-2" alt="User Image" height="30" width="30"> @User.Identity.Name <b class="caret"></b>
@@ -22,17 +22,22 @@
 					<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/ChangePassword" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-key"></i> Password</a>
 					<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-unlock"></i> Two-factor authentication</a>
 					<div class="divider dropdown-divider"></div>
-					        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-culture="@culture" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" localize-content>
-                                <button  type="submit" class="dropdown-item" localize-content>Logout</button>
-                            </form>
+							<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-sticky-note"></i> My Notes</a>
+							<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-share-square"></i> Shared Notes</a>
+					
+
+					<div class="divider dropdown-divider"></div>
+							<form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-culture="@culture" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" localize-content>
+								<button  type="submit" class="dropdown-item" localize-content><i class="fas fa-sign-out-alt"></i> Logout</button>
+							</form>
 				</div>
 			</li>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login" asp-route-culture="@culture" localize-content>Login</a>
-    </li>
+	<li class="nav-item">
+		<a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login" asp-route-culture="@culture" localize-content>Login</a>
+	</li>
 }
 
 

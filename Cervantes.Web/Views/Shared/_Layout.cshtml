@@ -87,22 +87,7 @@
 
 	<!-- Sidebar -->
 	<div class="sidebar">
-		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-		@if (SignInManager.IsSignedIn(User))
-		 {
 
-						<div class="image">
-							<img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-						</div>
-						<div class="info">
-							<a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="d-block">@User.Identity.Name</a>
-						</div>
-					}
-					else
-					{
-						<a class="d-block" asp-area="Identity" asp-page="/Account/Login">Login</a>
-					}
-				</div>
 	  <!-- Sidebar Menu -->
 	  <nav class="mt-2">
 		<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -170,8 +155,35 @@
 				  }
 							</ul>
 		  </li>
+
+		  <li class="nav-item">
+			<a href="#" class="nav-link" localize-content>
+			  <i class="nav-icon fas fa-file"></i><p>Documents<i class="right fas fa-angle-left"></i></p>
+			</a>
+			<ul class="nav nav-treeview">
+				<li class="nav-item">
+				<a asp-controller="Project" asp-action="Index" localize-content class="nav-link">
+				  <i class="fas fa-list nav-icon"></i><p>List</p>
+				</a>
+			  </li>
+			  @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+								{
+									<li class="nav-item">
+										<a asp-controller="Project" asp-action="Create" localize-content class="nav-link">
+											<i class="fas fa-plus nav-icon"></i><p>Create</p>
+
+										</a>
+									</li>
+								}
+			<li class="nav-item">
+				<a asp-controller="Project" asp-action="Template" localize-content class="nav-link">
+				  <i class="fas fa-clone nav-icon"></i><p>Templates</p>
+				</a>
+			  </li>
+		   </ul>
+		  </li>
 		  
-		  <li class="nav-header">EXAMPLES</li>
+
 		   @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
 			{
 			  <li class="nav-header">ADMIN</li>
@@ -225,7 +237,7 @@
 	<div class="float-right d-none d-sm-block">
 	  <b>Version</b> 1.0
 	</div>
-	<strong>Copyright &copy; 2014-2021 <a href="https://github.com/mesquidar/Cervantes">Cervantes</a>.</strong> All rights reserved.
+	<strong>Copyright &copy; @DateTime.Now.Year <a href="https://github.com/mesquidar/Cervantes">Cervantes</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->

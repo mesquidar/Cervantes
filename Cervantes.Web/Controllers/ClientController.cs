@@ -72,7 +72,6 @@ namespace Cervantes.Web.Controllers
             try
             {
                 var client = clientManager.GetById(id);
-                var user = userManager.GetByUserId(client.UserId);
                 if (client != null)
                 {
                     ClientViewModel model = new ClientViewModel
@@ -86,7 +85,6 @@ namespace Cervantes.Web.Controllers
                         Url = client.Url,
                         ImagePath = client.ImagePath,
                         CreatedDate = client.CreatedDate,
-                        UserName = user.UserName,
 
                     };
                     return View(model);

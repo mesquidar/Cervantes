@@ -1,5 +1,5 @@
 ﻿@using System.Net
-@model Cervantes.Web.Models.ClientViewModel
+@model Cervantes.Web.Models.UserViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-briefcase"></i> @Model.Name</h1>
+            <h1 localize-content><i class="fas fa-user"></i> @Model.FullName</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -43,19 +43,13 @@
                       <div class="row">
                           <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                               <dl>
-                                  <dt><h4 localize-content>Contact Name</h4></dt>
+                                  <dt><h4 localize-content>Position</h4></dt>
                                   <hr>
-                                  <dd>@Html.DisplayFor(model => model.ContactName)</dd>
-                                  <dt> <h4 localize-content>Contact Phone</h4></dt>
+                                  <dd>@Html.DisplayFor(model => model.Position)</dd>
+                                  <dt> <h4 localize-content>Description</h4></dt>
                                   <hr>
-                                  <dd>@Html.DisplayFor(model => model.ContactPhone)</dd>
+                                  <dd>@Html.DisplayFor(model => model.Description)</dd>
                                   <dt><h4 localize-content>Contact Email</h4></dt>
-                                  <hr>
-                                  <dd>@Html.DisplayFor(model => model.ContactEmail)</dd>
-                                  <dt><h4 localize-content>URL</h4></dt>
-                                  <hr>
-                                  <dd>@Html.DisplayFor(model => model.Url)</dd>
-                                    <dt><h4 localize-content>Description</h4></dt>
                                   <hr>
                                   <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Description))</dd>
                               </dl>
@@ -66,13 +60,19 @@
                           <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">    
                               
                                   <div align="center">
-                                        <img src="@Url.Content(Model.ImagePath)" alt="LogoClient" height="200" width="200" />
-                                        <dt><h4 localize-content>Created by</h4></dt>
+                                        <img src="@Url.Content(Model.Avatar)" alt="LogoClient" height="200" width="200" />
+                                        <dt><h4 localize-content>Username</h4></dt>
                                           <hr>
                                           <dd>@Html.DisplayFor(model => model.UserName)</dd>
-                                          <dt> <h4 localize-content>Created on</h4></dt>
+                                          <dt> <h4 localize-content>Email</h4></dt>
                                           <hr>
-                                          <dd>@Html.DisplayFor(model => model.CreatedDate)</dd>
+                                          <dd>@Html.DisplayFor(model => model.Email)</dd>
+                                          <hr>
+                                          <dt> <h4 localize-content>Email Confirmed</h4></dt>
+                                          <dd>@Html.DisplayFor(model => model.EmailConfirmed)</dd>
+                                          <hr />
+                                          <dt> <h4 localize-content>2FA Enabled?</h4></dt>
+                                          <dd>@Html.DisplayFor(model => model.TwoFactorEnabled)</dd>
 
                                   </div>
                               

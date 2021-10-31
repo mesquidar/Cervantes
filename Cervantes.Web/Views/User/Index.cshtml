@@ -84,15 +84,15 @@
                     <tr>
                         <td>@user.FullName</td>
                         <td>                  
-                            <a asp-controller="Client" asp-action="Details" asp-route-id="@user.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @user.UserName</span></a>                       
+                            <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @user.UserName</span></a>                       
                         </td>
                         <td>@user.EmailConfirmed</td>
                         <td>@user.TwoFactorEnabled</td>
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
                                 <td>
-                                    <a class="btn btn-outline-warning btn-sm" asp-controller="Client" asp-action="Edit" asp-route-id="@user.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
-                                    <a class="btn btn-outline-danger btn-sm" asp-controller="Client" asp-action="Delete" asp-route-id="@user.Id" localize-content ><i class="fas fa-trash"></i> Delete</a>
+                                    <a class="btn btn-outline-warning btn-sm" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
+                                    <a class="btn btn-outline-danger btn-sm" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id" localize-content ><i class="fas fa-trash"></i> Delete</a>
                                 </td>
 
                             }

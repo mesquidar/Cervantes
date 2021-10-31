@@ -21,6 +21,15 @@ namespace Cervantes.Application
         {
             _userManager = userManager;
         }
+        /// <summary>
+        /// Get user by his id
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns>User</returns>
+        public ApplicationUser GetByUserId(string id)
+        {
+            return Context.Set<ApplicationUser>().Find(id);
+        }
 
         public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
@@ -46,12 +55,6 @@ namespace Cervantes.Application
         {
             throw new NotImplementedException();
         }
-
-        public ApplicationUser GetByUserId(string id)
-        {
-            return Context.Set<ApplicationUser>().Find(id);
-        }
-
         public Task<string> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();

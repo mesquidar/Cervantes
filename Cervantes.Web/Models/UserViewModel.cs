@@ -1,4 +1,5 @@
 ﻿using Cervantes.CORE;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
@@ -24,9 +25,26 @@ namespace Cervantes.Web.Models
         /// User Position
         /// </summary>
         public string Position { get; set; }
+        /// <summary>
+        /// User Position
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// User Position
+        /// </summary>
 
-        public List<string> Role { get; set; }
+        public string ConfirmPassword { get; set; }
 
-        public ApplicationUser User { get; set; }
+        /// <summary>
+        /// File Uploaded
+        /// </summary>
+        public IFormFile upload { get; set; }
+
+        /// <summary>
+        /// Client Image
+        /// </summary>
+        public string ImagePath { get; set; }
+
+
     }
 }
