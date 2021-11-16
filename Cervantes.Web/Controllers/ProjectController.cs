@@ -17,13 +17,21 @@ namespace Cervantes.Web.Controllers
         IProjectManager projectManager = null;
         IClientManager clientManager = null;
 
+        /// <summary>
+        /// ProjectController Constructor
+        /// </summary>
+        /// <param name="projectManager">ProjectManager</param>
+        /// <param name="clientManager">ClientManager</param>
         public ProjectController(IProjectManager projectManager, IClientManager clientManager)
         {
             this.projectManager = projectManager;
             this.clientManager = clientManager;
         }
 
-        // GET: ProjectController
+        /// <summary>
+        /// Method Index show all projects
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
 
@@ -62,13 +70,20 @@ namespace Cervantes.Web.Controllers
             }
         }
 
-        // GET: ProjectController/Details/5
+        /// <summary>
+        /// Methos show project details
+        /// </summary>
+        /// <param name="id">Project Id</param>
+        /// <returns></returns>
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ProjectController/Create
+        /// <summary>
+        /// Method sheo create form
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             var result = clientManager.GetAll().Select(e => new ClientViewModel
@@ -92,7 +107,11 @@ namespace Cervantes.Web.Controllers
             return View(model);
         }
 
-        // POST: ProjectController/Create
+        /// <summary>
+        /// Method save reate form
+        /// </summary>
+        /// <param name="model">ProjectViewModel</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperUser")]
@@ -126,13 +145,22 @@ namespace Cervantes.Web.Controllers
             }
         }
 
-        // GET: ProjectController/Edit/5
+        /// <summary>
+        /// Method show edit form
+        /// </summary>
+        /// <param name="id">Project Id</param>
+        /// <returns></returns>
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: ProjectController/Edit/5
+        /// <summary>
+        /// Method save edit form
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -168,6 +196,10 @@ namespace Cervantes.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Method show all template projects
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Template()
         {
             try

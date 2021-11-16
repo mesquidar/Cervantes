@@ -1,7 +1,7 @@
 ﻿@model Cervantes.Web.Models.UserEditViewModel
 
 @{
-    ViewData["Title"] = "Create User";
+    ViewData["Title"] = "Edit User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-briefcase"></i> Create User</h1>
+            <h1 localize-content><i class="fas fa-user"></i> Edit @Model.User.FullName</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -31,7 +31,7 @@
 <div class="row justify-content-center">
     <div class="col-md-12">
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="User.FullName" class="control-label"></label>
@@ -59,7 +59,7 @@
                 <span asp-validation-for="User.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.Password"></label>
+                <label>New Password</label>
                 <input asp-for="User.Password" class="form-control" />
                 <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
@@ -70,20 +70,31 @@
             </div>
 
             <div class="form-group">
-            <label class="control-label col-md-2">Rol</label>
+            <label class="control-label col-md-2">Role</label>
       
                 @Html.DropDownListFor(m => m.Option, Model.ItemList, new { @class = "form-control" })
             </div>
 
             <div class="form-group">
-                   <label for="upload" localize-content>Avatar</label>
-                    <div class="input-group">
+                <label for="upload" localize-content>Avatar</label>
+                    @if (Model.User.Avatar != null)
+                    {
+                       <div>
+                      <img src="@Model.User.Avatar" class="img-circle elevation-2" alt="User Image" height="100" width="100">
+                       <a class="btn btn-danger btn-sm" asp-controller="User" asp-action="DeleteAvatar" asp-route-id="@Model.User.Id" as localize-content><i class="fas fa-trash"></i> Delete Avatar</a>
+                       </div>
+                    }
+                    else
+                    {
+                        <div class="input-group">
                       <div class="custom-file">
                         <input type="file" class="custom-file-input" id="upload" name="upload">
                         <label class="custom-file-label" for="upload" localize-content>Choose File</label>
                       </div>
 
                     </div>
+                    }
+                                   
              </div>
             
 

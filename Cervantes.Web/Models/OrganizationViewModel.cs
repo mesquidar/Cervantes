@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace Cervantes.CORE
+namespace Cervantes.Web.Models
 {
-    public class Organization
+    public class OrganizationViewModel
     {
         /// <summary>
         /// Organization Id
         /// </summary>
-        public int Id {  get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Organization Name
         /// </summary>
-        public string Name {  get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Organization Description
         /// </summary>
-        public string Description {  get; set; }
+        public string Description { get; set; }
         /// <summary>
         /// Organization Url
         /// </summary>
-        public string Url {  get; set; }
+        public string Url { get; set; }
         /// <summary>
         /// Organization Contact Name
         /// </summary>
@@ -31,18 +27,20 @@ namespace Cervantes.CORE
         /// <summary>
         /// Organization contact email
         /// </summary>
-        public string ContactEmail {  get; set; }
+        public string ContactEmail { get; set; }
         /// <summary>
         /// Organization contact phone
         /// </summary>
         public string ContactPhone { get; set; }
+        /// <summary>
+        /// File Uploaded
+        /// </summary>
+        public IFormFile upload { get; set; }
 
         /// <summary>
         /// Organization Image
         /// </summary>
         public string ImagePath { get; set; }
-
-
 
     }
 }

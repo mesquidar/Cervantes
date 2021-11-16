@@ -1,6 +1,7 @@
 ﻿using Cervantes.CORE;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 namespace Cervantes.Web.Models
@@ -44,6 +45,10 @@ namespace Cervantes.Web.Models
         /// Client Image
         /// </summary>
         public string ImagePath { get; set; }
+
+        public RoleList Role { get; set; }
+        public IList<SelectListItem> ItemList { get; set; }
+        public string Option { get; set; }
 
 
     }

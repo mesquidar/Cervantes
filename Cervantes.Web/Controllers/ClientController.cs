@@ -30,7 +30,10 @@ namespace Cervantes.Web.Controllers
         }
 
 
-        // GET: ClientController
+        /// <summary>
+        /// Method Index shows all clients
+        /// </summary>
+        /// <returns>All Clients</returns>
         public ActionResult Index()
         {
             try
@@ -66,7 +69,11 @@ namespace Cervantes.Web.Controllers
             }
         }
 
-        // GET: ClientController/Details/5
+        /// <summary>
+        /// Show Details of a client
+        /// </summary>
+        /// <param name="id">Client Id</param>
+        /// <returns>Client</returns>
         public ActionResult Details(int id)
         {
             try
@@ -99,14 +106,22 @@ namespace Cervantes.Web.Controllers
             return View();
         }
 
-        // GET: ClientController/Create
+        /// <summary>
+        /// Method Create show creation form
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ClientController/Create
+        /// <summary>
+        /// Method Save Post Create form
+        /// </summary>
+        /// <param name="model">ClientViewModel</param>
+        /// <param name="upload">File</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperUser")]
@@ -147,7 +162,11 @@ namespace Cervantes.Web.Controllers
             }
         }
 
-        // GET: ClientController/Edit/5
+        /// <summary>
+        /// Methos shwo edit form
+        /// </summary>
+        /// <param name="id">Client Id</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Edit(int id)
         {
@@ -176,7 +195,12 @@ namespace Cervantes.Web.Controllers
             }
         }
 
-        // POST: ClientController/Edit/5
+        /// <summary>
+        /// Method save post edit form
+        /// </summary>
+        /// <param name="id">Client Id</param>
+        /// <param name="model">Client</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperUser")]
@@ -203,7 +227,11 @@ namespace Cervantes.Web.Controllers
             }
         }
 
-        // GET: ClientController/Delete/5
+        /// <summary>
+        /// Methos show delete page
+        /// </summary>
+        /// <param name="id">Client Id</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Delete(int id)
         {
@@ -235,7 +263,12 @@ namespace Cervantes.Web.Controllers
             return View();
         }
 
-        // POST: ClientController/Delete/5
+        /// <summary>
+        /// Method confirms remove client
+        /// </summary>
+        /// <param name="id">Client Id</param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperUser")]

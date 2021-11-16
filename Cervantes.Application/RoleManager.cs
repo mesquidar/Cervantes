@@ -26,6 +26,8 @@ namespace Cervantes.Application
         {
             return Context.Set<IdentityRole>().Where(x => x.Name == name);
         }
+
+
     }
 }
 

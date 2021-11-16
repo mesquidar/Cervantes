@@ -68,12 +68,20 @@
                 <input asp-for="Position" class="form-control" />
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+            <label class="control-label col-md-2">Role</label>
+      
+                @Html.DropDownListFor(m => m.Option, Model.ItemList, "--Select Role--", new { @class = "form-control" })
+            </div>
+
+
             <div class="form-group">
                    <label for="upload" localize-content>Avatar</label>
                     <div class="input-group">
                       <div class="custom-file">
                         <input type="file" class="custom-file-input" id="upload" name="upload">
-                        <label class="custom-file-label" for="upload" localize-content>Choose File</label>
+                        <label class="custom-file-label" for="upload" localize-content>Select Image</label>
                       </div>
 
                     </div>

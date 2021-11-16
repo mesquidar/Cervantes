@@ -67,6 +67,7 @@ namespace Cervantes.Web
             services.AddScoped<IRoleManager, RoleManager>();
             services.AddScoped<IClientManager, ClientManager>();
             services.AddScoped<IProjectManager, ProjectManager>();
+            services.AddScoped<IOrganizationManager, OrganizationManager>();
 
 
 
