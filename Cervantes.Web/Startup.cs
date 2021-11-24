@@ -52,7 +52,7 @@ namespace Cervantes.Web
             
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+                options.UseLazyLoadingProxies().UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -68,6 +68,12 @@ namespace Cervantes.Web
             services.AddScoped<IClientManager, ClientManager>();
             services.AddScoped<IProjectManager, ProjectManager>();
             services.AddScoped<IOrganizationManager, OrganizationManager>();
+            services.AddScoped<IProjectUserManager, ProjectUserManager>();
+            services.AddScoped<IProjectNoteManager, ProjectNoteManager>();
+            services.AddScoped<IProjectAttachmentManager, ProjectAttachmentManager>();
+            services.AddScoped<ITargetManager, TargetManager>();
+            services.AddScoped<ITaskManager, TaskManager>();
+            services.AddScoped<IVulnManager, VulnManager>();
 
 
 

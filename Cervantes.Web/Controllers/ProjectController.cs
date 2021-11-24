@@ -16,16 +16,29 @@ namespace Cervantes.Web.Controllers
     {
         IProjectManager projectManager = null;
         IClientManager clientManager = null;
+        IProjectUserManager projectUserManager = null;
+        IProjectNoteManager projectNoteManager = null;
+        IProjectAttachmentManager projectAttachmentManager = null;
+        ITargetManager targetManager = null;
+        ITaskManager taskManager = null;
+        IVulnManager vulnManager = null;
 
         /// <summary>
         /// ProjectController Constructor
         /// </summary>
         /// <param name="projectManager">ProjectManager</param>
         /// <param name="clientManager">ClientManager</param>
-        public ProjectController(IProjectManager projectManager, IClientManager clientManager)
+        public ProjectController(IProjectManager projectManager, IClientManager clientManager, IProjectUserManager projectUserManager, IProjectNoteManager projectNoteManager, 
+            IProjectAttachmentManager projectAttachmentManager, ITargetManager targetManager, ITaskManager taskManager, IVulnManager vulnManager)
         {
             this.projectManager = projectManager;
             this.clientManager = clientManager;
+            this.projectUserManager = projectUserManager;
+            this.projectNoteManager = projectNoteManager;
+            this.projectAttachmentManager = projectAttachmentManager;   
+            this.targetManager = targetManager;
+            this.taskManager = taskManager;
+            this.vulnManager = vulnManager;
         }
 
         /// <summary>
@@ -77,6 +90,23 @@ namespace Cervantes.Web.Controllers
         /// <returns></returns>
         public ActionResult Details(int id)
         {
+            var project = projectManager.GetById(id);
+            if (project != null)
+            {
+                ProjectDetailsViewModel model = new ProjectDetailsViewModel
+                {
+                    Project = project,
+                    ProjectUsers = projectUserManager.GetAll().Where( x => x.ProjectId == id),
+                    ProjectNotes = projectNoteManager.GetAll().Where(x => x.ProjectId == id),
+                    ProjectAttachments = projectAttachmentManager.GetAll().Where(x => x.ProjectId == id),
+                    Targets = targetManager.GetAll().Where(x => x.ProjectId == id),
+                    Tasks = taskManager.GetAll().Where(x => x.ProjectId == id),
+                    Vulns = vulnManager.GetAll().Where(x => x.ProjectId == id),
+
+                };
+                return View(model);
+            }
+
             return View();
         }
 
@@ -236,5 +266,45 @@ namespace Cervantes.Web.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        /// Method return manage memebers page
+        /// </summary>
+        /// <param name="id">Project Id</param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin,SuperUser")]
+        public IActionResult Members(int id)
+        {
+            return View();
+            
+        }
+
+        /// <summary>
+        /// Method Add user to project
+        /// </summary>
+        /// <param name="project">Project Id</param>
+        /// <param name="user">User Id</param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin,SuperUser")]
+        [HttpPost]
+        public IActionResult AddMember(int project, string user)
+        {
+            return View("Members");
+        }
+
+        /// <summary>
+        /// Methos delete user from project
+        /// </summary>
+        /// <param name="project">Project Id</param>
+        /// <param name="user">User Id</param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin,SuperUser")]
+        [HttpPost]
+        public IActionResult DeleteMember(int project, string user)
+        {
+            return View("Members");
+        }
+
+
     }
 }

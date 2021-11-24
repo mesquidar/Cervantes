@@ -1,0 +1,214 @@
+﻿@using System.Net
+@model Cervantes.Web.Models.ProjectDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 localize-content><i class="fas fa-folder"></i> @Model.Project.Name</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
+              <li class="breadcrumb-item"><a asp-controller="Project" asp-action="Index" localize-content>Project</a></li>
+              <li class="breadcrumb-item active" localize-content>Details</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+      <hr />
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-2">
+    
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                  <div class="card-body box-profile">
+                    <div class="text-center">
+                      <img class="profile-user-img img-fluid img-circle"
+                           src="@Url.Content(Model.Project.Client.ImagePath)"
+                           alt="LogoClient">
+                    </div>
+    
+                    <h3 class="profile-username text-center">@Model.Project.Name</h3>
+                    <dt><p localize-content>Client</p></dt>
+                    <hr>
+                    <dd><a asp-controller="Client" asp-action="Details" asp-route-id="@Model.Project.Client.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @Model.Project.Client.Name</span></a></dd>
+                    <dt> <p localize-content>Start Date</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Project.StartDate)</dd>      
+                    <dt> <p localize-content>End Date</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Project.EndDate)</dd> 
+                    <dt> <p localize-content>Created by</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Project.User.FullName)</dd>
+
+                    <dt> <p localize-content>Project Type</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Project.ProjectType)</dd> 
+
+                    <dt> <p localize-content>Status</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Project.Status)</dd> 
+
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+              <div class="col-md-10">
+                <div class="card">
+                  <div class="card-header p-2">
+                    <ul class="nav nav-pills">
+                      <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#members" data-toggle="tab">Members</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#targets" data-toggle="tab">Targets</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#tasks" data-toggle="tab">Tasks</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#vulns" data-toggle="tab">Vulnerabilities</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes</a></li>
+                       <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments</a></li>
+                      
+                    </ul>
+                  </div><!-- /.card-header -->
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="active tab-pane" id="details">
+                        <dl>
+
+                            <dt><p localize-content>Description</p></dt>
+                            <hr>
+                            <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Project.Description))</dd>
+                        </dl>
+                      </div>
+
+                         <!-- /.tab-pane -->
+                      <div class="tab-pane" id="members">
+
+                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                          {
+                              <form asp-action="AddMember" method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label asp-for="ProjectUsers" class="control-label">User</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <a class="btn btn-default" asp-action="Index">Back</a>
+                                        <input type="submit" value="Create" class="btn btn-dark" />
+                                    </div>
+                                  </form>
+
+                            }
+
+
+                        <table id="membersResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Avatar</th>
+                                    <th localize-content>Name</th>
+
+                                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                        {
+                                            <th localize-content>Options</th>
+                                        }                             
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var members in Model.ProjectUsers)
+                                {
+                             <tr>
+                                        <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
+                                        <td>@members.User.FullName</td>
+                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                            {
+                                                <td>
+                                                    <a class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@members.ProjectId" asp-route-user="@members.UserId" localize-content><i class="fas fa-trash"></i> Delete</a>                                                
+                                                </td>
+
+                                            }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                      </div>
+                      <!-- /.tab-pane -->
+
+                         <!-- /.tab-pane -->
+                      <div class="tab-pane" id="targets">
+                        
+                      </div>
+                      <!-- /.tab-pane -->
+
+                         <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tasks">
+                        
+                      </div>
+                      <!-- /.tab-pane -->
+
+                         <!-- /.tab-pane -->
+                      <div class="tab-pane" id="vulns">
+                        
+                      </div>
+                      <!-- /.tab-pane -->
+
+                         <!-- /.tab-pane -->
+                      <div class="tab-pane" id="notes">
+                        
+                      </div>
+                      <!-- /.tab-pane -->
+
+                         <!-- /.tab-pane -->
+                      <div class="tab-pane" id="attachments">
+                        
+                      </div>
+                      <!-- /.tab-pane -->
+    
+                    </div>
+                    <!-- /.tab-content -->
+                  </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div><!-- /.container-fluid --> 
+    
+
+
+
+</section>
+
+           
+  @section Scripts{
+<script>
+
+    $(document).ready(function () {
+        $('#membersResults').DataTable({
+            "responsive": true
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+
+
+</script>
+}                       

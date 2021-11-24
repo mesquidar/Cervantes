@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>aspnet-Cervantes.Web-4BE0D898-2103-41BB-B089-6686E1489E52</UserSecretsId>
   </PropertyGroup>
 

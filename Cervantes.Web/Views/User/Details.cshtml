@@ -26,114 +26,110 @@
     
     <!-- Main content -->
     <section class="content">
-
-                <ul class="nav nav-tabs" id="custom-tabs-tab" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-details-tab" data-toggle="pill" href="#custom-tabs-details" role="tab" aria-controls="custom-tabs-details" aria-selected="true" localize-content>Details</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-four-projects-tab" data-toggle="pill" href="#custom-tabs-projects" role="tab" aria-controls="custom-tabs-projects" aria-selected="false" localize-content>Projects</a>
-                  </li>
-                </ul>
-              <div class="card-body">
-                <div class="tab-content" id="custom-tabs-tabContent">
-                  <div class="tab-pane fade active show" id="custom-tabs-details" role="tabpanel" aria-labelledby="custom-tabs-details-tab">
-                      <div class="row">
-                          <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-                              <dl>
-                                  <dt><h4 localize-content>Position</h4></dt>
-                                  <hr>
-                                  <dd>@Html.DisplayFor(model => model.Position)</dd>
-
-                                  <dt><h4 localize-content>Phone Number</h4></dt>
-                                  <hr>
-                                  <dd>@Html.DisplayFor(model => model.PhoneNumber)</dd>
-
-                                  <dt><h4 localize-content>2FA Enabled?</h4></dt>
-                                  <hr>
-                                  <dd>@Html.DisplayFor(model => model.TwoFactorEnabled)</dd>
-
-                                  <dt> <h4 localize-content>Description</h4></dt>
-                                  <hr>
-                                  <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Description))</dd>
-                                  
-                              </dl>
-                                            
-
-                          </div>
-
-                          <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">    
-                              
-                                  <div align="center">
-                                    @if (Model.Avatar != null)
-                                    {
-                                        <img src="@Url.Content(Model.Avatar)" alt="LogoClient" height="200" width="200" />
-
-                                    }
-                                    else
-                                    {
-                                        <i class="fas fa-user fa-5x"></i>
-
-                                    }
-
-
-                                        <dt><h4 localize-content>Username</h4></dt>
-                                          <hr>
-                                          <dd>@Html.DisplayFor(model => model.UserName)</dd>
-                                          <dt> <h4 localize-content>Email</h4></dt>
-                                          <hr>
-                                          <dd>@Html.DisplayFor(model => model.Email)</dd>
-                                     
-                                          <dt> <h4 localize-content>Role</h4></dt>
-                                          <hr />
-                                          @switch(Model.Option)
-                                            {
-                                                case "Admin":
-                                                    <dd><span class="badge badge-danger">@Html.DisplayFor(model => model.Option)</span></dd>
-                                                    break;
-                                                case "SuperUser":
-                                                     <dd><span class="badge badge-warning">@Html.DisplayFor(model => model.Option)</span></dd>
-                                                    break;
-                                                case "User":
-                                                    <dd><span class="badge badge-info">@Html.DisplayFor(model => model.Option)</span></dd>
-                                                    break;
-                                                case "Client":
-                                                    <dd><span class="badge badge-success">@Html.DisplayFor(model => model.Option)</span></dd>
-                                                    break;
-                                                default:
-                                                    <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Option)</span></dd>
-                                                    break;
-
-                                            }
-                                          
-
-                                  </div>
-                              
-
-
-                          </div>
-                             
-                       </div>
-
-                    
-
-                             
-
+        
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-2">
   
+              <!-- Profile Image -->
+              <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                  <div class="text-center">
+                    @if(Model.Avatar != null){
+                      <img class="profile-user-img img-fluid img-circle"
+                      src="@Url.Content(Model.Avatar)"
+                      alt="LogoClient">
+                    }
+                    
+                         else
+                          {
+                           <i class="fas fa-user fa-5x"></i>
 
-
-                       </div>
-
-
-                      <div class="tab-pane fade" id="custom-tabs-projects" role="tabpanel" aria-labelledby="custom-tabs-projects-tab">
-                         Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
-                      </div>
-
-
-
+                        }
                   </div>
+  
+                  <h3 class="profile-username text-center">@Model.FullName</h3>
+                  <dt><p localize-content>Username</p></dt>
+                  <hr>
+                  <dd>@Html.DisplayFor(model => model.UserName)</dd>
+                  <dt> <p localize-content>Email</p></dt>
+                  <hr>
+                  <dd>@Html.DisplayFor(model => model.Email)</dd>
+             
+                  <dt> <p localize-content>Role</p></dt>
+                  <hr />
+                  @switch(Model.Option)
+                    {
+                        case "Admin":
+                            <dd><span class="badge badge-danger">@Html.DisplayFor(model => model.Option)</span></dd>
+                            break;
+                        case "SuperUser":
+                             <dd><span class="badge badge-warning">@Html.DisplayFor(model => model.Option)</span></dd>
+                            break;
+                        case "User":
+                            <dd><span class="badge badge-info">@Html.DisplayFor(model => model.Option)</span></dd>
+                            break;
+                        case "Client":
+                            <dd><span class="badge badge-success">@Html.DisplayFor(model => model.Option)</span></dd>
+                            break;
+                        default:
+                            <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Option)</span></dd>
+                            break;
+
+                    }                   
+
+
                 </div>
-                <div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-10">
+              <div class="card">
+                <div class="card-header p-2">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects" data-toggle="tab">Projects</a></li>
+                  </ul>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="active tab-pane" id="details">
+                      <dl>
+                        <dt><p localize-content>Position</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.Position)</dd>
+
+                        <dt><p localize-content>Phone Number</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.PhoneNumber)</dd>
+
+                        <dt><p localize-content>2FA Enabled?</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.TwoFactorEnabled)</dd>
+
+                        <dt> <p localize-content>Description</p></dt>
+                        <hr>
+                        <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Description))</dd>
+                        
+                    </dl>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="projects">
+                      
+                    </div>
+                    <!-- /.tab-pane -->
+  
+                  </div>
+                  <!-- /.tab-content -->
+                </div><!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          
     <a class="btn btn-default" asp-controller="User" asp-action="Index" localize-content>Back</a>
 
         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
@@ -141,9 +137,11 @@
             <a class="btn btn-outline-warning" asp-area="" asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
 
         }
-</div>
-              </div>
-              <!-- /.card -->
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->   
+
+
+
     
 
 
