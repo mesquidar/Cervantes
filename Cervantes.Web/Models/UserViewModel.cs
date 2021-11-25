@@ -50,6 +50,6 @@ namespace Cervantes.Web.Models
         public IList<SelectListItem> ItemList { get; set; }
         public string Option { get; set; }
 
-
+        public IEnumerable<Project> Project { get; set; }
     }
 }

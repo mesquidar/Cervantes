@@ -1,4 +1,5 @@
 ﻿@using System.Net
+@using Cervantes.CORE
 @model Cervantes.Web.Models.ProjectDetailsViewModel
 
 @{
@@ -60,7 +61,22 @@
 
                     <dt> <p localize-content>Status</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.Project.Status)</dd> 
+                    @switch(Model.Project.Status)
+                    {
+                        case ProjectStatus.Active:
+                            <dd><span class="badge badge-success">@Html.DisplayFor(model => model.Project.Status)</span></dd>
+                            break;
+                        case ProjectStatus.Archived:
+                             <dd><span class="badge badge-secondary">@Html.DisplayFor(model => model.Project.Status)</span></dd>
+                            break;
+                        case ProjectStatus.Waiting:
+                            <dd><span class="badge badge-info">@Html.DisplayFor(model => model.Project.Status)</span></dd>
+                            break;
+                        default:
+                            <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Project.Status)</span></dd>
+                            break;
+
+                    }  
 
                   </div>
                   <!-- /.card-body -->

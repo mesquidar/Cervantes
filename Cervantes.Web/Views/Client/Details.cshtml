@@ -1,5 +1,5 @@
 ﻿@using System.Net
-@model Cervantes.Web.Models.ClientViewModel
+@model Cervantes.Web.Models.ClientDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-briefcase"></i> @Model.Name</h1>
+            <h1 localize-content><i class="fas fa-briefcase"></i> @Model.Client.Name</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -36,17 +36,17 @@
                   <div class="card-body box-profile">
                     <div class="text-center">
                       <img class="profile-user-img img-fluid img-circle"
-                           src="@Url.Content(Model.ImagePath)"
+                           src="@Url.Content(Model.Client.ImagePath)"
                            alt="LogoClient">
                     </div>
     
-                    <h3 class="profile-username text-center">@Model.Name</h3>
+                    <h3 class="profile-username text-center">@Model.Client.Name</h3>
                     <dt><p localize-content>Created by</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.UserName)</dd>
+                    <dd>@Html.DisplayFor(model => model.Client.User.UserName)</dd>
                     <dt> <p localize-content>Created on</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.CreatedDate)</dd>                    
+                    <dd>@Html.DisplayFor(model => model.Client.CreatedDate)</dd>                    
 
 
                   </div>
@@ -69,24 +69,73 @@
                         <dl>
                             <dt><p localize-content>Contact Name</p></dt>
                             <hr>
-                            <dd>@Html.DisplayFor(model => model.ContactName)</dd>
+                            <dd>@Html.DisplayFor(model => model.Client.ContactName)</dd>
                             <dt> <p localize-content>Contact Phone</p></dt>
                             <hr>
-                            <dd>@Html.DisplayFor(model => model.ContactPhone)</dd>
+                            <dd>@Html.DisplayFor(model => model.Client.ContactPhone)</dd>
                             <dt><p localize-content>Contact Email</p></dt>
                             <hr>
-                            <dd>@Html.DisplayFor(model => model.ContactEmail)</dd>
+                            <dd>@Html.DisplayFor(model => model.Client.ContactEmail)</dd>
                             <dt><p localize-content>URL</p></dt>
                             <hr>
-                            <dd>@Html.DisplayFor(model => model.Url)</dd>
+                            <dd>@Html.DisplayFor(model => model.Client.Url)</dd>
                               <dt><p localize-content>Description</p></dt>
                             <hr>
-                            <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Description))</dd>
+                            <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Client.Description))</dd>
                         </dl>
                       </div>
                       <!-- /.tab-pane -->
                       <div class="tab-pane" id="projects">
                         
+                          @if(Model.Project.FirstOrDefault() != null){
+                            <!--Table-->
+                            <table id="projectResults" class="table table-bordered table-hover" width="100%">
+                                <!--Table head-->
+                                <thead>
+                                    <tr>
+                                        <th localize-content>Name</th>
+                                        <th localize-content>Type</th>
+                                        <th localize-content>Status</th>
+                                        <th localize-content>Start Date</th>
+                                        <th localize-content>End Date</th>
+                                            @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                            {
+                                                <th localize-content>Options</th>
+                                            }                             
+                                    </tr>
+                                </thead>
+                                <!--Table head-->
+                                <!--Table body-->
+                                <tbody>
+
+                                    @foreach (var project in Model.Project)
+                                    {
+                                        <tr>
+                                            <td>                  
+                                                <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-folder"></i> @project.Name</span></a>                       
+                                            </td>
+                                            <td>@project.ProjectType</td>
+                                            <td>@project.Status</td>
+                                            <td>@project.StartDate</td>
+                                            <td>@project.EndDate</td>
+                                             @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                                {
+                                                    <td>
+                                                        <a class="btn btn-outline-warning btn-sm" asp-controller="Client" asp-action="Edit" asp-route-id="@project.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
+                                                        <a class="btn btn-outline-danger btn-sm" asp-controller="Client" asp-action="Delete" asp-route-id="@project.Id" localize-content ><i class="fas fa-trash"></i> Delete</a>
+                                                    </td>
+
+                                                }
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                                <!--Table body-->
+                            </table>
+                            <!--Table-->
+                            }
+
                       </div>
                       <!-- /.tab-pane -->
     

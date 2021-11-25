@@ -17,14 +17,16 @@ namespace Cervantes.Web.Controllers
     {
         private readonly IHostingEnvironment _appEnvironment;
         IClientManager clientManager = null;
+        IProjectManager projectManager = null;
         IUserManager userManager = null;
 
         /// <summary>
         /// Client Controller Constructor
         /// </summary>
-        public ClientController(IClientManager clientManager, IUserManager userManager, IHostingEnvironment _appEnvironment)
+        public ClientController(IClientManager clientManager, IUserManager userManager, IProjectManager projectManager, IHostingEnvironment _appEnvironment)
         {
             this.clientManager = clientManager;
+            this.projectManager = projectManager;
             this.userManager = userManager;
             this._appEnvironment = _appEnvironment;
         }
@@ -81,17 +83,10 @@ namespace Cervantes.Web.Controllers
                 var client = clientManager.GetById(id);
                 if (client != null)
                 {
-                    ClientViewModel model = new ClientViewModel
+                    ClientDetailsViewModel model = new ClientDetailsViewModel
                     {
-                        Id = client.Id,
-                        Name = client.Name,
-                        Description = client.Description,
-                        ContactEmail = client.ContactEmail,
-                        ContactName = client.ContactName,
-                        ContactPhone = client.ContactPhone,
-                        Url = client.Url,
-                        ImagePath = client.ImagePath,
-                        CreatedDate = client.CreatedDate,
+                        Client = client,
+                        Project = projectManager.GetAll().Where(x => x.ClientId == client.Id)
 
                     };
                     return View(model);

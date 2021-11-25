@@ -22,6 +22,7 @@ namespace Cervantes.Web.Controllers
     {
         private readonly IHostingEnvironment _appEnvironment;
         IUserManager usrManager = null;
+        IProjectManager projectManager = null;
         IRoleManager roleManager = null;
         Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager = null;
 
@@ -32,12 +33,13 @@ namespace Cervantes.Web.Controllers
         /// <param name="roleManager">RoleManager</param>
         /// <param name="userManager">Identity UserManager</param>
         /// <param name="_appEnvironment">IHostingEnviroment</param>
-        public UserController(IUserManager usrManager, IRoleManager roleManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IHostingEnvironment _appEnvironment)
+        public UserController(IUserManager usrManager, IRoleManager roleManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IProjectManager projectManager, IHostingEnvironment _appEnvironment)
         {
             this.usrManager = usrManager;
             this.roleManager = roleManager;
             this._appEnvironment = _appEnvironment;
             _userManager = userManager;
+            this.projectManager = projectManager;
         }
 
         /// <summary>
@@ -105,7 +107,8 @@ namespace Cervantes.Web.Controllers
                         Description = user.Description,
                         Position = user.Position,
                         PhoneNumber = user.PhoneNumber,
-                        Option = rolUser.Result.FirstOrDefault().ToString()
+                        Option = rolUser.Result.FirstOrDefault().ToString(),
+                        Project = projectManager.GetAll().Where(x => x.UserId == user.Id)
                     };
                     return View(model);
                 }

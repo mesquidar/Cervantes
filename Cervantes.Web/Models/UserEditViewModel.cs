@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Cervantes.CORE;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
@@ -20,6 +21,8 @@ namespace Cervantes.Web.Models
         public string Option { get; set; }
 
         public IList<SelectListItem> ItemList { get; set; }
+
+        
 
     }
 }
