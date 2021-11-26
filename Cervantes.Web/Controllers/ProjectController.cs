@@ -21,6 +21,7 @@ namespace Cervantes.Web.Controllers
         IProjectAttachmentManager projectAttachmentManager = null;
         ITargetManager targetManager = null;
         ITaskManager taskManager = null;
+        IUserManager userManager = null;
         IVulnManager vulnManager = null;
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace Cervantes.Web.Controllers
         /// <param name="projectManager">ProjectManager</param>
         /// <param name="clientManager">ClientManager</param>
         public ProjectController(IProjectManager projectManager, IClientManager clientManager, IProjectUserManager projectUserManager, IProjectNoteManager projectNoteManager, 
-            IProjectAttachmentManager projectAttachmentManager, ITargetManager targetManager, ITaskManager taskManager, IVulnManager vulnManager)
+            IProjectAttachmentManager projectAttachmentManager, ITargetManager targetManager, ITaskManager taskManager, IUserManager userManager, IVulnManager vulnManager)
         {
             this.projectManager = projectManager;
             this.clientManager = clientManager;
@@ -38,6 +39,7 @@ namespace Cervantes.Web.Controllers
             this.projectAttachmentManager = projectAttachmentManager;   
             this.targetManager = targetManager;
             this.taskManager = taskManager;
+            this.userManager = userManager;
             this.vulnManager = vulnManager;
         }
 
@@ -93,6 +95,20 @@ namespace Cervantes.Web.Controllers
             var project = projectManager.GetById(id);
             if (project != null)
             {
+
+                var result = userManager.GetAll().Select(e => new ApplicationUser
+                {
+                    Id = e.Id,
+                    FullName = e.FullName,
+                }).ToList();
+
+                var users = new List<SelectListItem>();
+
+                foreach (var item in result)
+                {
+                    users.Add(new SelectListItem { Text = item.FullName, Value = item.Id.ToString() });
+                }
+
                 ProjectDetailsViewModel model = new ProjectDetailsViewModel
                 {
                     Project = project,
@@ -101,6 +117,7 @@ namespace Cervantes.Web.Controllers
                     ProjectAttachments = projectAttachmentManager.GetAll().Where(x => x.ProjectId == id),
                     Targets = targetManager.GetAll().Where(x => x.ProjectId == id),
                     Tasks = taskManager.GetAll().Where(x => x.ProjectId == id),
+                    Users = users,
                     Vulns = vulnManager.GetAll().Where(x => x.ProjectId == id),
 
                 };
@@ -287,13 +304,41 @@ namespace Cervantes.Web.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
-        public IActionResult AddMember(int project, string user)
+        public IActionResult AddMember(int project, string users)
         {
-            return View("Members");
+            if (project != null && users != null)
+            {
+
+                var result = projectUserManager.GetAll().Where(x => x.UserId == users && x.ProjectId == project);
+
+                if(result.FirstOrDefault() == null)
+                {
+                    ProjectUser user = new ProjectUser
+                    {
+                        ProjectId = project,
+                        UserId = users
+                    };
+                    projectUserManager.Add(user);
+                    projectUserManager.Context.SaveChanges();
+                    TempData["addedMember"] = "added";
+                    return RedirectToAction("Details", "Project", new { id = project });
+                }
+                else
+                {
+                    TempData["existsMember"] = "exists";
+                    return RedirectToAction("Details", "Project", new { id = project });
+                }
+                
+            }
+            else
+            {
+                return RedirectToAction("Details", "Project", new { id = project });
+            }
+            
         }
 
         /// <summary>
-        /// Methos delete user from project
+        /// Method delete user from project
         /// </summary>
         /// <param name="project">Project Id</param>
         /// <param name="user">User Id</param>
@@ -302,7 +347,16 @@ namespace Cervantes.Web.Controllers
         [HttpPost]
         public IActionResult DeleteMember(int project, string user)
         {
-            return View("Members");
+            var result = projectUserManager.GetAll().Where(x => x.UserId == user && x.ProjectId == project);
+            if (result.FirstOrDefault() != null)
+            {
+                projectUserManager.Remove(result.FirstOrDefault());
+                projectUserManager.Context.SaveChanges();
+                TempData["deletedMember"] = "deleted";
+                return RedirectToAction("Details", "Project", new { id = project });
+            }
+
+            return RedirectToAction("Details", "Project", new { id = project });
         }
 
 

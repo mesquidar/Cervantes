@@ -3,8 +3,35 @@
 @model Cervantes.Web.Models.ProjectDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Project Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+
+     if (TempData["existsMember"] != null)
+    {
+        <div class="alert alert-info alert-dismissible">
+            <strong localize-content>This user is already added to project!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+
+     if (TempData["addedMember"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>User added to project successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+
+      if (TempData["deletedMember"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>User deleted from project successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
 }
 
     <section class="content-header">
@@ -57,7 +84,22 @@
 
                     <dt> <p localize-content>Project Type</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.Project.ProjectType)</dd> 
+                       @switch(Model.Project.ProjectType)
+                    {
+                        case ProjectType.BlackBox:
+                            <dd><span class="badge badge-dark">@Html.DisplayFor(model => model.Project.ProjectType)</span></dd>
+                            break;
+                        case ProjectType.GrayBox:
+                             <dd><span class="badge badge-secondary">@Html.DisplayFor(model => model.Project.ProjectType)</span></dd>
+                            break;
+                        case ProjectType.WhiteBox:
+                            <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Project.ProjectType)</span></dd>
+                            break;
+                        default:
+                            <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Project.ProjectType)</span></dd>
+                            break;
+
+                    }
 
                     <dt> <p localize-content>Status</p></dt>
                     <hr>
@@ -112,29 +154,13 @@
                          <!-- /.tab-pane -->
                       <div class="tab-pane" id="members">
 
-                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                          {
-                              <form asp-action="AddMember" method="post" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <label asp-for="ProjectUsers" class="control-label">User</label>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <a class="btn btn-default" asp-action="Index">Back</a>
-                                        <input type="submit" value="Create" class="btn btn-dark" />
-                                    </div>
-                                  </form>
-
-                            }
-
-
-                        <table id="membersResults" class="table table-bordered table-hover" width="100%">
+                        <table id="membersResults" class="table table-bordered table-hover projects" width="100%">
                             <!--Table head-->
                             <thead>
                                 <tr>
                                     <th localize-content>Avatar</th>
                                     <th localize-content>Name</th>
-
+                                    <th localize-content>Email</th>
                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                                         {
                                             <th localize-content>Options</th>
@@ -150,10 +176,13 @@
                              <tr>
                                         <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
                                         <td>@members.User.FullName</td>
+                                        <td>@members.User.Email</td>
                                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                                             {
                                                 <td>
-                                                    <a class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@members.ProjectId" asp-route-user="@members.UserId" localize-content><i class="fas fa-trash"></i> Delete</a>                                                
+                                                    <form asp-action="DeleteMember" method="post" enctype="multipart/form-data">
+                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@members.ProjectId" asp-route-user="@members.UserId" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                    </form>
                                                 </td>
 
                                             }
@@ -164,6 +193,44 @@
                             </tbody>
                             <!--Table body-->
                         </table>
+
+                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                          {
+                              <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addMemberModal">
+                              Add Member
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="addMemberModalLabel">Add Member to Project</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <form asp-action="AddMember" method="post" enctype="multipart/form-data">
+                                  <div class="modal-body">
+                                    <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
+                                    <div class="form-group">
+                                        <label asp-for="ProjectUsers" class="control-label">User</label>
+                                        @Html.DropDownListFor(m => m.Users, Model.Users, new { @class = "form-control", id = "users", name="users" })
+                                    </div>
+                                
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Add" class="btn btn-success" />
+                                  </div>
+                                   </form>
+                                </div>
+                              </div>
+                            </div>
+                              
+
+                            }
                         <!--Table-->
                       </div>
                       <!-- /.tab-pane -->
@@ -171,6 +238,119 @@
                          <!-- /.tab-pane -->
                       <div class="tab-pane" id="targets">
                         
+                           <table id="targetsResults" class="table table-bordered table-hover projects" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Name</th>
+                                    <th localize-content>Description</th>
+                                    <th localize-content>Type</th>
+                                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                        {
+                                            <th localize-content>Options</th>
+                                        }                             
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var targets in Model.Targets)
+                                {
+                             <tr>
+                                        <td>@targets.Name</td>
+                                        <td>@targets.Description</td>
+                                         @switch(targets.Type)
+                                        {
+                                            case TargetType.IP:
+                                                <dd><span class="badge badge-success">@targets.Type</span></dd>
+                                                break;
+                                            case TargetType.Hostname:
+                                                 <dd><span class="badge badge-secondary">@targets.Type</span></dd>
+                                                break;
+                                            case TargetType.CIDR:
+                                                <dd><span class="badge badge-light">@targets.Type</span></dd>
+                                                break;
+                                            case TargetType.URL:
+                                                <dd><span class="badge badge-info">@targets.Type</span></dd>
+                                                break;
+                                            case TargetType.Binary:
+                                                <dd><span class="badge badge-dark">@targets.Type</span></dd>
+                                                break;
+                                            default:
+                                                <dd><span class="badge badge-light">@targets.Type</span></dd>
+                                                break;
+
+                                        }
+                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                            {
+                                                <td>
+                                                    <form asp-action="DeleteMember" method="post" enctype="multipart/form-data">
+                                                    <a class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@targets.ProjectId" asp-route-user="@targets.UserId" ASP="POST" localize-content><i class="fas fa-trash"></i> Delete</a> 
+                                                    </form>
+                                                </td>
+
+                                            }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+
+                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                          {
+                              <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addTargetModal">
+                              Add Target
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="addTargetModal" tabindex="-1" role="dialog" aria-labelledby="addTargetModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="addTargetModalLabel">Add Target to Project</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <form asp-action="AddTarget" method="post" enctype="multipart/form-data">
+                                  <div class="modal-body">
+
+                                    <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
+
+                                     <div class="form-group">
+                                        <label class="control-label">Name / IP / CIDR / URL</label>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">Description</label>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">Target Type</label>
+                                        @Html.DropDownListFor(model => model.Targets, Html.GetEnumSelectList<TargetType>(),new { @class = "form-control" })
+                                    </div>  
+                                    
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Add" class="btn btn-success" />
+                                  </div>
+                                   </form>
+                                </div>
+                              </div>
+                            </div>
+                              
+
+                            }
+
+
+
                       </div>
                       <!-- /.tab-pane -->
 

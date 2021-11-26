@@ -1,4 +1,5 @@
 ﻿using Cervantes.CORE;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 namespace Cervantes.Web.Models
@@ -14,6 +15,8 @@ namespace Cervantes.Web.Models
 
         public IEnumerable<Vuln> Vulns { get; set; }
 
+        public IList<SelectListItem> Users { get; set; }
 
+        public IList<SelectListItem> TargetTypes { get; set; }
     }
 }
