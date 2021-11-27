@@ -2,11 +2,13 @@
 using Cervantes.CORE;
 using Cervantes.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 
@@ -14,6 +16,7 @@ namespace Cervantes.Web.Controllers
 {
     public class ProjectController : Controller
     {
+        private readonly IHostingEnvironment _appEnvironment;
         IProjectManager projectManager = null;
         IClientManager clientManager = null;
         IProjectUserManager projectUserManager = null;
@@ -30,7 +33,7 @@ namespace Cervantes.Web.Controllers
         /// <param name="projectManager">ProjectManager</param>
         /// <param name="clientManager">ClientManager</param>
         public ProjectController(IProjectManager projectManager, IClientManager clientManager, IProjectUserManager projectUserManager, IProjectNoteManager projectNoteManager, 
-            IProjectAttachmentManager projectAttachmentManager, ITargetManager targetManager, ITaskManager taskManager, IUserManager userManager, IVulnManager vulnManager)
+            IProjectAttachmentManager projectAttachmentManager, ITargetManager targetManager, ITaskManager taskManager, IUserManager userManager, IVulnManager vulnManager, IHostingEnvironment _appEnvironment)
         {
             this.projectManager = projectManager;
             this.clientManager = clientManager;
@@ -41,6 +44,7 @@ namespace Cervantes.Web.Controllers
             this.taskManager = taskManager;
             this.userManager = userManager;
             this.vulnManager = vulnManager;
+            this._appEnvironment = _appEnvironment;
         }
 
         /// <summary>
@@ -247,7 +251,7 @@ namespace Cervantes.Web.Controllers
         /// Method show all template projects
         /// </summary>
         /// <returns></returns>
-        public ActionResult Template()
+        public ActionResult Templates()
         {
             try
             {
@@ -285,16 +289,33 @@ namespace Cervantes.Web.Controllers
         }
 
         /// <summary>
-        /// Method return manage memebers page
+        /// Method retrieve project template by id
         /// </summary>
         /// <param name="id">Project Id</param>
         /// <returns></returns>
-        [Authorize(Roles = "Admin,SuperUser")]
-        public IActionResult Members(int id)
+        public ActionResult Template(int id)
         {
-            return View();
-            
+            try
+            {
+                var template = projectManager.GetById(id);
+                if (template.Template == true)
+                {
+
+                }
+                else
+                {
+                    TempData["errorTemplate"] = "added";
+                    return View("Templates");
+                }
+              return View();
+
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
+
 
         /// <summary>
         /// Method Add user to project
@@ -359,6 +380,190 @@ namespace Cervantes.Web.Controllers
             return RedirectToAction("Details", "Project", new { id = project });
         }
 
+        [Authorize(Roles = "Admin,SuperUser")]
+        [HttpPost]
+        public IActionResult AddTarget(IFormCollection form)
+        {
+
+            if (form != null)
+            {
+
+                Target target = new Target
+                { 
+                   Name = form["name"],
+                   Description = form["description"],
+                   ProjectId = Int32.Parse(form["project"]),
+                   UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                   Type = (TargetType)Enum.ToObject(typeof(TargetType), Int32.Parse(form["TargetType"])),
+
+                };
+
+                targetManager.Add(target);
+                targetManager.Context.SaveChanges();
+                TempData["addedTarget"] = "added";
+                return RedirectToAction("Details", "Project", new { id = Int32.Parse(form["project"]) });
+            }
+            else
+            {
+                return RedirectToAction("Details", "Project", new { id = Int32.Parse(form["project"]) });
+            }
+
+        }
+
+        [Authorize(Roles = "Admin,SuperUser")]
+        [HttpPost]
+        public IActionResult DeleteTarget(int target, int project)
+        {
+
+            if (target != 0)
+            {
+                var result = targetManager.GetById(target);
+
+                targetManager.Remove(result);
+                targetManager.Context.SaveChanges();
+                TempData["deletedTarget"] = "deleted";
+                return RedirectToAction("Details", "Project", new { id = project });
+            }
+            else
+            {
+                return RedirectToAction("Details", "Project", new { id = project });
+            }
+
+        }
+
+        [Authorize(Roles = "Admin,SuperUser")]
+        [HttpPost]
+        public IActionResult AddNote(IFormCollection form)
+        {
+
+            if (form != null)
+            {
+
+                ProjectNote note = new ProjectNote
+                {
+                    Name = form["noteName"],
+                    Description = form["noteDescription"],
+                    ProjectId = Int32.Parse(form["project"]),
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    Visibility = (Visibility)Enum.ToObject(typeof(Visibility), Int32.Parse(form["Visibility"])),
+
+                };
+
+                projectNoteManager.Add(note);
+                projectNoteManager.Context.SaveChanges();
+                TempData["addedNote"] = "added";
+                return RedirectToAction("Details", "Project", new { id = Int32.Parse(form["project"]) });
+            }
+            else
+            {
+                return RedirectToAction("Details", "Project", new { id = Int32.Parse(form["project"]) });
+            }
+
+        }
+
+        [Authorize(Roles = "Admin,SuperUser")]
+        [HttpPost]
+        public IActionResult DeleteNote(int id, int project)
+        {
+
+            if (id != 0)
+            {
+                var result = projectNoteManager.GetById(id);
+
+                projectNoteManager.Remove(result);
+                projectNoteManager.Context.SaveChanges();
+                TempData["deletedNote"] = "deleted";
+                return RedirectToAction("Details", "Project", new { id = project });
+            }
+            else
+            {
+                return RedirectToAction("Details", "Project", new { id = project });
+            }
+
+        }
+
+        
+
+        [Authorize(Roles = "Admin,SuperUser")]
+        [HttpPost]
+        public IActionResult AddAttachment(IFormCollection form, IFormFile upload)
+        {
+
+            if (form != null && upload != null)
+            {
+                var file = Request.Form.Files["upload"];
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Project/"+form["project"]+"/");
+                var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
+
+                if (Directory.Exists(uploads))
+                {
+                    using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+
+                    }
+                }
+                else
+                {
+                    Directory.CreateDirectory(uploads);
+                    
+                    using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+
+                    }
+                }
+
+                
+
+                ProjectAttachment note = new ProjectAttachment
+                {
+                    Name = form["attachmentName"],
+                    ProjectId = Int32.Parse(form["project"]),
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    FilePath = "/Attachments/Project/" + form["project"]+"/"+ uniqueName,
+
+                };
+
+                projectAttachmentManager.Add(note);
+                projectAttachmentManager.Context.SaveChanges();
+                TempData["addedAttachment"] = "added";
+                return RedirectToAction("Details", "Project", new { id = Int32.Parse(form["project"]) });
+            }
+            else
+            {
+                TempData["errorAttachment"] = "added";
+                return RedirectToAction("Details", "Project", new { id = Int32.Parse(form["project"]) });
+            }
+
+        }
+
+        [Authorize(Roles = "Admin,SuperUser")]
+        [HttpPost]
+        public IActionResult DeleteAttachment(int id, int project)
+        {
+
+            if (id != 0)
+            {
+                var result = projectAttachmentManager.GetById(id);
+
+                var pathFile = _appEnvironment.WebRootPath + result.FilePath;
+                if (System.IO.File.Exists(pathFile))
+                {
+                    System.IO.File.Delete(pathFile);
+                }
+
+                projectAttachmentManager.Remove(result);
+                projectAttachmentManager.Context.SaveChanges();
+                TempData["deletedAttachment"] = "deleted";
+                return RedirectToAction("Details", "Project", new { id = project });
+            }
+            else
+            {
+                return RedirectToAction("Details", "Project", new { id = project });
+            }
+
+        }
 
     }
 }

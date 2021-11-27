@@ -30,7 +30,7 @@ namespace Cervantes.CORE
         [ForeignKey("User")]
         public string CreatedUserId { get; set; }
         /// <summary>
-        /// User who created project
+        /// User asigned project
         /// </summary>
         public virtual ApplicationUser User2 { get; set; }
         /// <summary>

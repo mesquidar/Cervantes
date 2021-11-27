@@ -20,6 +20,10 @@ namespace Cervantes.CORE
         /// </summary>
         public bool Template { get; set; }
         /// <summary>
+        /// Vuln Name
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
         /// User who created project
         /// </summary>
         public virtual ApplicationUser User { get; set; }
@@ -65,7 +69,10 @@ namespace Cervantes.CORE
         /// Vuln Risk
         /// </summary>
         public VulnRisk Risk { get; set; }
-
+        /// <summary>
+        /// Vulnerability Status
+        /// </summary>
+        public VulnStatus Status { get; set; }
         /// <summary>
         /// CVE Associated to vuln
         /// </summary>

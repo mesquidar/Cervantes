@@ -47,7 +47,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item active" localize-content>Clients</li>
+              <li class="breadcrumb-item active" localize-content>Projects</li>
             </ol>
           </div>
         </div>
@@ -58,8 +58,6 @@
     <!-- Main content -->
     <section class="content">
         
-
-         @if(Model.FirstOrDefault() != null){
         <!--Table-->
         <table id="projectResults" class="table table-bordered table-hover" width="100%">
             <!--Table head-->
@@ -108,16 +106,7 @@
             <!--Table body-->
         </table>
         <!--Table-->
-        }
-        @if(Model.FirstOrDefault() == null)
-        {
-            <div class="alert alert-dismissible alert-info">
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              <h4 class="alert-heading">Warning!</h4>
-              <p class="mb-0">Best check yo self, you're not looking too good. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, <a href="#" class="alert-link">vel scelerisque nisl consectetur et</a>.</p>
-            </div>
-        }
-
+       
 
     </section>
     <!-- /.content -->

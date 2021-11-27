@@ -1,4 +1,5 @@
 ﻿using Cervantes.CORE;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
@@ -17,6 +18,12 @@ namespace Cervantes.Web.Models
 
         public IList<SelectListItem> Users { get; set; }
 
-        public IList<SelectListItem> TargetTypes { get; set; }
+        public TargetType TargetType { get; set; }
+        public Visibility Visibility { get; set; }
+
+        /// <summary>
+        /// File Uploaded
+        /// </summary>
+        public IFormFile upload { get; set; }
     }
 }
