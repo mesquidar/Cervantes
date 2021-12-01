@@ -1,10 +1,408 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-        var argsUrl = new[] { "https://docs.microsoft.com/aspnet/core" };
-
+﻿@model Cervantes.Web.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Users";
 }
 
-<div class="text-center">
-    <h1 class="display-4" localize-content>Welcome</h1>
-    <p localize-args="@argsUrl">Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 localize-content><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
+              <li class="breadcrumb-item active" localize-content>Dashboard</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+      <hr />
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+                <div class="row">
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-folder"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Projects</span>
+                <span class="info-box-number">
+                  @Model.ProjectNumber
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-bug"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Vulnerabilities</span>
+                <span class="info-box-number">@Model.VulnNumber</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-tasks"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Tasks</span>
+                <span class="info-box-number">@Model.TasksNumber</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-briefcase"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Clients</span>
+                <span class="info-box-number">@Model.ClientNumber</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Projects Percentages</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="chart-responsive"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                      <canvas id="myChart" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
+                    </div>
+                    <!-- ./chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <ul class="chart-legend clearfix">
+                      <li><i class="far fa-circle text-danger"></i> Chrome</li>
+                      <li><i class="far fa-circle text-success"></i> IE</li>
+                      <li><i class="far fa-circle text-warning"></i> FireFox</li>
+                      <li><i class="far fa-circle text-info"></i> Safari</li>
+                      <li><i class="far fa-circle text-primary"></i> Opera</li>
+                      <li><i class="far fa-circle text-secondary"></i> Navigator</li>
+                    </ul>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+                
+            </div>
+
+
+
+
+            <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Active Projects</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.ActiveProjects.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Project</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var project in Model.ActiveProjects)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @project.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+                <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Recent Clients</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.RecentClients.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Clients</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var clients in Model.RecentClients)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Client" asp-action="Details" asp-route-id="@clients.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @clients.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+            </div>
+
+
+          <div class="row">
+          <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Active Projects</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.ActiveProjects.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Project</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var project in Model.ActiveProjects)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @project.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+
+            <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Active Projects</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.ActiveProjects.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Project</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var project in Model.ActiveProjects)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @project.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+            
+            <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Active Projects</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.ActiveProjects.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Project</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var project in Model.ActiveProjects)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @project.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+
+        </div>
+
+
+    </section>
+    <!-- /.content -->
+  <!-- /.content-wrapper -->
+
+  @section Scripts{
+<script>
+    var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+var yValues = [55, 49, 44, 24, 15];
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "World Wide Wine Production 2018"
+    }
+  }
+});
+
+new Chart("myChart2", {
+  type: "doughnut",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "World Wide Wine Production 2018"
+    }
+  }
+});
+
+</script>
+}
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
