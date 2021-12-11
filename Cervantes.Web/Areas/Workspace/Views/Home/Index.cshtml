@@ -1,0 +1,38 @@
+﻿@model Cervantes.Web.Areas.Workspace.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Workspace";
+}
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 localize-content><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
+              <li class="breadcrumb-item active" localize-content>Dashboard</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+      <hr />
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        Workspace @Model.DashboardId
+</section>
+
+
+
+
+
+    
+
+
+
+
+

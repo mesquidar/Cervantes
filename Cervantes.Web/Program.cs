@@ -2,14 +2,9 @@ using Cervantes.CORE;
 using Cervantes.DAL;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cervantes.Web
 {
@@ -31,7 +26,8 @@ namespace Cervantes.Web
                     {
                         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                        DataInitializer.SeedData(userManager, roleManager);
+                        var vulnCategoryManager = serviceProvider.GetRequiredService<Contracts.IVulnCategoryManager>();
+                        DataInitializer.SeedData(userManager, roleManager, vulnCategoryManager);
                     }
                     catch (Exception ex)
                     {

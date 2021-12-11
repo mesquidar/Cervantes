@@ -19,8 +19,9 @@ namespace Cervantes.Web.Controllers
         IClientManager clientManager = null;
         IVulnManager vulnManager = null;
         ITaskManager taskManager = null;
+        IDocumentManager documentManager = null;
 
-        public HomeController(ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer, IProjectManager projectManager, IClientManager clientManager, IVulnManager vulnManager, ITaskManager taskManager)
+        public HomeController(ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer, IProjectManager projectManager, IClientManager clientManager, IVulnManager vulnManager, ITaskManager taskManager, IDocumentManager documentManager)
         {
             _logger = logger;
             _localizer = localizer;
@@ -28,6 +29,7 @@ namespace Cervantes.Web.Controllers
             this.clientManager = clientManager;
             this.vulnManager = vulnManager;
             this.taskManager = taskManager;
+            this.documentManager = documentManager;
         }
 
         public IActionResult Index()
@@ -42,6 +44,21 @@ namespace Cervantes.Web.Controllers
                     TasksNumber = taskManager.GetAll().Count(),
                     ActiveProjects = projectManager.GetAll().Where(x => x.Status == CORE.ProjectStatus.Active),
                     RecentClients = clientManager.GetAll().OrderByDescending(x => x.Id).Take(5),
+                    RecentDocuments = documentManager.GetAll().OrderByDescending(x => x.Id).Take(5),
+                    RecentVulns = vulnManager.GetAll().OrderByDescending(x => x.Id).Take(5),
+                    ProjectPercetagesActive = projectManager.GetAll().Where(x => x.Status == CORE.ProjectStatus.Active).Count(),
+                    ProjectPercetagesArchived = projectManager.GetAll().Where(x => x.Status == CORE.ProjectStatus.Archived).Count(),
+                    ProjectPercetagesWaiting = projectManager.GetAll().Where(x => x.Status == CORE.ProjectStatus.Waiting).Count(),
+                    OpenReported = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.OpenReported).Count(),
+                    OpenUnresolved = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.OpenUnresolved).Count(),
+                    ConfirmedExploited = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ConfirmedExploited).Count(),
+                    ConfirmedUnexploited = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ConfirmedUnexploited).Count(),
+                    ResolvedMitigated = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ResolvedMitigated).Count(),
+                    ResolvedRemediated = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ResolvedRemediated).Count(),
+                    ClosedMitigated = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ClosedMitigated).Count(),
+                    ClosedRemedaited = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ClosedRemediated).Count(),
+                    ClosedRejected = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ClosedRejected).Count()
+
                 };
 
                 return View(model);

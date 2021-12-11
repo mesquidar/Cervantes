@@ -18,7 +18,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />
     <PackageReference Include="TinyMCE" Version="5.10.0" />
   </ItemGroup>
 
@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Workspace\Data\" />
+    <Folder Include="Areas\Workspace\Views\Target\" />
+    <Folder Include="Areas\Workspace\Views\Task\" />
     <Folder Include="wwwroot\Attachments\Images\Clients\" />
     <Folder Include="Views\Workspace\" />
     <Folder Include="wwwroot\Attachments\Images\Avatars\" />

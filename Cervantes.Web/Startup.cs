@@ -6,23 +6,14 @@ using Cervantes.Web.LocalizationResources;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cervantes.Web
 {
@@ -49,7 +40,7 @@ namespace Cervantes.Web
 
             services.AddRazorPages();
 
-            
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(
@@ -74,6 +65,8 @@ namespace Cervantes.Web
             services.AddScoped<ITargetManager, TargetManager>();
             services.AddScoped<ITaskManager, TaskManager>();
             services.AddScoped<IVulnManager, VulnManager>();
+            services.AddScoped<IVulnCategoryManager, VulnCategoryManager>();
+            services.AddScoped<IDocumentManager, DocumentManager>();
 
 
 
@@ -121,7 +114,7 @@ namespace Cervantes.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-      
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -151,9 +144,14 @@ namespace Cervantes.Web
                     name: "default",
                     pattern: "{culture=en}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapAreaControllerRoute(
+                 name: "Workspace",
+                 areaName: "Workspace",
+                 pattern: "{culture=en}/Workspace/{project}/{controller=Home}/{action=Index}/{id?}");
             });
 
-            
+
         }
     }
 }
