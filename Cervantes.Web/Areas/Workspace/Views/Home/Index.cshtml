@@ -1,6 +1,5 @@
-﻿@model Cervantes.Web.Areas.Workspace.Models.DashboardViewModel
-@{
-    ViewData["Title"] = "Workspace";
+﻿@{
+    ViewData["Title"] = "Users";
 }
 
     <!-- Content Header (Page header) -->
@@ -23,8 +22,391 @@
 
     <!-- Main content -->
     <section class="content">
-        Workspace @Model.DashboardId
-</section>
+                <div class="row">
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-folder"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Projects</span>
+                <span class="info-box-number">
+                  @Model.ProjectNumber
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-bug"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Vulnerabilities</span>
+                <span class="info-box-number">@Model.VulnNumber</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-tasks"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Tasks</span>
+                <span class="info-box-number">@Model.TasksNumber</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-briefcase"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Clients</span>
+                <span class="info-box-number">@Model.ClientNumber</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Projects Percentages</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="chart-responsive"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                      <canvas id="projectPercentages" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
+                    </div>
+                    <!-- ./chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <ul class="chart-legend clearfix">
+                      <li><i class="far fa-circle text-success"></i> Active</li>
+                      <li><i class="far fa-circle text-info"></i> Archived</li>
+                      <li><i class="far fa-circle text-warning"></i> Waiting</li>
+
+                    </ul>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+                
+            </div>
+
+
+
+
+            <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Active Projects</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.ActiveProjects.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Project</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var project in Model.ActiveProjects)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @project.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+                <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Recent Clients</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.RecentClients.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Clients</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var clients in Model.RecentClients)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Client" asp-action="Details" asp-route-id="@clients.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @clients.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+            </div>
+
+
+          <div class="row">
+          <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Recent Documents</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.RecentDocuments.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Documents</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var doc in Model.RecentDocuments)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Document" asp-action="Details" asp-route-id="@doc.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @doc.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+
+            <div class="col-md-4">
+             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Recent Vulnerabilities</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                     @if(Model.RecentVulns.FirstOrDefault() != null){
+                        <!--Table-->
+                        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Vulnerabilities</th>                        
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var vulns in Model.RecentVulns)
+                                {
+                                    <tr>
+                                        <td>                  
+                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@vulns.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @vulns.Name</span></a>                       
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
+                        }
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+            </div>
+            
+            <div class="col-md-4">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Vulnerabilities Status</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="chart-responsive"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                      <canvas id="vulnStatus" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
+                    </div>
+                    <!-- ./chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <ul class="chart-legend clearfix">
+                      <li><i class="far fa-circle text-info"></i> Open (Reported)</li>
+                      <li><i class="far fa-circle text-lightblue"></i> Open (Unresolved)</li>
+                      <li><i class="far fa-circle text-danger"></i> Confirmed (Exploited)</li>
+                      <li><i class="far fa-circle text-warning"></i> Confirmed (Unexploited)</li>
+                      <li><i class="far fa-circle text-lime"></i> Resolved (Mitigated)</li>
+                      <li><i class="far fa-circle text-teal"></i> Resolved (Remediated)</li>
+                      <li><i class="far fa-circle text-success"></i> Closed (Mitigated)</li>
+                      <li><i class="far fa-circle text-olive"></i> Closed (Remediated)</li>
+                      <li><i class="far fa-circle text-maroon"></i> Closed (Rejected)</li>
+                    </ul>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.footer -->
+            </div>
+
+        </div>
+
+
+    </section>
+    <!-- /.content -->
+  <!-- /.content-wrapper -->
+
+  @section Scripts{
+<script>
+
+var xProjectValues = ["Active", "Archived", "Waiting"];
+var yProjectValues = [@Model.ProjectPercetagesActive, @Model.ProjectPercetagesArchived, @Model.ProjectPercetagesWaiting];
+var projectColors = [
+  "#28a745",
+  "#17A2B8",
+  "#ffc107",
+];
+
+new Chart("projectPercentages", {
+  type: "pie",
+  data: {
+    labels: xProjectValues,
+    datasets: [{
+      backgroundColor: projectColors,
+      data: yProjectValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Status Project Percetages"
+    }
+  }
+});
+
+var xVulnValues = ["Open (Reported)", "Open (Unresolved)", "Confirmed (Exploited)", "Confirmed (Unexploited)", "Resolved (Mitigated)", "Resolved (Remediated)", "Closed (Mitigated)", "Closed (Remediated)", "Closed (Rejected)"  ];
+var yVulnValues = [@Model.OpenReported, @Model.OpenUnresolved, @Model.ConfirmedExploited, @Model.ConfirmedUnexploited, @Model.ResolvedMitigated, @Model.ResolvedRemediated, @Model.ClosedMitigated, @Model.ClosedRemedaited, @Model.ClosedRejected];
+var VulnColors = [
+  "#17a2b8",
+  "#3c8dbc",
+  "#dc3545",
+  "#ffc107",
+  "#01ff70",
+  "#39cccc",
+  "#28a745",
+  "#3d9970",
+  "#d81b60"
+];
+
+new Chart("vulnStatus", {
+  type: "pie",
+  data: {
+    labels: xVulnValues,
+    datasets: [{
+      backgroundColor: VulnColors,
+      data: yVulnValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Vulnerabilities Status"
+    }
+  }
+});
+
+</script>
+}
+
+
+
+
+
+
+
+
+    
+
+
+
 
 
 
