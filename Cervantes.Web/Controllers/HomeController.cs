@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Cervantes.Web.Controllers
 {
@@ -20,8 +21,10 @@ namespace Cervantes.Web.Controllers
         IVulnManager vulnManager = null;
         ITaskManager taskManager = null;
         IDocumentManager documentManager = null;
+        IProjectUserManager projectUserManager = null;
 
-        public HomeController(ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer, IProjectManager projectManager, IClientManager clientManager, IVulnManager vulnManager, ITaskManager taskManager, IDocumentManager documentManager)
+        public HomeController(ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer, IProjectManager projectManager, IClientManager clientManager, IVulnManager vulnManager, ITaskManager taskManager, IDocumentManager documentManager,
+            IProjectUserManager projectUserManager)
         {
             _logger = logger;
             _localizer = localizer;
@@ -30,6 +33,7 @@ namespace Cervantes.Web.Controllers
             this.vulnManager = vulnManager;
             this.taskManager = taskManager;
             this.documentManager = documentManager;
+            this.projectUserManager = projectUserManager;
         }
 
         public IActionResult Index()
@@ -91,6 +95,29 @@ namespace Cervantes.Web.Controllers
                 );
 
             return LocalRedirect(returnUrl);
+        }
+
+        public IActionResult Workspaces()
+        {
+            try
+            {
+                if (User.FindFirstValue(ClaimTypes.Role) == "Admin" | User.FindFirstValue(ClaimTypes.Role) == "SuperUser")
+                {
+                    var model = projectManager.GetAll();
+                    return View(model);
+                }
+                else
+                {
+                    var projects = projectUserManager.GetAll().Where(x => x.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier)).Select(y => y.ProjectId);
+                    var model = projectManager.GetAll().Where(x => projects.Contains(x.Id));
+                    return View(model);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
     }
 }

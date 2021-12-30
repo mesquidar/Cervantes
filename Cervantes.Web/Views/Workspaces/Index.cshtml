@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Cervantes.CORE.Project>
+
+@{
+    ViewData["Title"] = "Wokrspaces";
+}
+@{
+    if (TempData["deleted"] != null)
+    {
+<div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <strong localize-content>Client deleted successfully!</strong>
+            
+        </div>
+    }
+
+    if (TempData["created"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <strong localize-content>Client created successfully!</strong>
+            
+        </div>
+    }
+
+    if (TempData["edited"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Client edited successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+
+}
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 localize-content><i class="fas fa-briefcase"></i> My Workspaces</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
+              <li class="breadcrumb-item active" localize-content>Workspaces</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+      <hr />
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        
+
+    </section>
+    <!-- /.content -->
+  <!-- /.content-wrapper -->
+
+  @section Scripts{
+<script>
+
+
+
+</script>
+}
