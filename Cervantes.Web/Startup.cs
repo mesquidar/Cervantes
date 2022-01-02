@@ -140,15 +140,17 @@ namespace Cervantes.Web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                 name: "Workspace",
+                 areaName: "Workspace",
+                 pattern: "{culture=en}/Workspace/{project}/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{culture=en}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
 
-                endpoints.MapAreaControllerRoute(
-                 name: "Workspace",
-                 areaName: "Workspace",
-                 pattern: "{culture=en}/Workspace/{project}/{controller=Home}/{action=Index}/{id?}");
+
             });
 
 

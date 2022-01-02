@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cervantes.CORE
 {
@@ -23,6 +19,10 @@ namespace Cervantes.CORE
         /// Vuln Name
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Vuln Created Date
+        /// </summary>
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// User who created project
         /// </summary>
@@ -109,7 +109,7 @@ namespace Cervantes.CORE
         /// <summary>
         /// Vuln Remediation Priority
         /// </summary>
-        public RemediationPriority RemediationPriority {  get; set; }
+        public RemediationPriority RemediationPriority { get; set; }
 
 
 
