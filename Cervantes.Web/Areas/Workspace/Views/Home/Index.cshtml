@@ -191,22 +191,23 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-8">
-                    <div class="chart-responsive"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                      <canvas id="projectPercentages" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
-                    </div>
-                    <!-- ./chart-responsive -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-4">
-                    <ul class="chart-legend clearfix">
-                      <li><i class="far fa-circle text-success"></i> Active</li>
-                      <li><i class="far fa-circle text-info"></i> Archived</li>
-                      <li><i class="far fa-circle text-warning"></i> Waiting</li>
 
-                    </ul>
-                  </div>
-                  <!-- /.col -->
+                         <table id="tasksResults" class="table table-bordered table-hover projects" width="100%">
+                            <!--Table head-->
+                            <tbody>
+
+                                @foreach (var task in Model.Tasks)
+                                {
+                             <tr>
+                                        <td>@task.Name</td>
+                                        <td>@task.Status</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+
                 </div>
                 <!-- /.row -->
               </div>
@@ -214,7 +215,7 @@
             </div>
                  </div>
 
-                             <div class="col-md-4">
+              <div class="col-md-4">
              <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Targets</h3>
@@ -222,22 +223,23 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-8">
-                    <div class="chart-responsive"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                      <canvas id="projectPercentages" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
-                    </div>
-                    <!-- ./chart-responsive -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-4">
-                    <ul class="chart-legend clearfix">
-                      <li><i class="far fa-circle text-success"></i> Active</li>
-                      <li><i class="far fa-circle text-info"></i> Archived</li>
-                      <li><i class="far fa-circle text-warning"></i> Waiting</li>
 
-                    </ul>
-                  </div>
-                  <!-- /.col -->
+                        <table id="targetResults" class="table table-bordered table-hover projects" width="100%">
+                            <!--Table head-->
+                            <tbody>
+
+                                @foreach (var target in Model.Targets)
+                                {
+                             <tr>
+                                        <td>@target.Name</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+
+
                 </div>
                 <!-- /.row -->
               </div>
@@ -288,27 +290,27 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-8">
-                    <div class="chart-responsive"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                      <canvas id="projectPercentages" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
-                    </div>
-                    <!-- ./chart-responsive -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-4">
-                    <ul class="chart-legend clearfix">
-                      <li><i class="far fa-circle text-success"></i> Active</li>
-                      <li><i class="far fa-circle text-info"></i> Archived</li>
-                      <li><i class="far fa-circle text-warning"></i> Waiting</li>
 
-                    </ul>
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
+                        <table id="vulnResults" class="table table-bordered table-hover projects" width="100%">
+                            <!--Table head-->
+                            <tbody>
+
+                                @foreach (var vuln in Model.Vulns)
+                                {
+                             <tr>
+                                        <td>@vuln.Name</td>
+                                        <td>@vuln.CreatedDate</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+    
               </div>
               <!-- /.footer -->
             </div>
+                 </div>
                  </div>
 
                              <div class="col-md-4">
@@ -355,22 +357,22 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-8">
-                    <div class="chart-responsive"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                      <canvas id="projectPercentages" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
-                    </div>
-                    <!-- ./chart-responsive -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-4">
-                    <ul class="chart-legend clearfix">
-                      <li><i class="far fa-circle text-success"></i> Active</li>
-                      <li><i class="far fa-circle text-info"></i> Archived</li>
-                      <li><i class="far fa-circle text-warning"></i> Waiting</li>
+                         <table id="noteResults" class="table table-bordered table-hover projects" width="100%">
+                            <!--Table head-->
+                            <tbody>
 
-                    </ul>
-                  </div>
-                  <!-- /.col -->
+                                @foreach (var note in Model.Notes)
+                                {
+                             <tr>
+                                        <td>@note.Name</td>
+                                        <td>@note.User.FullName</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+
                 </div>
                 <!-- /.row -->
               </div>
@@ -391,6 +393,27 @@
 
   @section Scripts{
 <script>
+
+       $(document).ready(function () {
+        $('#tasksResults').DataTable({
+            "responsive": true
+        });
+
+           $(document).ready(function () {
+        $('#noteResults').DataTable({
+            "responsive": true
+        });
+
+           $(document).ready(function () {
+        $('#targetResults').DataTable({
+            "responsive": true
+        });
+
+       $(document).ready(function () {
+        $('#vulnResults').DataTable({
+            "responsive": true
+        });
+
       $(document).ready(function () {
         $('#membersResults').DataTable({
             "responsive": true

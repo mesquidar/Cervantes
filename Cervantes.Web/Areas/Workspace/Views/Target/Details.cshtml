@@ -3,56 +3,16 @@
 @model Cervantes.Web.Models.ProjectDetailsViewModel
 
 @{
-    ViewData["Title"] = "Project Details";
+    ViewData["Title"] = "Task Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @{
 
-     if (TempData["existsMember"] != null)
-    {
-        <div class="alert alert-info alert-dismissible">
-            <strong localize-content>This user is already added to project!</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        </div>
-    }
-
-     if (TempData["addedMember"] != null)
-    {
-        <div class="alert alert-success alert-dismissible">
-            <strong localize-content>User added to project successfully!</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        </div>
-    }
-
-      if (TempData["deletedMember"] != null)
-    {
-        <div class="alert alert-success alert-dismissible">
-            <strong localize-content>User deleted from project successfully!</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        </div>
-    }
-
-    if (TempData["addedTarget"] != null)
-    {
-        <div class="alert alert-success alert-dismissible">
-            <strong localize-content>Target added to project successfully!</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        </div>
-    }
-
-    if (TempData["deletedTarget"] != null)
-    {
-        <div class="alert alert-success alert-dismissible">
-            <strong localize-content>Target deleted from project successfully!</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        </div>
-    }
-
     if (TempData["addedNote"] != null)
     {
         <div class="alert alert-success alert-dismissible">
-            <strong localize-content>Note added to project successfully!</strong>
+            <strong localize-content>Note added to task successfully!</strong>
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }
@@ -60,7 +20,7 @@
     if (TempData["deletedNote"] != null)
     {
         <div class="alert alert-success alert-dismissible">
-            <strong localize-content>Note deleted from project successfully!</strong>
+            <strong localize-content>Note deleted from task successfully!</strong>
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }
@@ -68,7 +28,7 @@
     if (TempData["addedAttachment"] != null)
     {
         <div class="alert alert-success alert-dismissible">
-            <strong localize-content>Attachment added to project successfully!</strong>
+            <strong localize-content>Attachment added to task successfully!</strong>
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }
@@ -76,7 +36,7 @@
      if (TempData["deletedAttachment"] != null)
     {
         <div class="alert alert-success alert-dismissible">
-            <strong localize-content>Attachment deleted from project successfully!</strong>
+            <strong localize-content>Attachment deleted from task successfully!</strong>
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }
@@ -99,8 +59,11 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item"><a asp-controller="Project" asp-action="Index" localize-content>Project</a></li>
-              <li class="breadcrumb-item active" localize-content>Details</li>
+              <li class="breadcrumb-item" localize-content>Workspace</li>
+              <li class="breadcrumb-item" localize-content>@Model.Project.Name</li>
+              <li class="breadcrumb-item" localize-content>Task</li>
+              <li class="breadcrumb-item" localize-content>Details</li>
+              <li class="breadcrumb-item active" localize-content></li>
             </ol>
           </div>
         </div>
@@ -119,9 +82,28 @@
                 <div class="card card-primary card-outline">
                   <div class="card-body box-profile">
                     <div class="text-center">
-                      <img class="profile-user-img img-fluid img-circle"
-                           src="@Url.Content(Model.Project.Client.ImagePath)"
-                           alt="LogoClient">
+@*                    @switch(Model.Project.ProjectType)
+                    {
+                        case TargetType.IP:
+                            <span class="profile-user-img img-fluid img-circle"><i class="fas fa-ethernet"></i></span>
+                            break;
+                        case TargetType.Hostname:
+                             <span class="profile-user-img img-fluid img-circle"><i class="fas fa-compass"></i></span>
+                            break;
+                        case TargetType.CIDR:
+                            <span class="profile-user-img img-fluid img-circle"><i class="fas fa-network-wired"></i></span>
+                            break;
+                        case TargetType.URL:
+                            <span class="profile-user-img img-fluid img-circle"><i class="fas fa-at"></i></span>
+                            break;
+                        case TargetType.Binary:
+                            <span class="profile-user-img img-fluid img-circle"><i class="fas fa-file-alt"></i></span>
+                            break;
+                        default:
+                            <span class="profile-user-img img-fluid img-circle"></span>
+                            break;
+
+                    }*@
                     </div>
     
                     <h3 class="profile-username text-center">@Model.Project.Name</h3>
@@ -187,10 +169,6 @@
                   <div class="card-header p-2">
                     <ul class="nav nav-pills">
                       <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#members" data-toggle="tab">Members</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#targets" data-toggle="tab">Targets</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#tasks" data-toggle="tab">Tasks</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#vulns" data-toggle="tab">Vulnerabilities</a></li>
                       <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes</a></li>
                        <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments</a></li>
                       
@@ -206,341 +184,7 @@
                             <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Project.Description))</dd>
                         </dl>
                       </div>
-
-                         <!-- /.tab-pane -->
-                      <div class="tab-pane" id="members">
-
-                        <table id="membersResults" class="table table-bordered table-hover projects" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Avatar</th>
-                                    <th localize-content>Name</th>
-                                    <th localize-content>Email</th>
-                                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                        {
-                                            <th localize-content>Options</th>
-                                        }                             
-                                </tr>
-                            </thead>
-                            <!--Table head-->
-                            <!--Table body-->
-                            <tbody>
-
-                                @foreach (var members in Model.ProjectUsers)
-                                {
-                             <tr>
-                                        <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
-                                        <td>@members.User.FullName</td>
-                                        <td>@members.User.Email</td>
-                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                            {
-                                                <td>
-                                                    <form asp-action="DeleteMember" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@members.ProjectId" asp-route-user="@members.UserId" localize-content><i class="fas fa-trash"></i> Delete </button>
-                                                    </form>
-                                                </td>
-
-                                            }
-
-                                    </tr>
-                                }
-
-                            </tbody>
-                            <!--Table body-->
-                        </table>
-
-                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                          {
-                              <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addMemberModal">
-                              Add Member
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="addMemberModalLabel">Add Member to Project</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <form asp-action="AddMember" method="post" enctype="multipart/form-data">
-                                  <div class="modal-body">
-                                    <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
-                                    <div class="form-group">
-                                        <label asp-for="ProjectUsers" class="control-label">User</label>
-                                        @Html.DropDownListFor(m => m.Users, Model.Users, new { @class = "form-control", id = "users", name="users" })
-                                    </div>
-                                
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
-                                  </div>
-                                   </form>
-                                </div>
-                              </div>
-                            </div>
-                              
-
-                            }
-                        <!--Table-->
-                      </div>
-                      <!-- /.tab-pane -->
-
-                         <!-- /.tab-pane -->
-                      <div class="tab-pane" id="targets">
-                        
-                           <table id="targetsResults" class="table table-bordered table-hover projects" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Name</th>               
-                                    <th localize-content>Type</th>
-                                    <th localize-content>Description</th>
-                                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                        {
-                                            <th localize-content>Options</th>
-                                        }                             
-                                </tr>
-                            </thead>
-                            <!--Table head-->
-                            <!--Table body-->
-                            <tbody>
-
-                                @foreach (var targets in Model.Targets)
-                                {
-                             <tr>
-                                        <td>@targets.Name</td>
-                                        
-                                         @switch(Model.TargetType)
-                                        {
-                                            case TargetType.IP:
-                                                <td><span class="badge badge-success">@targets.Type</span></td>
-                                                break;
-                                            case TargetType.Hostname:
-                                                 <td><span class="badge badge-secondary">@targets.Type</span></td>
-                                                break;
-                                            case TargetType.CIDR:
-                                                <td><span class="badge badge-light">@targets.Type</span></td>
-                                                break;
-                                            case TargetType.URL:
-                                                <td><span class="badge badge-info">@targets.Type</span></td>
-                                                break;
-                                            case TargetType.Binary:
-                                                <td><span class="badge badge-dark">@targets.Type</span></td>
-                                                break;
-                                            default:
-                                                <td><span class="badge badge-light">@targets.Type</span></td>
-                                                break;
-
-                                        }
-                                        <td>@targets.Description</td>
-                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                            {
-                                                <td>
-                                                    <form asp-action="DeleteTarget" method="post" enctype="multipart/form-data">
-                                                    <button class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteTarget" asp-route-target="@targets.Id" asp-route-project="@targets.ProjectId" localize-content><i class="fas fa-trash"></i> Delete</button> 
-                                                    </form>
-                                                </td>
-
-                                            }
-
-                                    </tr>
-                                }
-
-                            </tbody>
-                            <!--Table body-->
-                        </table>
-
-                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                          {
-
-                              <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addTargetModal">
-                              Add Target
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="addTargetModal" tabindex="-1" role="dialog" aria-labelledby="addTargetModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="addTargetModalLabel">Add Target to Project</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <form asp-action="AddTarget" method="post" enctype="multipart/form-data">
-                                  <div class="modal-body">
-
-                                    <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
-
-                                     <div class="form-group">
-                                        <label class="control-label">Name / IP / CIDR / URL</label>
-                                        <input type="text" class="form-control" id="name" name="name"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label">Description</label>
-                                        <textarea class="form-control" name="description" rows="10" cols="50"></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label">Target Type</label>
-                                        @Html.DropDownListFor(model => model.TargetType, Html.GetEnumSelectList<TargetType>(),new { @class = "form-control" })
-                                    </div>  
-                                    
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
-                                  </div>
-                                   </form>
-                                </div>
-                              </div>
-                            </div>
-                              
-
-                            }
-
-
-
-                      </div>
-                      <!-- /.tab-pane -->
-
-                         <!-- /.tab-pane -->
-                      <div class="tab-pane" id="tasks">
-                        
-                           <table id="tasksResults" class="table table-bordered table-hover projects" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Name</th>               
-                                    <th localize-content>Description</th>
-                                    <th localize-content>Start Date</th>
-                                    <th localize-content>End Date</th>
-                                    <th localize-content>Asigned To</th>
-                                    <th localize-content>Target</th>                          
-                                </tr>
-                            </thead>
-                            <!--Table head-->
-                            <!--Table body-->
-                            <tbody>
-
-                                @foreach (var tasks in Model.Tasks)
-                                {
-                             <tr>
-                                        <td>@tasks.Name</td>
-                                        <td>@tasks.Description</td>
-                                        <td>@tasks.StartDate</td>
-                                        <td>@tasks.EndDate</td>
-                                        <td>@tasks.AsignedUser.FullName</td>
-                                        <td>@tasks.Target.Name</td>
-
-                                    </tr>
-                                }
-
-                            </tbody>
-                            <!--Table body-->
-                        </table>
-
-                      </div>
-                      <!-- /.tab-pane -->
-
-                         <!-- /.tab-pane -->
-                      <div class="tab-pane" id="vulns">
-
-                           <table id="vulnResults" class="table table-bordered table-hover projects" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Name</th>               
-                                    <th localize-content>Risk</th>
-                                    <th localize-content>CVSS3 Score</th>
-                                    <th localize-content>Status</th>
-                                    <th localize-content>Category</th>
-                                    <th localize-content>Target</th>                          
-                                </tr>
-                            </thead>
-                            <!--Table head-->
-                            <!--Table body-->
-                            <tbody>
-
-                                @foreach (var vulns in Model.Vulns)
-                                {
-                             <tr>
-                                        <td>@vulns.Name</td>
-                                        @switch(vulns.Risk)
-                                        {
-                                            case VulnRisk.Info:
-                                                <td><span class="badge badge-info"><i class="fas fa-info-circle"></i> @vulns.Risk</span></td>
-                                                break;
-                                            case VulnRisk.Low:
-                                                 <td><span class="badge badge-success"><i class="fas fa-exclamation"></i> @vulns.Risk</span></td>
-                                                break;
-                                            case VulnRisk.Medium:
-                                                <td><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @vulns.Risk</span></td>
-                                                break;
-                                            case VulnRisk.High:
-                                                <td><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @vulns.Risk</span></td>
-                                                break;
-                                            case VulnRisk.Critical:
-                                                <td><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @vulns.Risk</span></td>
-                                                break;
-                                            default:
-                                                <td><span class="badge badge-light">@vulns.Risk</span></td>
-                                                break;
-
-                                        }
-                                        
-                                        @if(vulns.CVSS3 < 2)
-                                        {
-                                                    <td><span class="badge badge-info"><i class="fas fa-info-circle"></i> @vulns.Risk</span></td>
-
-                                                }
-                                                else if (vulns.CVSS3 > 2 && vulns.CVSS3 < 4)
-                                                {
-                                                
-                                                    <td><span class="badge badge-success"><i class="fas fa-exclamation"></i> @vulns.Risk</span></td>
-                                                }
-                                                else if (vulns.CVSS3 > 4 && vulns.CVSS3 < 6)
-                                                {
-                                                    <td><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @vulns.Risk</span></td>
-                                                }
-                                                else if (vulns.CVSS3 > 6 && vulns.CVSS3 < 8)
-                                                {
-                                                    <td><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @vulns.Risk</span></td>
-                                                }
-                                                 else if (vulns.CVSS3 > 8 && vulns.CVSS3 < 10)
-                                                {
-                                                    <td><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @vulns.Risk</span></td>
-                                                }
-
-                                                <td>@vulns.Status</td>
-                                        <td>@vulns.VulnCategory.Name</td>
-                                        <td>@vulns.Target.Name</td>
-                   
-                                 </tr>
-                                }
-                               
-
-
-
-
-                            </tbody>
-                            <!--Table body-->
-                        </table>
-
-
-                        
-                      </div>
-                      <!-- /.tab-pane -->
-
-                         <!-- /.tab-pane -->
+                     
                       <div class="tab-pane" id="notes">
                         
                           <table id="noteResults" class="table table-bordered table-hover projects" width="100%">

@@ -1,15 +1,12 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Cervantes.CORE;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
 
-namespace Cervantes.CORE
+namespace Cervantes.Web.Areas.Workspace.Models
 {
-    public class Task
+    public class TaskCreateViewModel
     {
-        /// <summary>
-        /// Id Task
-        /// </summary>
-        [Key]
         public int Id { get; set; }
         /// <summary>
         /// Is vuln template
@@ -18,21 +15,19 @@ namespace Cervantes.CORE
         /// <summary>
         /// User who created project
         /// </summary>
-        public virtual ApplicationUser CreatedUser { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         /// <summary>
         /// task created by
         /// </summary>
-        [ForeignKey("CreatedUser")]
         public string CreatedUserId { get; set; }
         /// <summary>
         /// User asigned project
         /// </summary>
-        public virtual ApplicationUser AsignedUser { get; set; }
+        public virtual ApplicationUser User2 { get; set; }
         /// <summary>
         /// Asined user id
         /// </summary>
-        [ForeignKey("AsignedUser")]
         public string AsignedUserId { get; set; }
 
         /// <summary>
@@ -43,7 +38,6 @@ namespace Cervantes.CORE
         /// <summary>
         /// Id Project
         /// </summary>
-        [ForeignKey("Project")]
         public int ProjectId { get; set; }
 
         /// <summary>
@@ -72,7 +66,6 @@ namespace Cervantes.CORE
         /// <summary>
         /// Id Target
         /// </summary>
-        [ForeignKey("Target")]
         public int TargetId { get; set; }
 
         /// <summary>
@@ -80,6 +73,8 @@ namespace Cervantes.CORE
         /// </summary>
         public TaskStatus Status { get; set; }
 
+        public string TargetName { get; set; }
+        public IList<SelectListItem> TargetList { get; set; }
 
     }
 }
