@@ -187,12 +187,12 @@
                   <div class="card-header p-2">
                     <ul class="nav nav-pills">
                       <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#members" data-toggle="tab">Members</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#targets" data-toggle="tab">Targets</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#tasks" data-toggle="tab">Tasks</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#vulns" data-toggle="tab">Vulnerabilities</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes</a></li>
-                       <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#members" data-toggle="tab">Members <span class="badge badge-danger">@Model.ProjectUsers.Count()</span></a></li>
+                      <li class="nav-item"><a class="nav-link" href="#targets" data-toggle="tab">Targets <span class="badge badge-danger">@Model.Targets.Count()</span></a></li>
+                      <li class="nav-item"><a class="nav-link" href="#tasks" data-toggle="tab">Tasks <span class="badge badge-danger">@Model.Tasks.Count()</span></a></li>
+                      <li class="nav-item"><a class="nav-link" href="#vulns" data-toggle="tab">Vulnerabilities <span class="badge badge-danger">@Model.Vulns.Count()</span></a></li>
+                      <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes <span class="badge badge-danger">@Model.ProjectNotes.Count()</span></a></li>
+                       <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments <span class="badge badge-danger">@Model.ProjectAttachments.Count()</span></a></li>
                       
                     </ul>
                   </div><!-- /.card-header -->

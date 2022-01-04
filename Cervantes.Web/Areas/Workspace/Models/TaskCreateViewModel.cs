@@ -75,6 +75,7 @@ namespace Cervantes.Web.Areas.Workspace.Models
 
         public string TargetName { get; set; }
         public IList<SelectListItem> TargetList { get; set; }
+        public IList<SelectListItem> UsersList { get; set; }
 
     }
 }

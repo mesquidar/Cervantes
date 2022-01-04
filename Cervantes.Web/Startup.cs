@@ -64,6 +64,8 @@ namespace Cervantes.Web
             services.AddScoped<IProjectAttachmentManager, ProjectAttachmentManager>();
             services.AddScoped<ITargetManager, TargetManager>();
             services.AddScoped<ITaskManager, TaskManager>();
+            services.AddScoped<ITaskNoteManager, TaskNoteManager>();
+            services.AddScoped<ITaskAttachmentManager, TaskAttachmentManager>();
             services.AddScoped<IVulnManager, VulnManager>();
             services.AddScoped<IVulnCategoryManager, VulnCategoryManager>();
             services.AddScoped<IDocumentManager, DocumentManager>();
