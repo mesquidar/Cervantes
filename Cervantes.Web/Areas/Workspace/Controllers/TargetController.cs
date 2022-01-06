@@ -1,14 +1,41 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Cervantes.Contracts;
+using Cervantes.Web.Areas.Workspace.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace Cervantes.Web.Areas.Workspace.Controllers
 {
+    [Area("Workspace")]
     public class TargetController : Controller
     {
-        // GET: TargetController
-        public ActionResult Index()
+        ITargetManager targetManager = null;
+        ITargetServicesManager targetServicesManager = null;
+        IProjectManager projectManager = null;
+        public TargetController(ITargetManager targetManager, ITargetServicesManager targetServicesManager, IProjectManager projectManager)
         {
-            return View();
+            this.targetManager = targetManager;
+            this.targetServicesManager = targetServicesManager;
+            this.projectManager = projectManager;
+        }
+
+        // GET: TargetController
+        public ActionResult Index(int project)
+        {
+            try
+            {
+                TargetViewModel model = new TargetViewModel
+                {
+                    Project = projectManager.GetById(project),
+                    Target = targetManager.GetAll().Where(x => x.ProjectId == project)
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return View("Error");
+            }
         }
 
         // GET: TargetController/Details/5

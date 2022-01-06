@@ -1,6 +1,6 @@
 ﻿@using System.Net
 @using Cervantes.CORE
-@model Cervantes.Web.Models.ProjectDetailsViewModel
+@model Cervantes.Web.Areas.Workspace.Models.TargetDetailsViewModels
 
 @{
     ViewData["Title"] = "Task Details";
@@ -82,7 +82,7 @@
                 <div class="card card-primary card-outline">
                   <div class="card-body box-profile">
                     <div class="text-center">
-@*                    @switch(Model.Project.ProjectType)
+                    @switch(Model.Target.Type)
                     {
                         case TargetType.IP:
                             <span class="profile-user-img img-fluid img-circle"><i class="fas fa-ethernet"></i></span>
@@ -103,61 +103,13 @@
                             <span class="profile-user-img img-fluid img-circle"></span>
                             break;
 
-                    }*@
+                    }
                     </div>
     
-                    <h3 class="profile-username text-center">@Model.Project.Name</h3>
-                    <dt><p localize-content>Client</p></dt>
-                    <hr>
-                    <dd><a asp-controller="Client" asp-action="Details" asp-route-id="@Model.Project.Client.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @Model.Project.Client.Name</span></a></dd>
-                    <dt> <p localize-content>Start Date</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Project.StartDate)</dd>      
-                    <dt> <p localize-content>End Date</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Project.EndDate)</dd> 
+                    <h3 class="profile-username text-center">@Model.Target.Name</h3>              
                     <dt> <p localize-content>Created by</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.Project.User.FullName)</dd>
-
-                    <dt> <p localize-content>Project Type</p></dt>
-                    <hr>
-                       @switch(Model.Project.ProjectType)
-                    {
-                        case ProjectType.BlackBox:
-                            <dd><span class="badge badge-dark">@Html.DisplayFor(model => model.Project.ProjectType)</span></dd>
-                            break;
-                        case ProjectType.GrayBox:
-                             <dd><span class="badge badge-secondary">@Html.DisplayFor(model => model.Project.ProjectType)</span></dd>
-                            break;
-                        case ProjectType.WhiteBox:
-                            <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Project.ProjectType)</span></dd>
-                            break;
-                        default:
-                            <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Project.ProjectType)</span></dd>
-                            break;
-
-                    }
-
-                    <dt> <p localize-content>Status</p></dt>
-                    <hr>
-                    @switch(Model.Project.Status)
-                    {
-                        case ProjectStatus.Active:
-                            <dd><span class="badge badge-success">@Html.DisplayFor(model => model.Project.Status)</span></dd>
-                            break;
-                        case ProjectStatus.Archived:
-                             <dd><span class="badge badge-secondary">@Html.DisplayFor(model => model.Project.Status)</span></dd>
-                            break;
-                        case ProjectStatus.Waiting:
-                            <dd><span class="badge badge-info">@Html.DisplayFor(model => model.Project.Status)</span></dd>
-                            break;
-                        default:
-                            <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Project.Status)</span></dd>
-                            break;
-
-                    }  
-
+                    <dd>@Html.DisplayFor(model => model.Target.User.FullName)</dd>
                   </div>
                   <!-- /.card-body -->
                 </div>
@@ -169,9 +121,7 @@
                   <div class="card-header p-2">
                     <ul class="nav nav-pills">
                       <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes</a></li>
-                       <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments</a></li>
-                      
+                      <li class="nav-item"><a class="nav-link" href="#services" data-toggle="tab">Services</a></li>                      
                     </ul>
                   </div><!-- /.card-header -->
                   <div class="card-body">
@@ -181,20 +131,20 @@
 
                             <dt><p localize-content>Description</p></dt>
                             <hr>
-                            <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Project.Description))</dd>
+                            <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Target.Description))</dd>
                         </dl>
                       </div>
                      
-                      <div class="tab-pane" id="notes">
+                      <div class="tab-pane" id="services">
                         
                           <table id="noteResults" class="table table-bordered table-hover projects" width="100%">
                             <!--Table head-->
                             <thead>
                                 <tr>
                                     <th localize-content>Name</th>
-                                    <th localize-content>Description</th>
-                                    <th localize-content>Created by</th>
-                                    <th localize-content>Visibility</th>
+                                    <th localize-content>Port</th>
+                                    <th localize-content>Version</th>
+                                    <th localize-content>Added By</th>
                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                                         {
                                             <th localize-content>Options</th>
@@ -205,21 +155,29 @@
                             <!--Table body-->
                             <tbody>
 
-                                @foreach (var note in Model.ProjectNotes)
+                                @foreach (var service in Model.TargetServices)
                                 {
                              <tr>
-                                        <td>@note.Name</td>
-                                        <td>@Html.Raw(@WebUtility.HtmlDecode(note.Description))</td>
-                                        <td>@note.User.FullName</td>
-                                        <td>@note.Visibility</td>
+                                        <td>@service.Name</td>
+                                        <td>@service.Port</td>
+                                        <td>@service.Version</td>
+                                        <td>@service.User.FullName</td>
                                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                                             {
                                                 <td>
+                                                     <a asp-area="Workspace" asp-controller="Target" asp-action="Service" asp-route-project="@Model.Project.Id" asp-route-id="@service.Id" class="btn btn-tool">
+                                                    <i class="fas fa-eye"></i>
+                                                  </a>
                                                     <form asp-action="DeleteNote" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteNote" asp-route-project="@note.ProjectId" asp-route-id="@note.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteNote" asp-route-project="@Model.Project.Id" asp-route-id="@service.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
                                                     </form>
                                                 </td>
 
+                                            }
+                                            else{
+                                                  <a asp-area="Workspace" asp-controller="Target" asp-action="Service" asp-route-project="@Model.Project.Id" asp-route-id="@service.Id" class="btn btn-tool">
+                                                    <i class="fas fa-eye"></i>
+                                                  </a>
                                             }
 
                                     </tr>
@@ -229,156 +187,9 @@
                             <!--Table body-->
                         </table>
 
-
-                            @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                          {
-                              <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addNoteModal">
-                              Add Note
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="addNoteModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="addNoteModalLabel">Add Note to Project</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <form asp-action="AddNote" method="post" enctype="multipart/form-data">
-                                  <div class="modal-body">
-
-                                    <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
-
-                                     <div class="form-group">
-                                        <label class="control-label">Name</label>
-                                        <input type="text" class="form-control"  id="noteName" name="noteName"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label">Note Description</label>
-                                        <textarea class="form-control" id="noteDescription" name="noteDescription"></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label">Visibility</label>
-                                        @Html.DropDownListFor(model => model.Visibility, Html.GetEnumSelectList<Visibility>(),new { @class = "form-control" })
-                                    </div>  
-                                    
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
-                                  </div>
-                                   </form>
-                                </div>
-                              </div>
-                            </div>
-                              
-
-                            }
-
                       </div>
                       <!-- /.tab-pane -->
 
-                         <!-- /.tab-pane -->
-                      <div class="tab-pane" id="attachments">
-                           <table id="attachmentsResults" class="table table-bordered table-hover projects" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Name</th>
-                                    <th localize-content>File</th>
-                                    <th localize-content>Uploaded by</th>
-                                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                        {
-                                            <th localize-content>Options</th>
-                                        }                             
-                                </tr>
-                            </thead>
-                            <!--Table head-->
-                            <!--Table body-->
-                            <tbody>
-
-                                @foreach (var attachment in Model.ProjectAttachments)
-                                {
-                             <tr>
-                                        <td>@attachment.Name</td>
-                                        <td>@attachment.FilePath</td>
-                                        <td>@attachment.User.FullName</td>
-                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                            {
-                                                <td>
-                                                    <form asp-action="DeleteAttachment" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteAttachment" asp-route-project="@attachment.ProjectId" asp-route-id="@attachment.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
-                                                    </form>
-                                                </td>
-
-                                            }
-
-                                    </tr>
-                                }
-
-                            </tbody>
-                            <!--Table body-->
-                        </table>
-
-
-                            @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                          {
-                              <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addAttachmentModal">
-                              Add Attachment
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="addAttachmentModal" tabindex="-1" role="dialog" aria-labelledby="addAttachmentModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="addAttachmentModalLabel">Add Attachment to Project</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <form asp-action="AddAttachment" method="post" enctype="multipart/form-data">
-                                  <div class="modal-body">
-
-                                    <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
-
-                                     <div class="form-group">
-                                        <label class="control-label">Name</label>
-                                        <input type="text" class="form-control"  id="attachmentName" name="attachmentName"/>
-                                    </div>
-
-                                               <div class="form-group">
-                                               <label for="upload" localize-content>Select File</label>
-                                                <div class="input-group">
-                                                  <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="upload" name="upload">
-                                                    <label class="custom-file-label" for="upload" localize-content>Choose File</label>
-                                                  </div>
-
-                                                </div>
-                                         </div>
-                                    
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
-                                  </div>
-                                   </form>
-                                </div>
-                              </div>
-                            </div>
-                              
-
-                            }
-                      </div>
-                      <!-- /.tab-pane -->
-    
                     </div>
                     <!-- /.tab-content -->
                   </div><!-- /.card-body -->
@@ -400,23 +211,10 @@
 <script>
 
     $(document).ready(function () {
-        $('#membersResults').DataTable({
+        $('#servicesResults').DataTable({
             "responsive": true
         });
-        $('#targetsResults').DataTable({
-            "responsive": true
-        });
-        $('#tasksResults').DataTable({
-            "responsive": true
-        });
-        $('#vulnResults').DataTable({
-            "responsive": true
-        });
-        $('#noteResults').DataTable({
-            "responsive": true
-        });
-        $('#attachmentsResults').DataTable({
-            "responsive": true
+
         });
         $('.dataTables_length').addClass('bs-select');
     });

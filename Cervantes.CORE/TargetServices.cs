@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cervantes.CORE
 {
@@ -40,6 +35,10 @@ namespace Cervantes.CORE
         /// Name of the service
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Description of the service
+        /// </summary>
+        public string Description { get; set; }
         /// <summary>
         /// Port of the service
         /// </summary>

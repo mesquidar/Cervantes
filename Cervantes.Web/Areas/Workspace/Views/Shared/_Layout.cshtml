@@ -30,10 +30,10 @@
 		<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 	  </li>
 	  <li class="nav-item d-none d-sm-inline-block">
-		<a class="nav-link" asp-controller="Home" asp-action="Index" localize-content>Home</a>
+		<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" localize-content>Home</a>
 	  </li>
 	  <li class="nav-item d-none d-sm-inline-block">
-		<a class="nav-link" asp-controller="Workspace" asp-action="Index" localize-content>Workspace</a>
+		<a class="nav-link" asp-area="" asp-controller="Workspace" asp-action="Index" localize-content>Workspace</a>
 	  </li>
 	  <li class="nav-item d-none d-sm-inline-block">
 		<a class="nav-link" asp-area="" asp-controller="Project" asp-action="Index" localize-content>Projects</a>
@@ -81,7 +81,7 @@
 	<!-- Brand Logo -->
 	<a href="../../index3.html" class="brand-link">
 
-	  <img src="/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+	  <img src="/img/logo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
 	  <span class="brand-text font-weight-light">Cervantes</span>
 	</a>
 
@@ -94,15 +94,15 @@
 
 			<li class="nav-header">GENERAL</li>
 		   <li class="nav-item">
-			<a asp-area=""  asp-controller="Home" asp-action="Index" localize-content class="nav-link">
+			<a asp-area="" asp-controller="Home" asp-action="Index" localize-content class="nav-link">
 				<i class="nav-icon fas fa-home"></i><p>Home</p>
 				
 			</a>
 		  </li>
 
 		  <li class="nav-item">
-			<a asp-area=""  asp-controller="Home" asp-action="Index" localize-content class="nav-link">
-				<i class="nav-icon fas fa-building"></i><p>Workspace</p>
+			<a asp-area="" asp-controller="Workspaces" asp-action="Index" localize-content class="nav-link">
+				<i class="nav-icon fas fa-building"></i><p>My Workspaces</p>
 				
 			</a>
 		  </li>
@@ -120,14 +120,13 @@
 			  @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
 								{
 									<li class="nav-item">
-										<a asp-area=""  asp-controller="Project" asp-action="Create" localize-content class="nav-link">
+										<a asp-area="" asp-controller="Project" asp-action="Create" localize-content class="nav-link">
 											<i class="fas fa-plus nav-icon"></i><p>Create</p>
-
 										</a>
 									</li>
 								}
 			<li class="nav-item">
-				<aasp-area=""   asp-controller="Project" asp-action="Template" localize-content class="nav-link">
+				<a asp-area="" asp-controller="Project" asp-action="Template" localize-content class="nav-link">
 				  <i class="fas fa-clone nav-icon"></i><p>Templates</p>
 				</a>
 			  </li>
@@ -140,19 +139,18 @@
 			</a>
 			<ul class="nav nav-treeview">
 				<li class="nav-item">
-				<a asp-controller="Client" asp-action="Index" localize-content class="nav-link">
-				  <i class="fas fa-list nav-icon"></i><p>List</p>
-				  
+				<a asp-area="" asp-controller="Client" asp-action="Index" localize-content class="nav-link">
+				  <i class="fas fa-list nav-icon"></i><p>List</p>			  
 				</a>
 			  </li>
 			  @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-								{
+				{
 									<li class="nav-item">
-										<a asp-controller="Client" asp-action="Create" localize-content class="nav-link">
+										<a asp-area="" asp-controller="Client" asp-action="Create" localize-content class="nav-link">
 											<i class="fas fa-plus nav-icon"></i><p>Create</p>
 										</a>
 									</li>
-				  }
+				}
 							</ul>
 		  </li>
 
@@ -162,27 +160,98 @@
 			</a>
 			<ul class="nav nav-treeview">
 				<li class="nav-item">
-				<a asp-controller="Project" asp-action="Index" localize-content class="nav-link">
+				<a asp-area="" asp-controller="Project" asp-action="Index" localize-content class="nav-link">
 				  <i class="fas fa-list nav-icon"></i><p>List</p>
 				</a>
 			  </li>
 			  @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
 								{
 									<li class="nav-item">
-										<a asp-controller="Project" asp-action="Create" localize-content class="nav-link">
+										<a asp-area="" asp-controller="Project" asp-action="Create" localize-content class="nav-link">
 											<i class="fas fa-plus nav-icon"></i><p>Create</p>
 
 										</a>
 									</li>
 								}
 			<li class="nav-item">
-				<a asp-controller="Project" asp-action="Template" localize-content class="nav-link">
+				<a asp-area="" asp-controller="Project" asp-action="Template" localize-content class="nav-link">
 				  <i class="fas fa-clone nav-icon"></i><p>Templates</p>
 				</a>
 			  </li>
 		   </ul>
 		  </li>
-		  
+
+
+		  <li class="nav-header">WORKSPACE</li>
+		  		  <li class="nav-item">
+					<a asp-area="Workspace" asp-controller="Home" asp-action="Index" localize-content class="nav-link">
+						<i class="nav-icon fas fa-tachometer-alt"></i><p>Dashboard</p>				
+					</a>
+				  </li>
+		  		   <li class="nav-item">
+				<a href="#" class="nav-link" localize-content>
+				  <i class="nav-icon fas fa-bullseye"></i><p>Targets<i class="right fas fa-angle-left"></i></p>
+				</a>
+				<ul class="nav nav-treeview">
+					<li class="nav-item">
+					<a asp-area="Workspace" asp-controller="Target" asp-action="Index" localize-content class="nav-link">
+					  <i class="fas fa-list nav-icon"></i><p>List</p>
+					</a>
+				  </li>
+	
+					 <li class="nav-item">
+						 <a asp-area="Workspace" asp-controller="Target" asp-action="Create" localize-content class="nav-link">
+							  <i class="fas fa-plus nav-icon"></i><p>Create</p>
+
+						  </a>
+					</li>
+		 
+			   </ul>
+			  </li>
+
+
+		   <li class="nav-item">
+				<a href="#" class="nav-link" localize-content>
+				  <i class="nav-icon fas fa-tasks"></i><p>Tasks<i class="right fas fa-angle-left"></i></p>
+				</a>
+				<ul class="nav nav-treeview">
+					<li class="nav-item">
+					<a asp-area="Workspace" asp-controller="Task" asp-action="Index" localize-content class="nav-link">
+					  <i class="fas fa-list nav-icon"></i><p>List</p>
+					</a>
+				  </li>
+	
+					 <li class="nav-item">
+						 <a asp-area="Workspace" asp-controller="Task" asp-action="Create" localize-content class="nav-link">
+							  <i class="fas fa-plus nav-icon"></i><p>Create</p>
+
+						  </a>
+					</li>
+		 
+			   </ul>
+			  </li>
+
+			  		   <li class="nav-item">
+				<a href="#" class="nav-link" localize-content>
+				  <i class="nav-icon fas fa-bug"></i><p>Vulnerabilities<i class="right fas fa-angle-left"></i></p>
+				</a>
+				<ul class="nav nav-treeview">
+					<li class="nav-item">
+					<a asp-area="Workspace" asp-controller="Vuln" asp-action="Index" localize-content class="nav-link">
+					  <i class="fas fa-list nav-icon"></i><p>List</p>
+					</a>
+				  </li>
+	
+					 <li class="nav-item">
+						 <a  asp-area="Workspace" asp-controller="Vuln" asp-action="Create" localize-content class="nav-link">
+							  <i class="fas fa-plus nav-icon"></i><p>Create</p>
+
+						  </a>
+					</li>
+		 
+			   </ul>
+			  </li>
+
 
 		   @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
 			{
@@ -193,13 +262,13 @@
 				</a>
 				<ul class="nav nav-treeview">
 					<li class="nav-item">
-					<a asp-controller="User" asp-action="Index" localize-content class="nav-link">
+					<a asp-area="" asp-controller="User" asp-action="Index" localize-content class="nav-link">
 					  <i class="fas fa-list nav-icon"></i><p>List</p>
 					</a>
 				  </li>
 	
 					 <li class="nav-item">
-						 <a asp-controller="User" asp-action="Create" localize-content class="nav-link">
+						 <a asp-area="" asp-controller="User" asp-action="Create" localize-content class="nav-link">
 							  <i class="fas fa-plus nav-icon"></i><p>Create</p>
 
 						  </a>
@@ -208,13 +277,13 @@
 			   </ul>
 			  </li>
 			  <li class="nav-item">
-			<a asp-controller="Organization" asp-action="Index" localize-content class="nav-link">
+			<a asp-area="" asp-controller="Organization" asp-action="Index" localize-content class="nav-link">
 				<i class="nav-icon fas fa-sitemap"></i><p>Organization</p>
 				
 			</a>
 		  </li>
 		  <li class="nav-item">
-			<a asp-controller="Home" asp-action="Index" localize-content class="nav-link">
+			<a asp-area="" asp-controller="Home" asp-action="Index" localize-content class="nav-link">
 				<i class="nav-icon fas fa-cogs"></i><p>Settings</p>
 				
 			</a>

@@ -386,18 +386,36 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         }
 
         // GET: TaskController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int project, int id)
         {
-            return View();
+            try
+            {
+                var result = taskManager.GetById(id);
+                return View(result);
+
+
+            }
+            catch (Exception e)
+            {
+                return View("Index");
+            }
         }
 
         // POST: TaskController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int project, int id, IFormCollection collection)
         {
             try
             {
+                var result = taskManager.GetById(id);
+                if (result != null)
+                {
+                    taskManager.Remove(result);
+                    taskManager.Context.SaveChanges();
+                }
+
+                TempData["deleted"] = "deleted";
                 return RedirectToAction(nameof(Index));
             }
             catch
