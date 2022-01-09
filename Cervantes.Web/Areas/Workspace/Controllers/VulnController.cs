@@ -1,14 +1,40 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Cervantes.Contracts;
+using Cervantes.Web.Areas.Workspace.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace Cervantes.Web.Areas.Workspace.Controllers
 {
+    [Area("Workspace")]
     public class VulnController : Controller
     {
-        // GET: VulnController
-        public ActionResult Index()
+        IVulnManager vulnManager = null;
+        IProjectManager projectManager = null;
+
+        public VulnController(IVulnManager vulnManager, IProjectManager projectManager)
         {
-            return View();
+            this.vulnManager = vulnManager;
+            this.projectManager = projectManager;
+        }
+        // GET: VulnController
+        public ActionResult Index(int project)
+        {
+            try
+            {
+                VulnViewModel model = new VulnViewModel
+                {
+                    Project = projectManager.GetById(project),
+                    Vulns = vulnManager.GetAll().Where(x => x.ProjectId == project)
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+
         }
 
         // GET: VulnController/Details/5

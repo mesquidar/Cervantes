@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Cervantes.Web.Areas.Workspace.Models
 {
-    public class TargetDetailsViewModels
+    public class TargetDetailsViewModel
     {
         public Project Project { get; set; }
         public Target Target { get; set; }
