@@ -5,16 +5,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
-using static System.Net.WebRequestMethods;
 
 namespace Cervantes.Web.Controllers
 {
     public class ClientController : Controller
     {
+        private readonly ILogger<ClientController> _logger;
         private readonly IHostingEnvironment _appEnvironment;
         IClientManager clientManager = null;
         IProjectManager projectManager = null;
@@ -23,12 +24,13 @@ namespace Cervantes.Web.Controllers
         /// <summary>
         /// Client Controller Constructor
         /// </summary>
-        public ClientController(IClientManager clientManager, IUserManager userManager, IProjectManager projectManager, IHostingEnvironment _appEnvironment)
+        public ClientController(IClientManager clientManager, IUserManager userManager, IProjectManager projectManager, IHostingEnvironment _appEnvironment, ILogger<ClientController> logger)
         {
             this.clientManager = clientManager;
             this.projectManager = projectManager;
             this.userManager = userManager;
             this._appEnvironment = _appEnvironment;
+            _logger = logger;
         }
 
 
@@ -40,8 +42,8 @@ namespace Cervantes.Web.Controllers
         {
             try
             {
-                
-               var model = clientManager.GetAll().Select(e => new CORE.Client
+
+                var model = clientManager.GetAll().Select(e => new CORE.Client
                 {
                     Id = e.Id,
                     Name = e.Name,
@@ -126,7 +128,7 @@ namespace Cervantes.Web.Controllers
             {
                 var file = Request.Form.Files["upload"];
                 var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Clients");
-                var uniqueName = Guid.NewGuid().ToString()+"_"+file.FileName;
+                var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
                 using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
@@ -137,22 +139,24 @@ namespace Cervantes.Web.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    ContactPhone= model.ContactPhone,
-                    ContactName= model.ContactName,
-                    ContactEmail= model.ContactEmail,
+                    ContactPhone = model.ContactPhone,
+                    ContactName = model.ContactName,
+                    ContactEmail = model.ContactEmail,
                     Url = model.Url,
-                    ImagePath = "/Attachments/Images/Clients"+uniqueName,
+                    ImagePath = "/Attachments/Images/Clients" + uniqueName,
                     CreatedDate = DateTime.Now,
-                    UserId= User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
                 clientManager.AddAsync(client);
                 clientManager.Context.SaveChanges();
                 TempData["created"] = "created";
+                _logger.LogInformation("Client created correctly");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 //guardamo log si hay un excepcion
+                _logger.LogError(ex, "An error ocurred adding a new Client");
                 return View();
             }
         }
@@ -175,9 +179,9 @@ namespace Cervantes.Web.Controllers
                     Name = result.Name,
                     Description = result.Description,
                     ContactEmail = result.ContactEmail,
-                    ContactName= result.ContactName,
-                    ContactPhone= result.ContactPhone,
-                    Url= result.Url,
+                    ContactName = result.ContactName,
+                    ContactPhone = result.ContactPhone,
+                    Url = result.Url,
                 };
 
                 return View(client);

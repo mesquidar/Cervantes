@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Cervantes.Contracts;
+using Cervantes.CORE;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Cervantes.CORE;
-using Cervantes.Contracts;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
-using static System.Formats.Asn1.AsnWriter;
+using System.Threading.Tasks;
 
 namespace Cervantes.DAL
 {
@@ -95,6 +89,9 @@ namespace Cervantes.DAL
         /// Table Vuln Notes
         /// </summary>
         public DbSet<VulnNote> VulnNotes { get; set; }
+
+        public DbSet<Log> Logs { get; set; }
+
 
 
     }

@@ -193,6 +193,7 @@
                       <li class="nav-item"><a class="nav-link" href="#vulns" data-toggle="tab">Vulnerabilities <span class="badge badge-danger">@Model.Vulns.Count()</span></a></li>
                       <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes <span class="badge badge-danger">@Model.ProjectNotes.Count()</span></a></li>
                        <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments <span class="badge badge-danger">@Model.ProjectAttachments.Count()</span></a></li>
+                       <li class="nav-item"><a class="nav-link" href="#reports" data-toggle="tab">Reports <span class="badge badge-danger">@Model.ProjectAttachments.Count()</span></a></li>
                       
                     </ul>
                   </div><!-- /.card-header -->
@@ -695,6 +696,103 @@
                                 <div class="modal-content">
                                   <div class="modal-header">
                                     <h5 class="modal-title" id="addAttachmentModalLabel">Add Attachment to Project</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <form asp-action="AddAttachment" method="post" enctype="multipart/form-data">
+                                  <div class="modal-body">
+
+                                    <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
+
+                                     <div class="form-group">
+                                        <label class="control-label">Name</label>
+                                        <input type="text" class="form-control"  id="attachmentName" name="attachmentName"/>
+                                    </div>
+
+                                               <div class="form-group">
+                                               <label for="upload" localize-content>Select File</label>
+                                                <div class="input-group">
+                                                  <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="upload" name="upload">
+                                                    <label class="custom-file-label" for="upload" localize-content>Choose File</label>
+                                                  </div>
+
+                                                </div>
+                                         </div>
+                                    
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Add" class="btn btn-success" />
+                                  </div>
+                                   </form>
+                                </div>
+                              </div>
+                            </div>
+                              
+
+                            }
+                      </div>
+                      <!-- /.tab-pane -->
+
+                      
+                         <!-- /.tab-pane -->
+                      <div class="tab-pane" id="reports">
+                           <table id="reportResults" class="table table-bordered table-hover projects" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Name</th>
+                                    <th localize-content>File</th>
+                                    <th localize-content>Uploaded by</th>
+                                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                        {
+                                            <th localize-content>Options</th>
+                                        }                             
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+
+                                @foreach (var attachment in Model.ProjectAttachments)
+                                {
+                             <tr>
+                                        <td>@attachment.Name</td>
+                                        <td>@attachment.FilePath</td>
+                                        <td>@attachment.User.FullName</td>
+                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                            {
+                                                <td>
+                                                    <form asp-action="DeleteAttachment" method="post" enctype="multipart/form-data">
+                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteAttachment" asp-route-project="@attachment.ProjectId" asp-route-id="@attachment.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                    </form>
+                                                </td>
+
+                                            }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+
+
+                            @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                          {
+                              <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#reportModal">
+                              Generate Report
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="reportModalLabel">Add Attachment to Project</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
