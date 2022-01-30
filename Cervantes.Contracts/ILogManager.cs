@@ -2,7 +2,7 @@
 
 namespace Cervantes.Contracts
 {
-    public interface IClientManager : IGenericManager<Client>
+    public interface ILogManager : IGenericManager<Log>
     {
     }
 }

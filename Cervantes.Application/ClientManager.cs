@@ -1,11 +1,6 @@
 ﻿
-using Cervantes.CORE;
 using Cervantes.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Cervantes.CORE;
 
 namespace Cervantes.Application
 {

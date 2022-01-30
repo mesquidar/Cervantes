@@ -65,7 +65,7 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-area="" asp-controller="Client" asp-action="Delete" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
          <a class="btn btn-light" asp-action="Index" localize-content>Back</a>
         <button type="submit" class="btn btn-outline-danger" localize-content>Delete</button>

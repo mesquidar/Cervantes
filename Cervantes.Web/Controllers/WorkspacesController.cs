@@ -1,5 +1,6 @@
 ﻿using Cervantes.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -8,15 +9,16 @@ namespace Cervantes.Web.Controllers
 {
     public class WorkspacesController : Controller
     {
-
+        private readonly ILogger<WorkspacesController> _logger = null;
         IProjectManager projectManager = null;
         IProjectUserManager projectUserManager = null;
 
-        public WorkspacesController(IProjectManager projectManager, IProjectUserManager projectUserManager)
+        public WorkspacesController(IProjectManager projectManager, IProjectUserManager projectUserManager, ILogger<WorkspacesController> logger)
         {
 
             this.projectManager = projectManager;
             this.projectUserManager = projectUserManager;
+            _logger = logger;
         }
         // GET: WorkspaceController
         public IActionResult Index()
@@ -38,6 +40,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred loading My Workspaces. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }

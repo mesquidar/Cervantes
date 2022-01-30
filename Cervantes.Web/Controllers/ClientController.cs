@@ -15,7 +15,7 @@ namespace Cervantes.Web.Controllers
 {
     public class ClientController : Controller
     {
-        private readonly ILogger<ClientController> _logger;
+        private readonly ILogger<ClientController> _logger = null;
         private readonly IHostingEnvironment _appEnvironment;
         IClientManager clientManager = null;
         IProjectManager projectManager = null;
@@ -69,6 +69,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred loading Client Index. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -97,6 +98,7 @@ namespace Cervantes.Web.Controllers
             catch (Exception e)
             {
                 // guarda log si ocurre excepcion
+                _logger.LogError(e, "An error ocurred loading Client Details. Client: {0} User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
 
@@ -150,13 +152,13 @@ namespace Cervantes.Web.Controllers
                 clientManager.AddAsync(client);
                 clientManager.Context.SaveChanges();
                 TempData["created"] = "created";
-                _logger.LogInformation("Client created correctly");
+                _logger.LogInformation("User: {0} Created a new client: {1}", User.FindFirstValue(ClaimTypes.Name), client.Name);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 //guardamo log si hay un excepcion
-                _logger.LogError(ex, "An error ocurred adding a new Client");
+                _logger.LogError(ex, "An error ocurred adding a new Client. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -183,12 +185,11 @@ namespace Cervantes.Web.Controllers
                     ContactPhone = result.ContactPhone,
                     Url = result.Url,
                 };
-
                 return View(client);
             }
             catch (Exception ex)
             {
-                //guardamos log si hay excepcion
+                _logger.LogError(ex, "An error ocurred loading edit form on Client Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
 
             }
@@ -217,11 +218,13 @@ namespace Cervantes.Web.Controllers
 
                 clientManager.Context.SaveChanges();
                 TempData["edited"] = "edited";
+                _logger.LogInformation("User: {0} edited client: {1}", User.FindFirstValue(ClaimTypes.Name), result.Name);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 //guardamos log si hay excepcion
+                _logger.LogError(ex, "An error ocurred editing Client Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -250,12 +253,13 @@ namespace Cervantes.Web.Controllers
                         Url = client.Url,
 
                     };
+
                     return View(model);
                 }
             }
             catch (Exception e)
             {
-                // guarda log si ocurre excepcion
+                _logger.LogError(e, "An error ocurred loading delet form on Client Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
 
@@ -271,7 +275,7 @@ namespace Cervantes.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
@@ -283,11 +287,13 @@ namespace Cervantes.Web.Controllers
                 }
 
                 TempData["deleted"] = "deleted";
+                _logger.LogInformation("User: {0} deleted client: {1}", User.FindFirstValue(ClaimTypes.Name), client.Name);
                 return RedirectToAction("Index");
 
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred deleteing Client Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }

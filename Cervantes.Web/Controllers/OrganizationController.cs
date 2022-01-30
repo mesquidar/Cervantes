@@ -1,29 +1,32 @@
 ﻿using Cervantes.Contracts;
 using Cervantes.Web.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Cervantes.Web.Controllers
 {
     public class OrganizationController : Controller
     {
+        private readonly ILogger<OrganizationController> _logger = null;
         private readonly IHostingEnvironment _appEnvironment;
         IOrganizationManager organizationManager = null;
 
         /// <summary>
         /// Organization Controller Constructor
         /// </summary>
-        public OrganizationController(IOrganizationManager organizationManager, IHostingEnvironment _appEnvironment)
+        public OrganizationController(IOrganizationManager organizationManager, IHostingEnvironment _appEnvironment, ILogger<OrganizationController> logger)
         {
             this.organizationManager = organizationManager;
             this._appEnvironment = _appEnvironment;
+            _logger = logger;
 
         }
-        
+
         /// <summary>
         /// Method show Organization Information
         /// </summary>
@@ -34,8 +37,8 @@ namespace Cervantes.Web.Controllers
             {
 
                 var org = organizationManager.GetAll().FirstOrDefault();
-                    
-                 
+
+
 
                 if (org != null)
                 {
@@ -62,6 +65,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred loading Organization Index. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -84,11 +88,11 @@ namespace Cervantes.Web.Controllers
                     var model = new OrganizationViewModel
                     {
                         Id = result.Id,
-                        Name= result.Name,
+                        Name = result.Name,
                         ContactEmail = result.ContactEmail,
-                        ContactName= result.ContactName,
-                        ContactPhone= result.ContactPhone,
-                        Url= result.Url,
+                        ContactName = result.ContactName,
+                        ContactPhone = result.ContactPhone,
+                        Url = result.Url,
                         ImagePath = result.ImagePath,
                         Description = result.Description,
 
@@ -103,7 +107,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
-                // guarda log si ocurre excepcion
+                _logger.LogError(e, "An error ocurred loading editing Organization form. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
 
@@ -146,11 +150,12 @@ namespace Cervantes.Web.Controllers
 
                 organizationManager.Context.SaveChanges();
                 TempData["edited"] = "edited";
+                _logger.LogInformation("User: {0} Edited Organization", User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                //guardamos log si hay excepcion
+                _logger.LogError(ex, "An error ocurred saving editing Organization form. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -176,10 +181,12 @@ namespace Cervantes.Web.Controllers
                 organizationManager.Context.SaveChanges();
 
                 TempData["avatar_deleted"] = "avatar deleted";
+                _logger.LogInformation("User: {0} Organization Logo Deleted", User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Edit", "Organization", new { id = id });
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred deleting Organization Logo. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Edit", "Organization", new { id = id });
             }
         }

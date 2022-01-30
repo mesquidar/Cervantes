@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Globalization;
 
 namespace Cervantes.Web
@@ -70,6 +71,7 @@ namespace Cervantes.Web
             services.AddScoped<IVulnManager, VulnManager>();
             services.AddScoped<IVulnCategoryManager, VulnCategoryManager>();
             services.AddScoped<IDocumentManager, DocumentManager>();
+            services.AddScoped<ILogManager, LogManager>();
 
 
 
@@ -114,7 +116,7 @@ namespace Cervantes.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
 
 

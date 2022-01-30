@@ -1,25 +1,25 @@
 ﻿using Cervantes.Contracts;
 using Cervantes.CORE;
-using Cervantes.DAL;
 using Cervantes.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Cervantes.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
+        private readonly ILogger<UserController> _logger = null;
         private readonly IHostingEnvironment _appEnvironment;
         IUserManager usrManager = null;
         IProjectManager projectManager = null;
@@ -33,13 +33,15 @@ namespace Cervantes.Web.Controllers
         /// <param name="roleManager">RoleManager</param>
         /// <param name="userManager">Identity UserManager</param>
         /// <param name="_appEnvironment">IHostingEnviroment</param>
-        public UserController(IUserManager usrManager, IRoleManager roleManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IProjectManager projectManager, IHostingEnvironment _appEnvironment)
+        public UserController(IUserManager usrManager, IRoleManager roleManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IProjectManager projectManager, IHostingEnvironment _appEnvironment,
+            ILogger<UserController> logger)
         {
             this.usrManager = usrManager;
             this.roleManager = roleManager;
             this._appEnvironment = _appEnvironment;
             _userManager = userManager;
             this.projectManager = projectManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -78,6 +80,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred loading User Index. by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -115,7 +118,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
-                // guarda log si ocurre excepcion
+                _logger.LogError(e, "An error ocurred loading User Id: {0}. by User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
 
@@ -152,8 +155,9 @@ namespace Cervantes.Web.Controllers
                 return View(model);
 
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred loading user cration form. by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View("Index");
             }
 
@@ -208,11 +212,12 @@ namespace Cervantes.Web.Controllers
 
 
                 TempData["created"] = "created";
+                _logger.LogInformation("User: {0} Created a new User: {1}", User.FindFirstValue(ClaimTypes.Name), user.UserName);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                //guardamo log si hay un excepcion
+                _logger.LogError(ex, "An error ocurred adding a new user. by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -276,7 +281,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
-                // guarda log si ocurre excepcion
+                _logger.LogError(e, "An error ocurred adding a new user. by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
 
@@ -308,7 +313,7 @@ namespace Cervantes.Web.Controllers
                 }
                 result.Position = model.User.Position;
                 result.PhoneNumber = model.User.PhoneNumber;
-                
+
 
                 if (Request.Form.Files["upload"] != null)
                 {
@@ -328,11 +333,12 @@ namespace Cervantes.Web.Controllers
 
 
                 TempData["edited"] = "edited";
+                _logger.LogInformation("User: {0} Edited User: {1}", User.FindFirstValue(ClaimTypes.Name), result.UserName);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                //guardamos log si hay excepcion
+                _logger.LogError(ex, "An error ocurred Editing user: {0}. by User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -363,7 +369,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
-                // guarda log si ocurre excepcion
+                _logger.LogError(e, "An error ocurred loading user deletion form,by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
 
@@ -390,36 +396,40 @@ namespace Cervantes.Web.Controllers
                 }
 
                 TempData["deleted"] = "deleted";
+                _logger.LogInformation("User: {0} Deleted User: {1}", User.FindFirstValue(ClaimTypes.Name), user.UserName);
                 return RedirectToAction("Index");
 
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred deleting user: {0}. by User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
 
-
+        [HttpPost]
         public ActionResult DeleteAvatar(string id)
         {
             try
             {
                 var user = usrManager.GetByUserId(id);
-                var pathFile = _appEnvironment.WebRootPath+user.Avatar;
+                var pathFile = _appEnvironment.WebRootPath + user.Avatar;
                 if (System.IO.File.Exists(pathFile))
                 {
                     System.IO.File.Delete(pathFile);
                 }
-                
+
 
                 user.Avatar = null;
                 usrManager.Context.SaveChanges();
 
                 TempData["avatar_deleted"] = "avatar deleted";
+                _logger.LogInformation("User: {0} deleted User Avatar: {1}", User.FindFirstValue(ClaimTypes.Name), user.UserName);
                 return RedirectToAction("Edit", "User", new { id = id });
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred deleting user avatar: {0}. by User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Edit", "User", new { id = id });
             }
         }

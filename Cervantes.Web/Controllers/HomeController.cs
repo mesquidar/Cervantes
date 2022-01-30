@@ -70,6 +70,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred loading Dashboard. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
 
@@ -116,6 +117,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred loading MyWorkspaces. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
