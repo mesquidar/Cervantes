@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cervantes.CORE.Log>
+﻿@model LogViewModel
 
 @{
     ViewData["Title"] = "System Logs";
@@ -37,7 +37,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-file-import"></i> System Logs</h1>
+            <h1 localize-content><i class="fas fa-eye"></i> System Logs</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -57,9 +57,9 @@
     <div class="card-body">
 
     
-         @if(Model.FirstOrDefault() != null){
         <!--Table-->
         <table id="logResults" class="table table-bordered table-hover" width="100%">
+
             <!--Table head-->
             <thead>
                 <tr>
@@ -77,49 +77,73 @@
             <!--Table body-->
             <tbody>
 
-                @foreach (var log in Model)
+                @foreach(var log in Model.Logs)
                 {
                    switch (log.Level)
                    {
-                        case "DEBUG":
+                        case "Debug":
+                        <tr class="bg-light">
+                                <td class="bg-light">@log.Id</td>
+                                <td class="bg-light">@log.CreatedOn/td>
+                                <td class="bg-light">@log.Level</td>
+                                <td class="bg-light">@log.Message</td>
+                                <td class="bg-light">@log.StackTrace</td> 
+                                <td class="bg-light">@log.Exception</td>
+                                <td class="bg-light">@log.Logger</td>
+                                <td class="bg-light">@log.Url</td>
+                            </tr>
                                     break;
-                        case "INFO":
-                         <tr class="table-info">
-                                <td>@log.Id</td>
-                                <td>@log.CreatedOn/td>
-                                <td>@log.Level</td>
-                                <td>@log.Message</td>
-                                <td>@log.StackTrace</td> 
-                                <td>@log.Exception</td>
-                                <td>@log.Logger</td>
-                                <td>@log.Url</td>
+                        case "Info":
+                         <tr class="bg-info">
+                                <td class="bg-info">@log.Id</td>
+                                <td class="bg-info">@log.CreatedOn/td>
+                                <td class="bg-info">@log.Level</td>
+                                <td class="bg-info">@log.Message</td>
+                                <td class="bg-info">@log.StackTrace</td> 
+                                <td class="bg-info">@log.Exception</td>
+                                <td class="bg-info">@log.Logger</td>
+                                <td class="bg-info">@log.Url</td>
                             </tr>
                         break;
-                        case "ERROR":
-                            <tr class="table-danger">
-                                <td>@log.Id</td>
-                                <td>@log.CreatedOn/td>
-                                <td>@log.Level</td>
-                                <td>@log.Message</td>
-                                <td>@log.StackTrace</td> 
-                                <td>@log.Exception</td>
-                                <td>@log.Logger</td>
-                                <td>@log.Url</td>
-                            </tr>
-                         break;
-                   }
+                        case "Error":
+                            <tr class="bg-danger">
+                                <td class="bg-danger">@log.Id</td>
+                                <td class="bg-danger">@log.CreatedOn/td>
+                                <td class="bg-danger">@log.Level</td>
+                                <td class="bg-danger">@log.Message</td>
+                                <td class="bg-danger">@log.StackTrace</td> 
+                                <td class="bg-danger">@log.Exception</td>
+                                <td class="bg-danger">@log.Logger</td>
+                                <td class="bg-danger">@log.Url</td>
+                                </tr>
+                                break;
+                            case "Warn":
+                            <tr class="bg-warning">
+                                <td class="bg-warning">@log.Id</td>
+                                <td class="bg-warning">@log.CreatedOn/td>
+                                <td class="bg-warning">@log.Level</td>
+                                <td class="bg-warning">@log.Message</td>
+                                <td class="bg-warning">@log.StackTrace</td> 
+                                <td class="bg-warning">@log.Exception</td>
+                                <td class="bg-warning">@log.Logger</td>
+                                <td class="bg-warning">@log.Url</td>
+                                </tr>
+                                break;
+                        }
+                }
                             
                     
-                }
+                
 
             </tbody>
             <!--Table body-->
         </table>
         <!--Table-->
-        }
-
+        <a asp-area="" asp-controller="Log" asp-action="Export" localize-content class="btn btn-primary btn-sm"><i class="nav-icon fas fa-download"></i><p>Export</p></a>
+         <a asp-area="" asp-controller="Log" asp-action="Delete" localize-content class="btn btn-danger btn-sm"><i class="nav-icon fas fa-trash"></i><p>Delete</p></a>
 
         </div>
+        
         </div>
     </section>
     <!-- /.content -->
