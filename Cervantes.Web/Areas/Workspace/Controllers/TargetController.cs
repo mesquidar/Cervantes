@@ -3,6 +3,7 @@ using Cervantes.CORE;
 using Cervantes.Web.Areas.Workspace.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -12,6 +13,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
     [Area("Workspace")]
     public class TargetController : Controller
     {
+        private readonly ILogger<TargetController> _logger = null;
         ITargetManager targetManager = null;
         ITargetServicesManager targetServicesManager = null;
         IProjectManager projectManager = null;
@@ -22,11 +24,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         /// <param name="targetManager">TargetManager</param>
         /// <param name="targetServicesManager">TargetServiceManager</param>
         /// <param name="projectManager">ProjectManager</param>
-        public TargetController(ITargetManager targetManager, ITargetServicesManager targetServicesManager, IProjectManager projectManager)
+        public TargetController(ITargetManager targetManager, ITargetServicesManager targetServicesManager, IProjectManager projectManager, ILogger<TargetController> logger)
         {
             this.targetManager = targetManager;
             this.targetServicesManager = targetServicesManager;
             this.projectManager = projectManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -47,6 +50,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Target Workspace Index. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View("Error");
             }
         }
@@ -72,6 +76,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Target Workspace Details. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
                 return View("Error");
             }
         }
@@ -107,10 +112,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 };
                 targetManager.Add(target);
                 targetManager.Context.SaveChanges();
+                _logger.LogInformation("User: {0} added a new target on Project: {1}", User.FindFirstValue(ClaimTypes.Name), project);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred adding a new Target Workspace on Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -130,6 +137,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Target Workspace Edit form. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -154,10 +162,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
                 targetManager.Context.SaveChanges();
                 TempData["edited"] = "edited";
+                _logger.LogInformation("User: {0} edited target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name), model.Name, project);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred editing Target Workspace Details. Project: {0} Target: {1} User: {2}", project, model.Name, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -177,6 +187,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Target Workspace Delete form. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -202,10 +213,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 }
 
                 TempData["deleted"] = "deleted";
+                _logger.LogInformation("User: {0} deleted target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred deleting Target Workspace. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -232,6 +245,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Target Workspace Service details. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
                 return View("Error");
             }
         }
@@ -250,6 +264,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Target Workspace Service create form. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -273,10 +288,13 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
                 targetServicesManager.Add(result);
                 targetServicesManager.Context.SaveChanges();
+                _logger.LogInformation("User: {0} added a new target service on Target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name), model.Target.Name, project);
+
                 return View(model);
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred adding Target Workspace Service. Project: {0} Target: {1} User: {2}", project, model.Target.Name, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -296,6 +314,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Target Workspace Service edit form. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -304,7 +323,17 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditService(IFormCollection collection)
         {
-            return View();
+            try
+            {
+                _logger.LogInformation("User: {0} edited target service on Target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name));
+                return View();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error ocurred editing Target Workspace Service. Project: {0} Target: {1} User: {2}");
+                return View();
+            }
+
         }
 
         public ActionResult DeleteService(int project, int id)
@@ -316,6 +345,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Target Workspace Service delete form. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -334,10 +364,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 }
 
                 TempData["deleted"] = "deleted";
+                _logger.LogInformation("User: {0} deleted target service on Target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred deleting Target Workspace Service: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }

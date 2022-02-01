@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
     public class TaskController : Controller
     {
         private readonly IHostingEnvironment _appEnvironment;
-
+        private readonly ILogger<TaskController> _logger = null;
         IProjectManager projectManager = null;
         IProjectUserManager projectUserManager = null;
         ITaskManager taskManager = null;
@@ -27,7 +28,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         ITargetManager targetManager = null;
 
         public TaskController(IHostingEnvironment _appEnvironment, ITaskManager taskManager, IProjectManager projectManager, ITargetManager targetManager, ITaskNoteManager taskNoteManager, ITaskAttachmentManager taskAttachmentManager,
-            IProjectUserManager projectUserManager)
+            IProjectUserManager projectUserManager, ILogger<TaskController> logger)
         {
             this.projectManager = projectManager;
             this.projectUserManager = projectUserManager;
@@ -36,6 +37,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             this.taskNoteManager = taskNoteManager;
             this.taskAttachmentManager = taskAttachmentManager;
             this._appEnvironment = _appEnvironment;
+            _logger = logger;
         }
 
         public ActionResult Index(int project)
@@ -51,6 +53,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Task Workspace Index. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
 
@@ -69,6 +72,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Task Workspace Project Index. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
 
@@ -91,6 +95,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Task Workspace Details.Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
 
@@ -125,6 +130,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Task Workspace create form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
 
@@ -152,10 +158,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
                 taskManager.Add(task);
                 taskManager.Context.SaveChanges();
+                _logger.LogInformation("User: {0} Created a new Task on Project {1}", User.FindFirstValue(ClaimTypes.Name), project);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred adding a new Task Workspace.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -198,6 +206,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Task Workspace create project form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
 
@@ -226,10 +235,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
                 taskManager.Add(task);
                 taskManager.Context.SaveChanges();
+                _logger.LogInformation("User: {0} Created a new Task Project on Project {1}", User.FindFirstValue(ClaimTypes.Name), project);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred adding a new Task Project Workspace on.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -277,6 +288,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Task Workspace edit form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -298,10 +310,13 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
                 taskManager.Context.SaveChanges();
                 TempData["edited"] = "edited";
+                _logger.LogInformation("User: {0} edited Task: {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
+
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred editing a Task Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -355,6 +370,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Task Workspace edit PROJECT form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -377,10 +393,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
                 taskManager.Context.SaveChanges();
                 TempData["edited"] = "edited";
+                _logger.LogInformation("User: {0} edited Task Project: Task: {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
                 return RedirectToAction("Project");
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred editing a Task project Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -397,6 +415,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Task Workspace delete form. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View("Index");
             }
         }
@@ -416,10 +435,12 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 }
 
                 TempData["deleted"] = "deleted";
+                _logger.LogInformation("User: {0} deleted Task: {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred deleting a Task  Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -427,26 +448,34 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         [HttpPost]
         public IActionResult AddNote(int project, IFormCollection form)
         {
-
-            if (form != null)
+            try
             {
-
-                TaskNote note = new TaskNote
+                if (form != null)
                 {
-                    Name = form["noteName"],
-                    Description = form["noteDescription"],
-                    TaskId = Int32.Parse(form["task"]),
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
 
-                };
+                    TaskNote note = new TaskNote
+                    {
+                        Name = form["noteName"],
+                        Description = form["noteDescription"],
+                        TaskId = Int32.Parse(form["task"]),
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
 
-                taskNoteManager.Add(note);
-                taskNoteManager.Context.SaveChanges();
-                TempData["addedNote"] = "added";
-                return RedirectToAction("Details", "Task", new { project = project, id = Int32.Parse(form["task"]) });
+                    };
+
+                    taskNoteManager.Add(note);
+                    taskNoteManager.Context.SaveChanges();
+                    TempData["addedNote"] = "added";
+                    _logger.LogInformation("User: {0} added Task Note on Task: {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), Int32.Parse(form["task"]), project);
+                    return RedirectToAction("Details", "Task", new { project = project, id = Int32.Parse(form["task"]) });
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Project", new { project = project, id = Int32.Parse(form["task"]) });
+                }
             }
-            else
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred adding a Task Note Workspace on. Task: {0} Project: {1} User: {2}", Int32.Parse(form["task"]), project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Project", new { project = project, id = Int32.Parse(form["task"]) });
             }
 
@@ -455,18 +484,26 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         [HttpPost]
         public IActionResult DeleteNote(int task, int project, int id)
         {
-
-            if (id != 0)
+            try
             {
-                var result = taskNoteManager.GetById(id);
+                if (id != 0)
+                {
+                    var result = taskNoteManager.GetById(id);
 
-                taskNoteManager.Remove(result);
-                taskNoteManager.Context.SaveChanges();
-                TempData["deletedNote"] = "deleted";
-                return RedirectToAction("Details", "Task", new { project = project, id = task });
+                    taskNoteManager.Remove(result);
+                    taskNoteManager.Context.SaveChanges();
+                    TempData["deletedNote"] = "deleted";
+                    _logger.LogInformation("User: {0} deleted Task Note on Task: {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
+                    return RedirectToAction("Details", "Task", new { project = project, id = task });
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Task", new { project = project, id = task });
+                }
             }
-            else
+            catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred deleting a Task Note Workspace on. Task: {0} Project: {1} User: {2}", task, project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Task", new { project = project, id = task });
             }
 
@@ -477,51 +514,59 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         [HttpPost]
         public IActionResult AddAttachment(int project, int task, IFormCollection form, IFormFile upload)
         {
-
-            if (form != null && upload != null)
+            try
             {
-                var file = Request.Form.Files["upload"];
-                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Task/" + form["task"] + "/");
-                var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
-
-                if (Directory.Exists(uploads))
+                if (form != null && upload != null)
                 {
-                    using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
+                    var file = Request.Form.Files["upload"];
+                    var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Task/" + form["task"] + "/");
+                    var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
 
+                    if (Directory.Exists(uploads))
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+
+                        }
                     }
+                    else
+                    {
+                        Directory.CreateDirectory(uploads);
+
+                        using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+
+                        }
+                    }
+
+
+
+                    TaskAttachment note = new TaskAttachment
+                    {
+                        Name = form["attachmentName"],
+                        TaskId = Int32.Parse(form["task"]),
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        FilePath = "/Attachments/Task/" + form["task"] + "/" + uniqueName,
+
+                    };
+
+                    taskAttachmentManager.Add(note);
+                    taskAttachmentManager.Context.SaveChanges();
+                    TempData["addedAttachment"] = "added";
+                    _logger.LogInformation("User: {0} added Task Attachment on Task: {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), task, project);
+                    return RedirectToAction("Details", "Task", new { project = project, id = Int32.Parse(form["task"]) });
                 }
                 else
                 {
-                    Directory.CreateDirectory(uploads);
-
-                    using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-
-                    }
+                    TempData["errorAttachment"] = "added";
+                    return RedirectToAction("Details", "Task", new { project = project, id = Int32.Parse(form["task"]) });
                 }
-
-
-
-                TaskAttachment note = new TaskAttachment
-                {
-                    Name = form["attachmentName"],
-                    TaskId = Int32.Parse(form["task"]),
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                    FilePath = "/Attachments/Task/" + form["task"] + "/" + uniqueName,
-
-                };
-
-                taskAttachmentManager.Add(note);
-                taskAttachmentManager.Context.SaveChanges();
-                TempData["addedAttachment"] = "added";
-                return RedirectToAction("Details", "Task", new { project = project, id = Int32.Parse(form["task"]) });
             }
-            else
+            catch (Exception ex)
             {
-                TempData["errorAttachment"] = "added";
+                _logger.LogError(ex, "An error ocurred adding a Task Attachement Workspace on. Task: {0} Project: {1} User: {2}", Int32.Parse(form["task"]), project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Task", new { project = project, id = Int32.Parse(form["task"]) });
             }
 
@@ -531,24 +576,32 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         [HttpPost]
         public IActionResult DeleteAttachment(int id, int project, int task)
         {
-
-            if (id != 0)
+            try
             {
-                var result = taskAttachmentManager.GetById(id);
-
-                var pathFile = _appEnvironment.WebRootPath + result.FilePath;
-                if (System.IO.File.Exists(pathFile))
+                if (id != 0)
                 {
-                    System.IO.File.Delete(pathFile);
-                }
+                    var result = taskAttachmentManager.GetById(id);
 
-                taskAttachmentManager.Remove(result);
-                taskAttachmentManager.Context.SaveChanges();
-                TempData["deletedAttachment"] = "deleted";
-                return RedirectToAction("Details", "Task", new { project = project, id = task });
+                    var pathFile = _appEnvironment.WebRootPath + result.FilePath;
+                    if (System.IO.File.Exists(pathFile))
+                    {
+                        System.IO.File.Delete(pathFile);
+                    }
+
+                    taskAttachmentManager.Remove(result);
+                    taskAttachmentManager.Context.SaveChanges();
+                    TempData["deletedAttachment"] = "deleted";
+                    _logger.LogInformation("User: {0} deleted Task Attachment on Task: {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), task, project);
+                    return RedirectToAction("Details", "Task", new { project = project, id = task });
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Task", new { project = project, id = task });
+                }
             }
-            else
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "An error ocurred deleting a Task Attachement Workspace on. Task: {0} Project: {1} User: {2}", task, project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Task", new { project = project, id = task });
             }
 

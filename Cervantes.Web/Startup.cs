@@ -2,6 +2,7 @@ using Cervantes.Application;
 using Cervantes.Contracts;
 using Cervantes.CORE;
 using Cervantes.DAL;
+using Cervantes.Web.Controllers;
 using Cervantes.Web.LocalizationResources;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +15,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RazorLight;
+using System;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
 
 namespace Cervantes.Web
 {
@@ -81,6 +86,8 @@ namespace Cervantes.Web
                 new CultureInfo("es"),
             };
 
+
+
             services.AddControllersWithViews()
                 .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
                 {
@@ -112,6 +119,22 @@ namespace Cervantes.Web
                     };
                 }); ;
 
+            var processSufix = "32bit";
+            if (Environment.Is64BitProcess && IntPtr.Size == 8)
+            {
+                processSufix = "64bit";
+            }
+            var context = new CustomAssemblyLoadContext();
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), $"PDFLibrary\\{processSufix}\\libwkhtmltox.dll"));
+
+            services.AddScoped<IRazorLightEngine>(sp =>
+            {
+                var engine = new RazorLightEngineBuilder()
+                    .UseFileSystemProject(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
+                    .UseMemoryCachingProvider()
+                    .Build();
+                return engine;
+            });
 
         }
 

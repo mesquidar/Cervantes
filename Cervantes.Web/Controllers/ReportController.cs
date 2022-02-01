@@ -4,7 +4,7 @@ namespace Cervantes.Web.Controllers
 {
     public class ReportController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Generate(int project)
         {
             return View();
         }

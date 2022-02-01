@@ -2,6 +2,7 @@
 using Cervantes.Web.Areas.Workspace.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -12,7 +13,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
     public class HomeController : Controller
     {
 
-
+        private readonly ILogger<HomeController> _logger = null;
         IProjectManager projectManager = null;
         IClientManager clientManager = null;
         IVulnManager vulnManager = null;
@@ -24,7 +25,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         IProjectAttachmentManager projectAttachmentManager = null;
 
         public HomeController(IProjectManager projectManager, IClientManager clientManager, IVulnManager vulnManager, ITaskManager taskManager, IDocumentManager documentManager,
-            IProjectUserManager projectUserManager, ITargetManager targetManager, IProjectNoteManager projectNoteManager, IProjectAttachmentManager projectAttachmentManager)
+            IProjectUserManager projectUserManager, ITargetManager targetManager, IProjectNoteManager projectNoteManager, IProjectAttachmentManager projectAttachmentManager,
+            ILogger<HomeController> logger)
         {
             this.projectManager = projectManager;
             this.clientManager = clientManager;
@@ -35,6 +37,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             this.targetManager = targetManager;
             this.projectNoteManager = projectNoteManager;
             this.projectAttachmentManager = projectAttachmentManager;
+            _logger = logger;
         }
 
         public ActionResult Index(int project)
@@ -65,6 +68,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Home Workspace Dashboard. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View("Error");
             }
         }
