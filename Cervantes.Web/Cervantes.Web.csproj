@@ -41,6 +41,7 @@
     <Folder Include="wwwroot\Attachments\Images\Clients\" />
     <Folder Include="wwwroot\Attachments\Images\Avatars\" />
     <Folder Include="wwwroot\Attachments\Images\Organization\" />
+    <Folder Include="wwwroot\Attachments\Documents\" />
     <Folder Include="wwwroot\Attachments\Task\" />
     <Folder Include="wwwroot\Attachments\Project\" />
   </ItemGroup>

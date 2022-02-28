@@ -162,24 +162,19 @@
 			</a>
 			<ul class="nav nav-treeview">
 				<li class="nav-item">
-				<a asp-controller="Project" asp-action="Index" localize-content class="nav-link">
+				<a asp-controller="Document" asp-action="Index" localize-content class="nav-link">
 				  <i class="fas fa-list nav-icon"></i><p>List</p>
 				</a>
 			  </li>
 			  @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
 								{
 									<li class="nav-item">
-										<a asp-controller="Project" asp-action="Create" localize-content class="nav-link">
+										<a asp-controller="Document" asp-action="Create" localize-content class="nav-link">
 											<i class="fas fa-plus nav-icon"></i><p>Create</p>
 
 										</a>
 									</li>
 								}
-			<li class="nav-item">
-				<a asp-controller="Project" asp-action="Template" localize-content class="nav-link">
-				  <i class="fas fa-clone nav-icon"></i><p>Templates</p>
-				</a>
-			  </li>
 		   </ul>
 		  </li>
 		  

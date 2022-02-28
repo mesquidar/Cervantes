@@ -1,5 +1,4 @@
-﻿using Cervantes.Contracts;
-using DinkToPdf;
+﻿using DinkToPdf;
 using DinkToPdf.Contracts;
 using RazorLight;
 using System.IO;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cervantes.Application
 {
-    public class PDFManager : IPDFManager
+    public class PDFManager
     {
         private readonly IRazorLightEngine _razorEngine;
         private readonly IConverter _pdfConverter;

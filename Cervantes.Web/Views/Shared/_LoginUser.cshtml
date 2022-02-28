@@ -22,8 +22,7 @@
 					<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/ChangePassword" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-key"></i> Password</a>
 					<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-unlock"></i> Two-factor authentication</a>
 					<div class="divider dropdown-divider"></div>
-							<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-sticky-note"></i> My Notes</a>
-							<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-share-square"></i> Shared Notes</a>
+							<a class="dropdown-item" asp-area="" asp-controller="Note" asp-action="Index" asp-route-culture="@culture" title="Manage" localize-content><i class="fas fa-sticky-note"></i> My Notes</a>
 					
 
 					<div class="divider dropdown-divider"></div>

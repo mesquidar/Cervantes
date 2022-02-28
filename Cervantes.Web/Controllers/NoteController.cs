@@ -1,26 +1,25 @@
 ﻿using Cervantes.Contracts;
 using Cervantes.CORE;
-using Cervantes.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Linq;
 using System.Security.Claims;
 
 namespace Cervantes.Web.Controllers
 {
-    public class DocumentController : Controller
+    public class NoteController : Controller
     {
-        private readonly ILogger<DocumentController> _logger = null;
+
+        private readonly ILogger<NoteController> _logger = null;
         private readonly IHostingEnvironment _appEnvironment;
-        IDocumentManager documentManager = null;
-        public DocumentController(IDocumentManager documentManager, ILogger<DocumentController> logger)
+        INoteManager noteManager = null;
+        public NoteController(INoteManager noteManager, ILogger<NoteController> logger)
         {
-            this.documentManager = documentManager;
+            this.noteManager = noteManager;
             _logger = logger;
         }
 
@@ -30,14 +29,14 @@ namespace Cervantes.Web.Controllers
             try
             {
 
-                var model = documentManager.GetAll().Select(e => new CORE.Document
+                var model = noteManager.GetAll().Select(e => new CORE.Note
                 {
                     Id = e.Id,
                     Name = e.Name,
                     Description = e.Description,
-                    FilePath = e.FilePath,
                     User = e.User,
                     UserId = e.UserId,
+                    CreatedDate = e.CreatedDate
 
                 });
 
@@ -55,7 +54,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error ocurred loading Document Index. User: {0}", User.FindFirstValue(ClaimTypes.Name));
+                _logger.LogError(ex, "An error ocurred loading Note Index. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -71,61 +70,50 @@ namespace Cervantes.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Create(DocumentViewModel model, IFormFile upload)
+        public ActionResult Create(Note model, IFormFile upload)
         {
             try
             {
-                var file = Request.Form.Files["upload"];
-                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Documents");
-                var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
 
-                }
-
-                Document doc = new Document
+                Note note = new Note
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    FilePath = "/Attachments/Documents" + uniqueName,
                     CreatedDate = DateTime.Now,
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                    Visibility = Visibility.Public
+                    UserId = User.FindFirstValue(ClaimTypes.Name)
                 };
-                documentManager.AddAsync(doc);
-                documentManager.Context.SaveChanges();
+                noteManager.AddAsync(note);
+                noteManager.Context.SaveChanges();
                 TempData["created"] = "created";
-                _logger.LogInformation("User: {0} Created a new Document: {1}", User.FindFirstValue(ClaimTypes.Name), doc.Name);
+                _logger.LogInformation("User: {0} Created a new Note: {1}", User.FindFirstValue(ClaimTypes.Name), note.Name);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 //guardamo log si hay un excepcion
-                _logger.LogError(ex, "An error ocurred adding a new Document. User: {0}", User.FindFirstValue(ClaimTypes.Name));
+                _logger.LogError(ex, "An error ocurred adding a new Note. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View("Index");
 
             }
         }
 
-        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Edit(int id)
         {
             try
             {
                 //obtenemos la categoria a editar mediante su id
-                var result = documentManager.GetById(id);
+                var result = noteManager.GetById(id);
 
-                Client client = new Client
+                Note note = new Note
                 {
                     Name = result.Name,
                     Description = result.Description,
                 };
-                return View(client);
+                return View(note);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error ocurred loading edit form on Document Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
+                _logger.LogError(ex, "An error ocurred loading edit form on Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
 
             }
@@ -134,24 +122,23 @@ namespace Cervantes.Web.Controllers
         // POST: DocumentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Edit(int id, Document model)
         {
             try
             {
-                var result = documentManager.GetById(id);
+                var result = noteManager.GetById(id);
                 result.Name = model.Name;
                 result.Description = model.Description;
 
-                documentManager.Context.SaveChanges();
+                noteManager.Context.SaveChanges();
                 TempData["edited"] = "edited";
-                _logger.LogInformation("User: {0} edited Document: {1}", User.FindFirstValue(ClaimTypes.Name), result.Name);
+                _logger.LogInformation("User: {0} edited Note: {1}", User.FindFirstValue(ClaimTypes.Name), result.Name);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 //guardamos log si hay excepcion
-                _logger.LogError(ex, "An error ocurred editing Document Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
+                _logger.LogError(ex, "An error ocurred editing Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
@@ -161,22 +148,23 @@ namespace Cervantes.Web.Controllers
         {
             try
             {
-                var doc = documentManager.GetById(id);
-                if (doc != null)
+                var note = noteManager.GetById(id);
+                if (note != null)
                 {
-                    Document document = new Document
+                    Note note1 = new Note
                     {
-                        Id = doc.Id,
-                        Name = doc.Name,
-                        Description = doc.Description,
+                        Id = note.Id,
+                        Name = note.Name,
+                        Description = note.Description,
+                        CreatedDate = note.CreatedDate,
                     };
 
-                    return View(document);
+                    return View(note1);
                 }
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "An error ocurred loading delet form on Document Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
+                _logger.LogError(e, "An error ocurred loading delet form on Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
 
@@ -186,28 +174,34 @@ namespace Cervantes.Web.Controllers
         // POST: DocumentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
-                var doc = documentManager.GetById(id);
-                if (doc != null)
+                var note = noteManager.GetById(id);
+                if (note != null)
                 {
-                    documentManager.Remove(doc);
-                    documentManager.Context.SaveChanges();
+                    if (note.UserId == User.FindFirstValue(ClaimTypes.Name))
+                    {
+                        noteManager.Remove(note);
+                        noteManager.Context.SaveChanges();
+
+                        TempData["deleted"] = "deleted";
+                        _logger.LogInformation("User: {0} deleted Note: {1}", User.FindFirstValue(ClaimTypes.Name), note.Name);
+                        return RedirectToAction("Index");
+                    }
+
                 }
 
-                TempData["deleted"] = "deleted";
-                _logger.LogInformation("User: {0} deleted document: {1}", User.FindFirstValue(ClaimTypes.Name), doc.Name);
                 return RedirectToAction("Index");
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error ocurred deleteing Document Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
+                _logger.LogError(ex, "An error ocurred deleteing Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
         }
     }
 }
+
