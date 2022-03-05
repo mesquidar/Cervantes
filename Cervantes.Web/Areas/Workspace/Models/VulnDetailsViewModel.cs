@@ -15,5 +15,6 @@ namespace Cervantes.Web.Areas.Workspace.Models
         /// File Uploaded
         /// </summary>
         public IFormFile upload { get; set; }
+        public Visibility Visibility { get; set; }
     }
 }

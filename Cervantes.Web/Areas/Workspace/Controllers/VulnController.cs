@@ -1,12 +1,14 @@
 ﻿using Cervantes.Contracts;
 using Cervantes.CORE;
 using Cervantes.Web.Areas.Workspace.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 
@@ -21,10 +23,11 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
         IVulnCategoryManager vulnCategoryManager = null;
         IVulnNoteManager vulnNoteManager = null;
         IVulnAttachmentManager vulnAttachmentManager = null;
+        private readonly IHostingEnvironment _appEnvironment;
         private readonly ILogger<VulnController> _logger = null;
 
         public VulnController(IVulnManager vulnManager, IProjectManager projectManager, ILogger<VulnController> logger, ITargetManager targetManager,
-            IVulnCategoryManager vulnCategoryManager, IVulnNoteManager vulnNoteManager, IVulnAttachmentManager vulnAttachmentManager)
+            IVulnCategoryManager vulnCategoryManager, IVulnNoteManager vulnNoteManager, IVulnAttachmentManager vulnAttachmentManager, IHostingEnvironment _appEnvironment)
         {
             this.vulnManager = vulnManager;
             this.projectManager = projectManager;
@@ -32,6 +35,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             this.vulnCategoryManager = vulnCategoryManager;
             this.vulnAttachmentManager = vulnAttachmentManager;
             this.vulnNoteManager = vulnNoteManager;
+            this._appEnvironment = _appEnvironment;
             _logger = logger;
         }
         // GET: VulnController
@@ -239,7 +243,6 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             {
                 var result = vulnManager.GetById(id);
                 result.Name = model.Name;
-                result.ProjectId = project;
                 result.Template = model.Template;
                 result.cve = model.cve;
                 result.Description = model.Description;
@@ -309,6 +312,173 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 _logger.LogError(e, "An error ocurred deleting a Vuln Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
+        }
+
+        [HttpPost]
+        public IActionResult AddNote(IFormCollection form)
+        {
+            try
+            {
+                if (form != null)
+                {
+
+                    VulnNote note = new VulnNote
+                    {
+                        Name = form["noteName"],
+                        Description = form["noteDescription"],
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        Visibility = (Visibility)Enum.ToObject(typeof(Visibility), Int32.Parse(form["Visibility"])),
+                        VulnId = Int32.Parse(form["vulnId"])
+
+                    };
+
+                    vulnNoteManager.Add(note);
+                    vulnNoteManager.Context.SaveChanges();
+                    TempData["addedNote"] = "added";
+                    _logger.LogInformation("User: {0} Added new note: {1} on Vuln: {2}", User.FindFirstValue(ClaimTypes.Name), note.Name, Int32.Parse(form["vulnId"]));
+                    return RedirectToAction("Details", "Vuln", new { id = Int32.Parse(form["vulnId"]) });
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Vuln", new { id = Int32.Parse(form["vulnId"]) });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error ocurred adding a Note on Vuln: {1}. User: {2}", Int32.Parse(form["vulnId"]), User.FindFirstValue(ClaimTypes.Name));
+                return RedirectToAction("Details", "Vuln", new { id = Int32.Parse(form["vulnId"]) });
+            }
+
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteNote(int id, int project, int vuln)
+        {
+            try
+            {
+                if (id != 0)
+                {
+                    var result = vulnNoteManager.GetById(id);
+
+                    vulnNoteManager.Remove(result);
+                    vulnNoteManager.Context.SaveChanges();
+                    TempData["deletedNote"] = "deleted";
+                    _logger.LogInformation("User: {0} Deleted note: {1} on Vuln: {2}", User.FindFirstValue(ClaimTypes.Name), result.Name, vuln);
+                    return RedirectToAction("Details", "Vuln", new { id = result.VulnId });
+                }
+                else
+                {
+                    return RedirectToAction("Details", "Vuln", new { id = vuln });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error ocurred deleting a Note on Project: {1}. User: {2}", project, User.FindFirstValue(ClaimTypes.Name));
+                return RedirectToAction("Details", "Vuln", new { id = vuln });
+
+            }
+
+        }
+
+
+        [HttpPost]
+        public IActionResult AddAttachment(IFormCollection form, IFormFile upload)
+        {
+            try
+            {
+                if (form != null && upload != null)
+                {
+                    var file = Request.Form.Files["upload"];
+                    var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Vuln/" + form["vulnId"] + "/");
+                    var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
+
+                    if (Directory.Exists(uploads))
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+
+                        }
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(uploads);
+
+                        using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+
+                        }
+                    }
+
+
+
+                    VulnAttachment attachment = new VulnAttachment
+                    {
+                        Name = form["attachmentName"],
+                        VulnId = Int32.Parse(form["vulnId"]),
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        FilePath = "/Attachments/Project/" + form["vulnId"] + "/" + uniqueName,
+
+                    };
+
+                    vulnAttachmentManager.Add(attachment);
+                    vulnAttachmentManager.Context.SaveChanges();
+                    TempData["addedAttachment"] = "added";
+                    _logger.LogInformation("User: {0} Added an attachment: {1} on Vuln: {2}", User.FindFirstValue(ClaimTypes.Name), attachment.Name, Int32.Parse(form["vulnId"]));
+                    return RedirectToAction("Details", "Vuln", new { id = Int32.Parse(form["vulnId"]) });
+                }
+                else
+                {
+                    TempData["errorAttachment"] = "added";
+                    _logger.LogError("An error ocurred adding an Attachment on Vuln: {1}. User: {2}", Int32.Parse(form["vulnId"]), User.FindFirstValue(ClaimTypes.Name));
+                    return RedirectToAction("Details", "Vuln", new { id = Int32.Parse(form["vulnId"]) });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error ocurred adding an Attachment on Vuln: {1}. User: {2}", Int32.Parse(form["project"]), User.FindFirstValue(ClaimTypes.Name));
+                return RedirectToAction("Details", "Vuln", new { id = Int32.Parse(form["vulnId"]) });
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAttachment(int id, int project, int vuln)
+        {
+            try
+            {
+                if (id != 0)
+                {
+                    var result = vulnAttachmentManager.GetById(id);
+
+                    var pathFile = _appEnvironment.WebRootPath + result.FilePath;
+                    if (System.IO.File.Exists(pathFile))
+                    {
+                        System.IO.File.Delete(pathFile);
+                    }
+
+                    vulnAttachmentManager.Remove(result);
+                    vulnAttachmentManager.Context.SaveChanges();
+                    TempData["deletedAttachment"] = "deleted";
+                    _logger.LogInformation("User: {0} Deleted an attachment: {1} on Vuln: {2}", User.FindFirstValue(ClaimTypes.Name), result.Name, vuln);
+                    return RedirectToAction("Details", "Vuln", new { id = vuln });
+                }
+                else
+                {
+                    _logger.LogError("An error ocurred deleting an Attachment on Vuln: {1}. User: {2}", vuln, User.FindFirstValue(ClaimTypes.Name));
+                    return RedirectToAction("Details", "Vuln", new { id = vuln });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error ocurred deleting an Attachment on Vuln: {1}. User: {2}", vuln, User.FindFirstValue(ClaimTypes.Name));
+                return RedirectToAction("Details", "Vuln", new { id = vuln });
+
+
+            }
+
         }
     }
 }

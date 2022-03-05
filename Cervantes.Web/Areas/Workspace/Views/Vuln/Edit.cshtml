@@ -81,7 +81,7 @@
                             </div>
                              <div class="form-group">
                                 <label class="control-label">Target</label>
-                                @Html.DropDownListFor(model => model.Target, Html.GetEnumSelectList<VulnStatus>(),new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.TargetId, Model.TargetList,new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label asp-for="CVSS3" class="control-label"></label>

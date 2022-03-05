@@ -1,6 +1,6 @@
 ﻿@using System.Net
 @using Cervantes.CORE
-@model Cervantes.Web.Areas.Workspace.Models.TargetDetailsViewModel
+@model VulnDetailsViewModel
 
 @{
     ViewData["Title"] = "Vuln Details";
@@ -53,7 +53,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-folder"></i> @Model.Project.Name</h1>
+            <h1 localize-content><i class="fas fa-bug"></i> @Model.Vuln.Name</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -81,20 +81,43 @@
                 <div class="card card-primary card-outline">
                   <div class="card-body box-profile">
                     <div class="text-center">
-                      <span class="profile-user-img img-fluid img-circle"><i class="fas fa-bug"></i></span>
+                        <span class="profile-user-img img-fluid img-circle"><i class="fas fa-bug"></i></span>
                     </div>
     
-                    <h3 class="profile-username text-center">@Model.Target.Name</h3>
-                    
+                    <h3 class="profile-username text-center">@Model.Vuln.Name</h3>              
                     <dt> <p localize-content>Created by</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.Target.User.FullName)</dd>
-                    <dt> <p localize-content>Created On</p></dt>
+                    <dd>@Html.DisplayFor(model => model.Vuln.User.FullName)</dd>
+
+                    <dt> <p localize-content>Category</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.Target.User.FullName)</dd>
-                    <dt> <p localize-content>Vuln Category</p></dt>
+                    <dd>@Html.DisplayFor(model => model.Vuln.VulnCategory.Name)</dd>
+
+                    <dt> <p localize-content>CVE</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.Target.User.FullName)</dd>
+                    <dd>@Html.DisplayFor(model => model.Vuln.cve)</dd>
+
+                    <dt> <p localize-content>CVSS3 Score</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Vuln.CVSS3)</dd>
+
+                    <dt> <p localize-content>CVSS Vector</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Vuln.CVSS3)</dd>
+
+                    <dt> <p localize-content>Risk</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Vuln.cve)</dd>
+
+                    <dt> <p localize-content>Status</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Vuln.cve)</dd>
+
+                    <dt> <p localize-content>Target</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Vuln.Target.Name)</dd>
+
+
 
                   </div>
                   <!-- /.card-body -->
@@ -106,46 +129,238 @@
                 <div class="card">
                   <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                      <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>       
-                      <li class="nav-item"><a class="nav-link active" href="#poc" data-toggle="tab">Exploting</a></li> 
-                      <li class="nav-item"><a class="nav-link active" href="#remediation" data-toggle="tab">Remediation</a></li>
-                      <li class="nav-item"><a class="nav-link active" href="#notes" data-toggle="tab">Notes</a></li> 
-                      <li class="nav-item"><a class="nav-link active" href="#attachments" data-toggle="tab">Attachments</a></li> 
+                      <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li> 
+                      <li class="nav-item"><a class="nav-link" href="#exploitation" data-toggle="tab">Exploitation</a></li>   
+                      <li class="nav-item"><a class="nav-link" href="#remediation" data-toggle="tab">Remediation</a></li>   
+                      <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments</a></li>   
                     </ul>
-                  </div><!-- /.card-header --
-                  >
+                  </div><!-- /.card-header -->
                   <div class="card-body">
                     <div class="tab-content">
                      
                       <div class="active tab-pane" id="details">
-                        
+                        <dt> <p localize-content>Description</p></dt>
+                        <hr>
+                        <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Vuln.Description))</dd>
 
+                        <dt> <p localize-content>Impact</p></dt>
+                        <hr>
+                        <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Vuln.Impact))</dd>
+                      
                       </div>
                       <!-- /.tab-pane -->
 
-                      <div class="tab-pane" id="poc">
-                        
+                      <div class="tab-pane" id="exploitation">
+                        <dt> <p localize-content>Proof of Concept</p></dt>
+                        <hr>
+                        <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Vuln.ProofOfConcept))</dd>
 
                       </div>
-                      <!-- /.tab-pane -->
 
                       <div class="tab-pane" id="remediation">
-                        
+                        <dt> <p localize-content>Remediation</p></dt>
+                        <hr>
+                        <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Vuln.Remediation))</dd>
 
+                        <dt> <p localize-content>Remediation Complexity</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.Vuln.RemediationComplexity)</dd>
+
+                        <dt> <p localize-content>Remediation Priority</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.Vuln.RemediationPriority)</dd>
                       </div>
-                      <!-- /.tab-pane -->
+
+
+
 
                       <div class="tab-pane" id="notes">
-                        
+                         <table id="noteResults" class="table table-bordered table-hover projects" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Name</th>
+                                    <th localize-content>Description</th>
+                                    <th localize-content>Created by</th>
+                                    <th localize-content>Visibility</th>
+                                    <th localize-content>Options</th>
+                          
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
 
+                                @foreach (var note in Model.Notes)
+                                {
+                             <tr>
+                                        <td>@note.Name</td>
+                                        <td>@Html.Raw(@WebUtility.HtmlDecode(note.Description))</td>
+                                        <td>@note.User.FullName</td>
+                                        <td>@note.Visibility</td>
+                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                            {
+                                                <td>
+                                                    <form asp-action="DeleteNote" method="post" enctype="multipart/form-data">
+                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Vuln" asp-action="DeleteNote" asp-route-project="@Model.Vuln.ProjectId" asp-route-id="@note.Id" asp-route-vuln="@Model.Vuln.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                    </form>
+                                                </td>
+
+                                            }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+
+
+                              <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addNoteModal">
+                              Add Note
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="addNoteModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="addNoteModalLabel">Add Note to Vuln</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <form asp-action="AddNote" method="post" enctype="multipart/form-data">
+                                  <div class="modal-body">
+
+                                    <input asp-for="@Model.Project.Id" type="hidden" id="project" name="project"/>
+                                    <input asp-for="@Model.Vuln.Id" type="hidden" id="vulnId" name="vulnId"/>
+
+                                     <div class="form-group">
+                                        <label class="control-label">Name</label>
+                                        <input type="text" class="form-control"  id="noteName" name="noteName"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">Note Description</label>
+                                        <textarea class="form-control" id="noteDescription" name="noteDescription"></textarea>
+                                    </div>
+
+                                   <div class="form-group">
+                                        <label class="control-label">Visibility</label>
+                                        @Html.DropDownListFor(model => model.Visibility, Html.GetEnumSelectList<Visibility>(),new { @class = "form-control" })
+                                    </div>  
+                                    
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Add" class="btn btn-success" />
+                                  </div>
+                                   </form>
+                                </div>
+                              </div>
+                            </div>
+                              
+
+                            
                       </div>
-                      <!-- /.tab-pane -->
 
-                      <div class="active tab-pane" id="attachments">
-                        
+                      <div class="tab-pane" id="attachments">
+                        <table id="attachmentsResults" class="table table-bordered table-hover projects" width="100%">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th localize-content>Name</th>
+                                    <th localize-content>File</th>
+                                    <th localize-content>Uploaded by</th>
+                                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                        {
+                                            <th localize-content>Options</th>
+                                        }                             
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
 
+                                @foreach (var attachment in Model.Attachments)
+                                {
+                             <tr>
+                                        <td>@attachment.Name</td>
+                                        <td>@attachment.FilePath</td>
+                                        <td>@attachment.User.FullName</td>
+                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                            {
+                                                <td>
+                                                    <form asp-action="DeleteAttachment" method="post" enctype="multipart/form-data">
+                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Vuln" asp-action="DeleteAttachment" asp-route-project="@Model.Vuln.ProjectId" asp-route-id="@attachment.Id" asp-route-vuln="@Model.Vuln.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                    </form>
+                                                </td>
+
+                                            }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+
+
+                            @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                          {
+                              <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addAttachmentModal">
+                              Add Attachment
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="addAttachmentModal" tabindex="-1" role="dialog" aria-labelledby="addAttachmentModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="addAttachmentModalLabel">Add Attachment to Vuln</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <form asp-action="AddAttachment" method="post" enctype="multipart/form-data">
+                                  <div class="modal-body">
+
+                                    <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
+                                    <input asp-for="@Model.Vuln.Id" type="hidden" id="vulnId" name="vulnId"/>
+
+                                     <div class="form-group">
+                                        <label class="control-label">Name</label>
+                                        <input type="text" class="form-control"  id="attachmentName" name="attachmentName"/>
+                                    </div>
+
+                                               <div class="form-group">
+                                               <label for="upload" localize-content>Select File</label>
+                                                <div class="input-group">
+                                                  <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="upload" name="upload">
+                                                    <label class="custom-file-label" for="upload" localize-content>Choose File</label>
+                                                  </div>
+
+                                                </div>
+                                         </div>
+                                    
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Add" class="btn btn-success" />
+                                  </div>
+                                   </form>
+                                </div>
+                              </div>
+                            </div>
+                              
+
+                            }
                       </div>
-                      <!-- /.tab-pane -->
 
                     </div>
                     <!-- /.tab-content -->
@@ -245,3 +460,4 @@
 
 </script>
 }                       
+
