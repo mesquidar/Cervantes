@@ -70,10 +70,11 @@ namespace Cervantes.Web
             services.AddScoped<ITaskAttachmentManager, TaskAttachmentManager>();
             services.AddScoped<IVulnManager, VulnManager>();
             services.AddScoped<IVulnCategoryManager, VulnCategoryManager>();
+            services.AddScoped<IVulnNoteManager, VulnNoteManager>();
+            services.AddScoped<IVulnAttachmentManager, VulnAttachmentManager>();
             services.AddScoped<IDocumentManager, DocumentManager>();
             services.AddScoped<INoteManager, NoteManager>();
             services.AddScoped<ILogManager, LogManager>();
-
 
 
             var cultures = new[]

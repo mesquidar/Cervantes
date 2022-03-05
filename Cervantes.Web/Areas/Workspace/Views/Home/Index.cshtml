@@ -2,7 +2,7 @@
 @model Cervantes.Web.Areas.Workspace.Models.DashboardViewModel
 
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = "Workspace Dashboard";
 }
 
     <!-- Content Header (Page header) -->
@@ -323,7 +323,7 @@
                 <div class="row">
                   <div class="col-md-8">
                     <div class="chart-responsive"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                      <canvas id="vulnerabilitiesSeverity" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
+                      <canvas id="vulnSeverity" style="display: block; width: 180px; height: 90px;" class="chartjs-render-monitor" width="180" height="90"></canvas>
                     </div>
                     <!-- ./chart-responsive -->
                   </div>
@@ -335,9 +335,6 @@
                       <li><i class="far fa-circle text-warning"></i> Medium</li>
                       <li><i class="far fa-circle text-orange"></i> High</li>
                       <li><i class="far fa-circle text-danger"></i> Critical</li>
-
-
-
                     </ul>
                   </div>
                   <!-- /.col -->
