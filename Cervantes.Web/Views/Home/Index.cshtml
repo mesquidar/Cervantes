@@ -1,6 +1,6 @@
 ﻿@model Cervantes.Web.Models.DashboardViewModel
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = "Dashboard";
 }
 
     <!-- Content Header (Page header) -->
@@ -131,13 +131,6 @@
                      @if(Model.ActiveProjects.FirstOrDefault() != null){
                         <!--Table-->
                         <table id="clientResults" class="table table-bordered table-hover" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Project</th>                        
-                                </tr>
-                            </thead>
-                            <!--Table head-->
                             <!--Table body-->
                             <tbody>
 
@@ -145,7 +138,7 @@
                                 {
                                     <tr>
                                         <td>                  
-                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @project.Name</span></a>                       
+                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-folder"></i> @project.Name</span></a>                       
                                         </td>
                                     </tr>
                                 }
@@ -175,13 +168,6 @@
                      @if(Model.RecentClients.FirstOrDefault() != null){
                         <!--Table-->
                         <table id="clientResults" class="table table-bordered table-hover" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Clients</th>                        
-                                </tr>
-                            </thead>
-                            <!--Table head-->
                             <!--Table body-->
                             <tbody>
 
@@ -220,13 +206,6 @@
                      @if(Model.RecentDocuments.FirstOrDefault() != null){
                         <!--Table-->
                         <table id="clientResults" class="table table-bordered table-hover" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Documents</th>                        
-                                </tr>
-                            </thead>
-                            <!--Table head-->
                             <!--Table body-->
                             <tbody>
 
@@ -234,7 +213,7 @@
                                 {
                                     <tr>
                                         <td>                  
-                                            <a asp-controller="Document" asp-action="Details" asp-route-id="@doc.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @doc.Name</span></a>                       
+                                            <a asp-controller="Document" asp-action="Details" asp-route-id="@doc.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-file"></i> @doc.Name</span></a>                       
                                         </td>
                                     </tr>
                                 }
@@ -262,13 +241,6 @@
                      @if(Model.RecentVulns.FirstOrDefault() != null){
                         <!--Table-->
                         <table id="clientResults" class="table table-bordered table-hover" width="100%">
-                            <!--Table head-->
-                            <thead>
-                                <tr>
-                                    <th localize-content>Vulnerabilities</th>                        
-                                </tr>
-                            </thead>
-                            <!--Table head-->
                             <!--Table body-->
                             <tbody>
 
@@ -276,7 +248,7 @@
                                 {
                                     <tr>
                                         <td>                  
-                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@vulns.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @vulns.Name</span></a>                       
+                                            <a asp-controller="Project" asp-action="Details" asp-route-id="@vulns.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-bug"></i> @vulns.Name</span></a>                       
                                         </td>
                                     </tr>
                                 }

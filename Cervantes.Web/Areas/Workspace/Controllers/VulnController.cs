@@ -52,6 +52,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error ocurred loading Vuln Workspace Index. Project: {1} User: {2}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
 

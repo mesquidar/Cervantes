@@ -18,9 +18,10 @@ namespace Cervantes.Web.Controllers
         private readonly ILogger<DocumentController> _logger = null;
         private readonly IHostingEnvironment _appEnvironment;
         IDocumentManager documentManager = null;
-        public DocumentController(IDocumentManager documentManager, ILogger<DocumentController> logger)
+        public DocumentController(IDocumentManager documentManager, ILogger<DocumentController> logger, IHostingEnvironment _appEnvironment)
         {
             this.documentManager = documentManager;
+            this._appEnvironment = _appEnvironment;
             _logger = logger;
         }
 
@@ -60,6 +61,29 @@ namespace Cervantes.Web.Controllers
             }
         }
 
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var doc = documentManager.GetById(id);
+                Document model = new Document
+                {
+                    Name = doc.Name,
+                    Description = doc.Description,
+                    UserId = doc.UserId,
+                    User = doc.User,
+                    FilePath = doc.FilePath,
+                    Visibility = doc.Visibility,
+                    CreatedDate = doc.CreatedDate,
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error ocurred loading Document Details. User: {0}. Document: {1}", User.FindFirstValue(ClaimTypes.Name), id);
+                return RedirectToAction("Index");
+            }
+        }
 
         // GET: DocumentController/Create
         public ActionResult Create()
@@ -88,7 +112,7 @@ namespace Cervantes.Web.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    FilePath = "/Attachments/Documents" + uniqueName,
+                    FilePath = "/Attachments/Documents/" + uniqueName,
                     CreatedDate = DateTime.Now,
                     UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                     Visibility = Visibility.Public
@@ -116,12 +140,12 @@ namespace Cervantes.Web.Controllers
                 //obtenemos la categoria a editar mediante su id
                 var result = documentManager.GetById(id);
 
-                Client client = new Client
+                Document doc = new Document
                 {
                     Name = result.Name,
                     Description = result.Description,
                 };
-                return View(client);
+                return View(doc);
             }
             catch (Exception ex)
             {

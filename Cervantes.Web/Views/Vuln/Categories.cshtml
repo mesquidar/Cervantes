@@ -1,8 +1,8 @@
-﻿@using System.Net
-@model IEnumerable<Cervantes.CORE.Document>
+﻿@using Cervantes.CORE
+@model IEnumerable<VulnCategory>
 
 @{
-    ViewData["Title"] = "Clients";
+    ViewData["Title"] = "Vuln Categories";
 }
 @{
     if (TempData["deleted"] != null)
@@ -38,12 +38,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fa fa-file"></i> Documents</h1>
+            <h1 localize-content><i class="fas fa-briefcase"></i> Clients</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item active" localize-content>Documents</li>
+              <li class="breadcrumb-item active" localize-content>Clients</li>
             </ol>
           </div>
         </div>
@@ -57,52 +57,37 @@
 <div class="card">
     <div class="card-body">
 
-   
+    
+         @if(Model.FirstOrDefault() != null){
         <!--Table-->
-        <table id="clientResults" class="table table-bordered table-hover" width="100%">
+        <table id="vulnCategories" class="table table-bordered table-hover" width="100%">
             <!--Table head-->
             <thead>
                 <tr>
                     <th localize-content>Name</th>
                     <th localize-content>Description</th>
-                    <th localize-content>Uploaded By</th>
-                    <th localize-content>Options</th>
-
-                    </tr>
+                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                        {
+                            <th localize-content>Options</th>
+                        }                             
+                </tr>
             </thead>
             <!--Table head-->
             <!--Table body-->
             <tbody>
 
-                @foreach (var doc in Model)
+                @foreach(var cat in Model)
                 {
                     <tr>
-                        <td>                  
-                            <a asp-controller="Client" asp-action="Details" asp-route-id="@doc.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @doc.Name</span></a>                       
-                        </td>
-                        <td>@Html.Raw(@WebUtility.HtmlDecode(doc.Description))</td>
-                        <td>@doc.User.FullName</td>
+                        <td>@cat.Name</td>
+                        <td>@cat.Description</td>
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
                                 <td>
-                                    <a asp-area="" asp-controller="Document" asp-action="Details" asp-route-id="@doc.Id" class="btn btn-tool">
-                                    <i class="fas fa-eye"></i>
-                                  </a>
-                                   <a asp-area="" asp-controller="Document" asp-action="Edit" asp-route-id="@doc.Id" class="btn btn-tool">
-                                    <i class="fas fa-pen"></i>
-                                  </a>
-                                   <a asp-area="" asp-controller="Document" asp-action="Delete" asp-route-id="@doc.Id" class="btn btn-tool">
-                                    <i class="fas fa-trash"></i>
-                                  </a>
-                                    
+                                        <a class="btn btn-tool" asp-area="" asp-controller="Vuln" asp-action="EditCategory" asp-route-id="@cat.Id" localize-content><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-tool" asp-area="" asp-controller="Vuln" asp-action="DeleteCategory" asp-route-id="@cat.Id" localize-content ><i class="fas fa-trash"></i></a>
                                 </td>
 
-                            }
-                            else
-                            {
-                                <a asp-area="" asp-controller="Document" asp-action="View" asp-route-id="@doc.Id" class="btn btn-tool">
-                                    <i class="fas fa-eye"></i>
-                                  </a>
                             }
 
                     </tr>
@@ -112,7 +97,7 @@
             <!--Table body-->
         </table>
         <!--Table-->
-
+        }
 
         </div>
         </div>
@@ -124,7 +109,7 @@
 <script>
 
     $(document).ready(function () {
-        $('#clientResults').DataTable({
+        $('#vulnCategories').DataTable({
             "responsive": true
         });
         $('.dataTables_length').addClass('bs-select');
@@ -133,17 +118,3 @@
 
 </script>
 }
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
