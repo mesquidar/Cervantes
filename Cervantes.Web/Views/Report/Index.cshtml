@@ -1,7 +1,7 @@
 ﻿@model ReportViewModel
 
 @{
-    Layout = "";
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
             margin-top: 25.4mm;
             margin-left: 31.7mm;
             margin-right: 31.7mm;
-            font-size: 9pt;
+            font-size: 11pt;
         }
         a {
             color: #748094;
@@ -71,12 +71,17 @@
 
 <body>
 
+    <div align="center" >
+
+        <img src="~/img/logo.png" />
+        <h1>Test Company</h1>
+    </div>
+    
 
 
-{% if configuration.include_revisions_table and reports %}
     <div style="break-after:page;page-break-after: always;"></div>
 
-    <h2>Version control</h2>
+    <h1>Version control</h1>
 
     <table>
         <thead>
@@ -87,45 +92,54 @@
         </tr>
         </thead>
         <tbody>
-        {% for version in reports %}
+
             <tr>
-                <td>{{ version.insert_ts }}</td>
-                <td>{{ version.version_name }}</td>
-                <td>{{ version.version_description }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
-        {% endfor %}
+ 
         </tbody>
     </table>
-{% endif %}
 
 <div style="break-after:page;page-break-after: always;"></div>
 
-<h1>@Model.Project.Name</h1>
-<p>@Model.Project.Description</p>
-<hr>
+
 
 <div style="break-after:page;page-break-after: always;"></div>
 
-{% if configuration.include_team_bios and users %}
+
     <h1><a id="pentesting-team">Pentesting team</a></h1>
+    @if (Model.Users != null) {
 
-    <table>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td style="border: 0; width: 60px; padding-bottom: 8px;">
-                    <img alt="Avatar" style="width: 50px;"
+        <table>
+            <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Position</th>
+        </tr>
+        </thead>
+            <tbody>
+                @foreach(var user in Model.Users){
+                <tr>
+                    <td style=" width: 60px; padding-bottom: 8px;">
+                        <img alt="Avatar" style="width: 50px;"
                          src="https://www.gravatar.com/avatar/{{ user.email_md5 }}?s=200&d=robohash"/>
-                </td>
-                <td style="border: 0;">
-                    <h3>{{ user.full_name }}</h3>
-                    <p>{{ user.short_bio }}</p>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% endif %}
+                    </td>
+                    <td>
+                        <h3>@user.User.FullName</h3>
+                        
+                        
+                    </td>
+                    <td><p>@user.User.Email</p></td>
+                    <td><p>@user.User.Position</p></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
 
     @if (Model.Targets != null)
     {
@@ -134,20 +148,29 @@
 
         <h1><a id="targets">Targets</a></h1>
 
-        <ul>
             @foreach (var target in Model.Targets)
             {
-                <li><strong>@target.Name</strong> (@target.Type)</li>
+            <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                     
+                <tr>
+                    <td>@target.Name</td>
+                    <td>@target.Type</td>
+                </tr>
+            </tbody>
+        </table>
+
             }
 
-        </ul>
     }
 
 <div style="break-after:page;page-break-after: always;"></div>
-
-
-    @if(Model.Vulns != null)
-    {
 
 
         <h1><a id="findings-overview">Findings overview</a></h1>
@@ -164,59 +187,89 @@
                     
                 
                 <tr>
-                    <td class="risk-{{ item.severity }}">{{ item.severity|capitalize }}</td>
-                    <td>{{ item.count }}</td>
+                    <td style="background-color:#dc3545">Critical</td>
+                    <td>@Model.Vulns.Where(x => x.Risk == Cervantes.CORE.VulnRisk.Critical).Count()</td>
                 </tr>
-                
+                <tr>
+                    <td style="background-color:#fd7e14">High</td>
+                    <td>@Model.Vulns.Where(x => x.Risk == Cervantes.CORE.VulnRisk.High).Count()</td>
+                </tr>
+                <tr>
+                    <td style="background-color:#ffc107">Medium</td>
+                    <td>@Model.Vulns.Where(x => x.Risk == Cervantes.CORE.VulnRisk.Medium).Count()</td>
+                </tr>
+                <tr>
+                    <td style="background-color:#28a745">Low</td>
+                    <td>@Model.Vulns.Where(x => x.Risk == Cervantes.CORE.VulnRisk.Low).Count()</td>
+                </tr>
+                <tr>
+                    <td style="background-color:#007bff">Info</td>
+                    <td>@Model.Vulns.Where(x => x.Risk == Cervantes.CORE.VulnRisk.Info).Count()</td>
+                </tr>
             </tbody>
         </table>
-    }
+    
 
 <div style="break-after:page;page-break-after: always;"></div>
 
-<h1>Vulnerabilities</h1>
+<h1><a id="vulns">Vulnerabilities</a></h1>
+
     @if (Model.Vulns != null)
     {
+        @foreach (var vuln in Model.Vulns)
+        {
 
+            <div>
+               
+            <h2>@vuln.Name</h2>
 
-        <div>
-            {% if vulnerability.external_id %}
-            <h3>{{ vulnerability.external_id }} {{ vulnerability.summary }}</h3>
-            {% else %}
-            <h3>{{ vulnerability.summary }}</h3>
-            {% endif %}
+            <table>
+                <tbody>
 
-            <dl>
-                <dt>Category</dt>
-                <dd>{{ vulnerability.category_name ?? '(undefined)' }}</dd>
+                    <tr>
+                        <td style="background-color:#6c757d; color:white">Category</td>
+                        <td>@vuln.VulnCategory.Name</td>
+                    </tr>
 
-                <dt>Severity</dt>
-                <dd>{{ vulnerability.risk|capitalize }}</dd>
+                    <tr>
+                        <td style="background-color:#6c757d; color:white">Risk</td>
+                        <td>@vuln.Risk</td>
+                    </tr>
 
-                <dt>CVSS score</dt>
-                <dd>{% if vulnerability.cvss_vector %}
-                    <a href="https://www.first.org/cvss/calculator/3.0#{{ vulnerability.cvss_vector }}">{{ vulnerability.cvss_score }}</a>
-                    {% else %}
-                    (undefined)
-                    {% endif %}</dd>
-            </dl>
-
-            {% if vulnerability.description %}
-            <h4>Description</h4>
-            <p>{{ markdownParser.text(vulnerability.description)|raw }}</p>
-            {% endif %}
-
-            {% if vulnerability.proof_of_concept %}
-            <h4>Proof of concept</h4>
-            <p>{{ markdownParser.text(vulnerability.proof_of_concept)|raw }}</p>
-            {% endif %}
-
-            {% if vulnerability.remediation %}
-            <h4>Remediation</h4>
-            <p>{{ markdownParser.text(vulnerability.remediation)|raw }}</p>
-            {% endif %}
+                    <tr>
+                        <td style="background-color:#6c757d; color:white">CVSS3 Score</td>
+                        <td><a href="https://www.first.org/cvss/calculator/3.0#@vuln.CVSSVector">@vuln.CVSS3</a></td>
+                    </tr>
+                    <tr>
+                    
+                        <td colspan="2" align="center" style="background-color:#6c757d; color:white">Description</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">@vuln.Description</td>
+                    </tr>
+                     <tr>                 
+                        <td colspan="2" align="center" style="background-color:#6c757d; color:white">Impact</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">@vuln.Impact</td>
+                    </tr>
+                    <tr>                 
+                        <td colspan="2" align="center" style="background-color:#6c757d; color:white">Proof of concept</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">@vuln.ProofOfConcept</td>
+                    </tr>
+                     <tr>                 
+                        <td colspan="2" align="center" style="background-color:#6c757d; color:white">Remediation</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">@vuln.Remediation</td>
+                    </tr>
+                </tbody>
+            </table>
 
         </div>
+        }
     }
 </body>
 </html>

@@ -6,9 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.4" />
-    <PackageReference Include="LazZiya.TagHelpers" Version="5.0.0" />
+    <PackageReference Include="LazZiya.TagHelpers" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.11" />
@@ -23,8 +22,7 @@
     <PackageReference Include="NLog" Version="4.7.13" />
     <PackageReference Include="NLog.Appsettings.Standard" Version="2.1.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.14.0" />
-    <PackageReference Include="RazorLight" Version="1.1.0" />
-    <PackageReference Include="RazorLight.NetCore3" Version="3.0.2" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.2.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="TinyMCE" Version="5.10.0" />
   </ItemGroup>
@@ -38,6 +36,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Workspace\Data\" />
+    <Folder Include="Rotativa\Linux\" />
+    <Folder Include="Rotativa\MacOS\" />
     <Folder Include="wwwroot\Attachments\Images\Clients\" />
     <Folder Include="wwwroot\Attachments\Images\Avatars\" />
     <Folder Include="wwwroot\Attachments\Images\Organization\" />

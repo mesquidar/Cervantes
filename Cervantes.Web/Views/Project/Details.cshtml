@@ -797,33 +797,16 @@
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                   </div>
-                                  <form asp-action="AddAttachment" method="post" enctype="multipart/form-data">
                                   <div class="modal-body">
 
                                     <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
 
-                                     <div class="form-group">
-                                        <label class="control-label">Name</label>
-                                        <input type="text" class="form-control"  id="attachmentName" name="attachmentName"/>
-                                    </div>
-
-                                               <div class="form-group">
-                                               <label for="upload" localize-content>Select File</label>
-                                                <div class="input-group">
-                                                  <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="upload" name="upload">
-                                                    <label class="custom-file-label" for="upload" localize-content>Choose File</label>
-                                                  </div>
-
-                                                </div>
-                                         </div>
-                                    
-                                  </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    <input type="submit" value="Yes" class="btn btn-success" />
+                                    <a asp-controller="Report" asp-action="index" asp-route-id="@Model.Project.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-folder"></i> Report</span></a>
                                   </div>
-                                   </form>
+                                   </div>
                                 </div>
                               </div>
                             </div>

@@ -11,7 +11,7 @@ namespace Cervantes.Web.Models
 
         public IEnumerable<TargetServices> TargetServices { get; set; }
         public Project Project { get; set; }
-        public IEnumerable<ApplicationUser> Users { get; set; }
+        public IEnumerable<ProjectUser> Users { get; set; }
 
 
     }

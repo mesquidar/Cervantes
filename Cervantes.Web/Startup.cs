@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace Cervantes.Web
 {
@@ -75,6 +76,7 @@ namespace Cervantes.Web
             services.AddScoped<IDocumentManager, DocumentManager>();
             services.AddScoped<INoteManager, NoteManager>();
             services.AddScoped<ILogManager, LogManager>();
+
 
 
             var cultures = new[]
@@ -145,7 +147,18 @@ namespace Cervantes.Web
 
             });
 
-
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "..\\Rotativa\\Windows\\");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "..\\Rotativa\\MacOS\\");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "..\\Rotativa\\Linux\\");
+            }
         }
     }
 }
