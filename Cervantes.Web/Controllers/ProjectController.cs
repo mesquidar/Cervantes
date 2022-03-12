@@ -28,6 +28,7 @@ namespace Cervantes.Web.Controllers
         ITaskManager taskManager = null;
         IUserManager userManager = null;
         IVulnManager vulnManager = null;
+        IReportManager reportManager = null;
 
         /// <summary>
         /// ProjectController Constructor
@@ -36,7 +37,7 @@ namespace Cervantes.Web.Controllers
         /// <param name="clientManager">ClientManager</param>
         public ProjectController(IProjectManager projectManager, IClientManager clientManager, IProjectUserManager projectUserManager, IProjectNoteManager projectNoteManager,
             IProjectAttachmentManager projectAttachmentManager, ITargetManager targetManager, ITaskManager taskManager, IUserManager userManager, IVulnManager vulnManager, IHostingEnvironment _appEnvironment,
-            ILogger<ProjectController> logger)
+            ILogger<ProjectController> logger, IReportManager reportManager)
         {
             this.projectManager = projectManager;
             this.clientManager = clientManager;
@@ -49,6 +50,7 @@ namespace Cervantes.Web.Controllers
             this.vulnManager = vulnManager;
             this._appEnvironment = _appEnvironment;
             _logger = logger;
+            this.reportManager = reportManager;
         }
 
         /// <summary>
@@ -130,7 +132,7 @@ namespace Cervantes.Web.Controllers
                         Tasks = taskManager.GetAll().Where(x => x.ProjectId == id),
                         Users = users,
                         Vulns = vulnManager.GetAll().Where(x => x.ProjectId == id),
-
+                        Reports = reportManager.GetAll().Where(x => x.ProjectId == id),
                     };
                     return View(model);
                 }

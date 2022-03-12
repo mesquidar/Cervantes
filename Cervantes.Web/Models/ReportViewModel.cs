@@ -13,6 +13,6 @@ namespace Cervantes.Web.Models
         public Project Project { get; set; }
         public IEnumerable<ProjectUser> Users { get; set; }
 
-
+        public IEnumerable<Report> Reports { get; set; }
     }
 }

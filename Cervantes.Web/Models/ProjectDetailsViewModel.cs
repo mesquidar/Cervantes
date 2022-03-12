@@ -16,6 +16,8 @@ namespace Cervantes.Web.Models
 
         public IEnumerable<Vuln> Vulns { get; set; }
 
+        public IEnumerable<Report> Reports { get; set; }
+
         public IList<SelectListItem> Users { get; set; }
 
         public TargetType TargetType { get; set; }

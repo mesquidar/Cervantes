@@ -91,6 +91,7 @@ namespace Cervantes.DAL
         public DbSet<VulnNote> VulnNotes { get; set; }
 
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
 
 

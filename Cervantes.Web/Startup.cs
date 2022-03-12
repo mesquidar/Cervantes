@@ -76,6 +76,7 @@ namespace Cervantes.Web
             services.AddScoped<IDocumentManager, DocumentManager>();
             services.AddScoped<INoteManager, NoteManager>();
             services.AddScoped<ILogManager, LogManager>();
+            services.AddScoped<IReportManager, ReportManager>();
 
 
 
