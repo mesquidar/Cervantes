@@ -78,7 +78,7 @@
                 {
                     <tr>
                         <td>                  
-                            <a asp-controller="Client" asp-action="Details" asp-route-id="@doc.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @doc.Name</span></a>                       
+                             @doc.Name                    
                         </td>
                         <td>@Html.Raw(@WebUtility.HtmlDecode(doc.Description))</td>
                         <td>@doc.User.FullName</td>

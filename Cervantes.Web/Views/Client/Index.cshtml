@@ -82,7 +82,7 @@
                 {
                     <tr>
                         <td>                  
-                            <a asp-controller="Client" asp-action="Details" asp-route-id="@client.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @client.Name</span></a>                       
+                             @client.Name                   
                         </td>
                         <td><a href="@client.Url">@client.Url</a></td>
                         <td>@client.ContactName</td>
@@ -91,8 +91,9 @@
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
                                 <td>
-                                    <a class="btn btn-outline-warning btn-sm" asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
-                                    <a class="btn btn-outline-danger btn-sm" asp-controller="Client" asp-action="Delete" asp-route-id="@client.Id" localize-content ><i class="fas fa-trash"></i> Delete</a>
+                                    <a class="btn btn-tool" asp-controller="Client" asp-action="Details" asp-route-id="@client.Id" localize-content><i class="fas fa-eye"></i></a>
+                                    <a class="btn btn-tool" asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id" localize-content><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-tool" asp-controller="Client" asp-action="Delete" asp-route-id="@client.Id" localize-content ><i class="fas fa-trash"></i></a>
                                 </td>
 
                             }

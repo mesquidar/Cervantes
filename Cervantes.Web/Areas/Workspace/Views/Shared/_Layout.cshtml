@@ -294,6 +294,26 @@
 				
 			</a>
 		  </li>
+		  		  <li class="nav-item">
+				<a href="#" class="nav-link" localize-content>
+				  <i class="nav-icon fas fa-bug"></i><p>Vulns<i class="right fas fa-angle-left"></i></p>
+				</a>
+				<ul class="nav nav-treeview">
+					<li class="nav-item">
+					<a asp-controller="Vuln" asp-action="Index" localize-content class="nav-link">
+					  <i class="fas fa-list nav-icon"></i><p>List</p>
+					</a>
+				  </li>
+	
+					 <li class="nav-item">
+						 <a asp-controller="Vuln" asp-action="Categories" localize-content class="nav-link">
+							  <i class="fas fa-plus nav-icon"></i><p>Categories</p>
+
+						  </a>
+					</li>
+		 
+			   </ul>
+			  </li>
 		}
 		</ul>
 	  </nav>
@@ -310,7 +330,7 @@
 
   <footer class="main-footer">
 	<div class="float-right d-none d-sm-block">
-	  <b>Version</b> 1.0
+	  <b>Version</b> Alpha-0.1
 	</div>
 	<strong>Copyright &copy; @DateTime.Now.Year <a href="https://github.com/mesquidar/Cervantes">Cervantes</a>.</strong> All rights reserved.
   </footer>

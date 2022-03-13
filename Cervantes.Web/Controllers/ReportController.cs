@@ -103,7 +103,7 @@ namespace Cervantes.Web.Controllers
                             FileName = uniqueName,
                             CustomSwitches =
             "--footer-center \"  " + "Page: [page]/[toPage]\"" +
-          " --footer-line --footer-font-size \"12\" --footer-spacing 1 --footer-font-name \"Segoe UI\""
+          " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Segoe UI\""
                         };
                         byte[] pdfData = pdfResult.BuildFile(ControllerContext).Result;
                         fileStream.Write(pdfData, 0, pdfData.Length);
@@ -120,7 +120,7 @@ namespace Cervantes.Web.Controllers
                             FileName = uniqueName,
                             CustomSwitches =
             "--footer-center \"  " + "Page: [page]/[toPage]\"" +
-          " --footer-line --footer-font-size \"12\" --footer-spacing 1 --footer-font-name \"Segoe UI\""
+          " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Segoe UI\""
                         };
                         byte[] pdfData = pdfResult.BuildFile(ControllerContext).Result;
                         fileStream.Write(pdfData, 0, pdfData.Length);
@@ -164,6 +164,51 @@ namespace Cervantes.Web.Controllers
 
             return File(fileBytes, "application/PDF", fileName);
 
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var report = reportManager.GetById(id);
+
+                reportManager.Remove(report);
+                reportManager.Context.SaveChanges();
+                _logger.LogInformation("User: {0} deleted report {1} in Project: {2}", User.FindFirstValue(ClaimTypes.Name), id, report.ProjectId);
+                return RedirectToAction("Details", "Project", new { id = report.ProjectId });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error ocurred deleting report for Project: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
+                return View();
+            }
+        }
+
+
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var report = reportManager.GetById(id);
+                Report model = new Report
+                {
+                    Name = report.Name,
+                    Description = report.Description,
+                    UserId = report.UserId,
+                    User = report.User,
+                    FilePath = report.FilePath,
+                    CreatedDate = report.CreatedDate,
+                    Version = report.Version,
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error ocurred loading Report Details. User: {0}. Report: {1}", User.FindFirstValue(ClaimTypes.Name), id);
+                return RedirectToAction("Index");
+            }
         }
     }
 }

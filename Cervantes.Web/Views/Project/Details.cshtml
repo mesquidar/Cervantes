@@ -180,7 +180,13 @@
                   <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
-              </div>
+                                <a class="btn btn-default" asp-controller="Project" asp-action="Index" localize-content>Back</a>
+                       @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                    {
+                        <a class="btn btn-outline-warning" asp-area="" asp-controller="Project" asp-action="Edit" asp-route-id="@Model.Project.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
+
+                    }
+                          </div>
               <!-- /.col -->
               <div class="col-md-10">
                 <div class="card">
@@ -238,7 +244,7 @@
                                             {
                                                 <td>
                                                     <form asp-action="DeleteMember" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@members.ProjectId" asp-route-user="@members.UserId" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                        <button type="submit" class="btn btn-tool" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@members.ProjectId" asp-route-user="@members.UserId" localize-content><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
 
@@ -344,7 +350,7 @@
                                             {
                                                 <td>
                                                     <form asp-action="DeleteTarget" method="post" enctype="multipart/form-data">
-                                                    <button class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteTarget" asp-route-target="@targets.Id" asp-route-project="@targets.ProjectId" localize-content><i class="fas fa-trash"></i> Delete</button> 
+                                                    <button class="btn btn-tool" asp-controller="Project" asp-action="DeleteTarget" asp-route-target="@targets.Id" asp-route-project="@targets.ProjectId" localize-content><i class="fas fa-trash"></i></button> 
                                                     </form>
                                                 </td>
 
@@ -516,12 +522,13 @@
                                                 {
                                                     <td><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @vulns.Risk</span></td>
                                                 }
-                                                 else if (vulns.CVSS3 > 8 && vulns.CVSS3 < 10)
+                                                 else if (vulns.CVSS3 > 8 && vulns.CVSS3 < 11)
                                                 {
                                                     <td><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @vulns.Risk</span></td>
                                                 }
+                                        
 
-                                                <td>@vulns.Status</td>
+                                         <td>@vulns.Status</td>
                                         <td>@vulns.VulnCategory.Name</td>
                                         <td>@vulns.Target.Name</td>
                    
@@ -573,7 +580,7 @@
                                             {
                                                 <td>
                                                     <form asp-action="DeleteNote" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteNote" asp-route-project="@note.ProjectId" asp-route-id="@note.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                        <button type="submit" class="btn btn-tool" asp-controller="Project" asp-action="DeleteNote" asp-route-project="@note.ProjectId" asp-route-id="@note.Id" localize-content><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
 
@@ -669,7 +676,7 @@
                                             {
                                                 <td>
                                                     <form asp-action="DeleteAttachment" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Project" asp-action="DeleteAttachment" asp-route-project="@attachment.ProjectId" asp-route-id="@attachment.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                        <button type="submit" class="btn btn-tool" asp-controller="Project" asp-action="DeleteAttachment" asp-route-project="@attachment.ProjectId" asp-route-id="@attachment.Id" localize-content><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
 
@@ -747,6 +754,7 @@
                                     <th localize-content>Version</th>
                                     <th localize-content>Description</th>
                                     <th localize-content>Creation Date</th>
+                                    <th localize-content>Created By</th>
                                     <th localize-content>Options</th>
                             
                                 </tr>
@@ -762,7 +770,9 @@
                                         <td>@report.Version</td>
                                         <td>@report.Description</td>
                                         <td>@report.CreatedDate</td>
+                                        <td>@report.User.FullName</td>
                                         <td>
+                                            <a class="btn btn-tool" asp-area="" asp-controller="Report" asp-action="Details" asp-route-id="@report.Id" localize-content ><i class="fas fa-eye"></i></a>
                                               <a class="btn btn-tool" asp-area="" asp-controller="Report" asp-action="Download" asp-route-id="@report.Id" localize-content>
                                                 <i class="fas fa-download"></i>
                                             </a>
@@ -790,7 +800,7 @@
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="reportModalLabel">Add Attachment to Project</h5>
+                                    <h5 class="modal-title" id="reportModalLabel">Generate Report</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -806,19 +816,19 @@
                                             <input type="text" class="form-control"  id="reportName" name="reportName"/>
                                         </div>
                                          <div class="form-group">
-                                        <label class="control-label">Description</label>
-                                        <input type="text" class="form-control" id="description" name="name"/>
+                                        <label class="control-label">Version</label>
+                                        <input type="text" class="form-control" id="verion" name="version"/>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label">Version</label>
-                                        <textarea class="form-control" name="version" rows="10" cols="50"></textarea>
+                                        <label class="control-label">Description</label>
+                                        <textarea class="form-control" name="description" id="description" rows="10" cols="50"></textarea>
                                     </div>
                                     
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <input type="submit" value="Add" class="btn btn-success" />
+                                        <input type="submit" value="Generate" class="btn btn-success" />
                                       </div>
                                     </form>
                                    </div>
@@ -868,6 +878,9 @@
             "responsive": true
         });
         $('#attachmentsResults').DataTable({
+            "responsive": true
+        });
+        $('#reportResults').DataTable({
             "responsive": true
         });
         $('.dataTables_length').addClass('bs-select');

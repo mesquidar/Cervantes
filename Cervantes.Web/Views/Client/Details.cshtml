@@ -53,6 +53,12 @@
                   <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
+                                <a class="btn btn-default" asp-controller="Client" asp-action="Index" localize-content>Back</a>
+                       @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                    {
+                        <a class="btn btn-outline-warning" asp-area="" asp-controller="Client" asp-action="Edit" asp-route-id="@Model.Client.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
+
+                    }
               </div>
               <!-- /.col -->
               <div class="col-md-10">

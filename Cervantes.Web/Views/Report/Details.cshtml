@@ -1,8 +1,8 @@
 ﻿@using System.Net
-@model Cervantes.CORE.Document
+@model Cervantes.CORE.Report
 
 @{
-    ViewData["Title"] = "Document Details";
+    ViewData["Title"] = "Report Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,12 +16,10 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item"><a asp-controller="Client" asp-action="Index" localize-content>Document</a></li>
+              <li class="breadcrumb-item"><a asp-controller="Client" asp-action="Index" localize-content>Report</a></li>
               <li class="breadcrumb-item active" localize-content>Details</li>
             </ol>
           </div>
-
-
         </div>
       </div><!-- /.container-fluid -->
       <hr />
@@ -43,6 +41,9 @@
                     </div>
     
                     <h3 class="profile-username text-center">@Model.Name</h3>
+                    <dt><p localize-content>Version</p></dt>
+                    <hr>
+                    <dd>@Html.DisplayFor(model => model.Version)</dd>
                     <dt><p localize-content>Created by</p></dt>
                     <hr>
                     <dd>@Html.DisplayFor(model => model.User.UserName)</dd>
@@ -52,21 +53,12 @@
                     <dt> <p localize-content>Description</p></dt>
                     <hr>
                     <dd>@Html.DisplayFor(model => model.Description)</dd> 
-                    <dt> <p localize-content>Visibility</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Visibility)</dd>  
 
 
                   </div>
                   <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
-                <a class="btn btn-default" asp-controller="Document" asp-action="Index" localize-content>Back</a>
-           @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-        {
-            <a class="btn btn-outline-warning" asp-area="" asp-controller="Document" asp-action="Edit" asp-route-id="@Model.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
-
-        }
               </div>
               <!-- /.col -->
               <div class="col-md-10">
@@ -78,7 +70,7 @@
                   <div class="card-body">
                     <div class="tab-content">
                       <div class="active tab-pane" id="details">
-                        <object class="col-md-12" data="@Model.FilePath" height="1000">
+                        <object class="col-md-12" data="~/@Model.FilePath" height="1000">
                             <div>No online PDF viewer installed</div>
                         </object>
                       </div>
@@ -88,6 +80,4 @@
 
 </div>
 </div>
-
-
 </section>
