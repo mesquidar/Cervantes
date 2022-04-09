@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using Wkhtmltopdf.NetCore;
 
 namespace Cervantes.Web
 {
@@ -45,7 +46,7 @@ namespace Cervantes.Web
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseLazyLoadingProxies().UseSqlServer(
+                options.UseLazyLoadingProxies().UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -101,9 +102,12 @@ namespace Cervantes.Web
                         o.DefaultRequestCulture = new RequestCulture("en");
                     };
                 }); ;
-
+            
+            services.AddWkhtmltopdf();
 
         }
+        
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -147,8 +151,8 @@ namespace Cervantes.Web
 
 
             });
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            
+            /*if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "..\\Rotativa\\Windows\\");
             }
@@ -159,7 +163,8 @@ namespace Cervantes.Web
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "..\\Rotativa\\Linux\\");
-            }
+            }*/
+            
         }
     }
 }

@@ -33,7 +33,7 @@
 		<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" localize-content>Home</a>
 	  </li>
 	  <li class="nav-item d-none d-sm-inline-block">
-		<a class="nav-link" asp-area="" asp-controller="Workspace" asp-action="Index" localize-content>Workspace</a>
+		<a class="nav-link" asp-area="" asp-controller="Workspaces" asp-action="Index" localize-content>Workspace</a>
 	  </li>
 	  <li class="nav-item d-none d-sm-inline-block">
 		<a class="nav-link" asp-area="" asp-controller="Project" asp-action="Index" localize-content>Projects</a>
@@ -68,7 +68,7 @@
 
 	  </li>
 	  <li class="nav-item dropdown show">
-		<language-nav class="nav-link" flags="true" language-label="NativeName" cookie-handler-url="@(Url.Action("OnGetSetCultureCookie", "", new { area= "", cltr="{0}", returnUrl="{1}" }))"></language-nav>
+		<language-nav class="nav-link" flags="true" language-label="NativeName" cookie-handler-url="@(Url.Action("OnGetSetCultureCookie", "Home", new { area= "", cltr="{0}", returnUrl="{1}" }))"></language-nav>
 	  </li>
 	  @await Html.PartialAsync("_LoginUser")
 		

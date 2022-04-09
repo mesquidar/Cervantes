@@ -47,7 +47,7 @@ namespace Cervantes.Web.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(int id)
+        /*public IActionResult Index(int id)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Cervantes.Web.Controllers
                 _logger.LogError(ex, "An error ocurred generating report for Project: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
-        }
+        }*/
 
         [HttpPost]
         public IActionResult Generate(IFormCollection form)
@@ -182,7 +182,7 @@ namespace Cervantes.Web.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error ocurred deleting report for Project: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
-                return View();
+                return RedirectToAction("Index", "Project");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Cervantes.Web.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, "An error ocurred loading Report Details. User: {0}. Report: {1}", User.FindFirstValue(ClaimTypes.Name), id);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Project");
             }
         }
     }

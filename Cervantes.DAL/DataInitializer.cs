@@ -7,11 +7,13 @@ namespace Cervantes.DAL
     public class DataInitializer
     {
 
-        public static void SeedData(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, Contracts.IVulnCategoryManager vulnCategoryManager)
+        public static void SeedData(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, Contracts.IVulnCategoryManager vulnCategoryManager,
+            Contracts.IOrganizationManager organizationManager)
         {
             SeedRoles(roleManager);
             SeedUsers(userManager);
             SeedVulnCategories(vulnCategoryManager);
+            SeedOrganization(organizationManager);
         }
 
         private static void SeedUsers(UserManager<ApplicationUser> userManager)
@@ -144,6 +146,23 @@ namespace Cervantes.DAL
                 category14.Name = "Timing";
                 vulnCategoryManager.Add(category14);
                 vulnCategoryManager.Context.SaveChanges();
+            }
+        }
+
+        private static void SeedOrganization(Contracts.IOrganizationManager organizationManager)
+        {
+            if (organizationManager.GetAll().FirstOrDefault() == null)
+            {
+                Organization org = new Organization();
+                org.Id = 1;
+                org.Name = "Cervantes";
+                org.Url = "https://github.com/mesquidar/Cervantes";
+                org.ContactEmail = "cervantes@cervantes.com";
+                org.ContactName = "Cervantes";
+                org.ContactPhone = "1111111";
+                org.Description = "Cervantes Platform";
+                organizationManager.Add(org);
+                organizationManager.Context.SaveChanges();
             }
         }
 

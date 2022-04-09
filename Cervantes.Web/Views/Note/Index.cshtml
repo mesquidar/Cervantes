@@ -85,7 +85,7 @@
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
                                 <td>
-                                    <a asp-area="" asp-controller="Document" asp-action="View" asp-route-id="@note.Id" class="btn btn-tool">
+                                    <a asp-area="" asp-controller="Document" asp-action="Details" asp-route-id="@note.Id" class="btn btn-tool">
                                     <i class="fas fa-eye"></i>
                                   </a>
                                    <a asp-area="" asp-controller="Document" asp-action="Edit" asp-route-id="@note.Id" class="btn btn-tool">
@@ -100,7 +100,7 @@
                             }
                             else
                             {
-                                <a asp-area="" asp-controller="Document" asp-action="View" asp-route-id="@note.Id" class="btn btn-tool">
+                                <a asp-area="" asp-controller="Document" asp-action="Details" asp-route-id="@note.Id" class="btn btn-tool">
                                     <i class="fas fa-eye"></i>
                                   </a>
                             }

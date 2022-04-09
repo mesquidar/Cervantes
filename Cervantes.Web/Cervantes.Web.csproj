@@ -10,21 +10,23 @@
     <PackageReference Include="LazZiya.TagHelpers" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
-    <PackageReference Include="NLog" Version="4.7.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+    <PackageReference Include="NLog" Version="4.7.15" />
     <PackageReference Include="NLog.Appsettings.Standard" Version="2.1.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.14.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
     <PackageReference Include="Rotativa.AspNetCore" Version="1.2.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-    <PackageReference Include="TinyMCE" Version="5.10.0" />
+    <PackageReference Include="TinyMCE" Version="6.0.1" />
+    <PackageReference Include="Wkhtmltopdf.NetCore" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +46,21 @@
     <Folder Include="wwwroot\Attachments\Documents\" />
     <Folder Include="wwwroot\Attachments\Task\" />
     <Folder Include="wwwroot\Attachments\Project\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\Desktop\wkhtmltoimage">
+      <Link>Rotativa\MacOS\wkhtmltoimage</Link>
+    </Content>
+    <Content Include="..\..\..\Desktop\wkhtmltopdf">
+      <Link>Rotativa\MacOS\wkhtmltopdf</Link>
+    </Content>
+    <Content Include="..\..\..\Downloads\libwkhtmltox.so">
+      <Link>Rotativa\Linux\libwkhtmltox.so</Link>
+    </Content>
+    <Content Include="..\..\..\Downloads\wkhtmltopdf">
+      <Link>Rotativa\Linux\wkhtmltopdf</Link>
+    </Content>
   </ItemGroup>
 
 </Project>

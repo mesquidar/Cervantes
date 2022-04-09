@@ -199,8 +199,8 @@ namespace Cervantes.Web.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    StartDate = model.StartDate,
-                    EndDate = model.EndDate,
+                    StartDate = model.StartDate.ToUniversalTime(),
+                    EndDate = model.EndDate.ToUniversalTime(),
                     ClientId = model.ClientId,
                     ProjectType = model.ProjectType,
                     Status = model.Status,
@@ -230,10 +230,33 @@ namespace Cervantes.Web.Controllers
         {
             try
             {
-                var project = projectManager.GetById(id);
-                Project model = new Project
+                var result = clientManager.GetAll().Select(e => new ClientViewModel
                 {
+                    Id = e.Id,
+                    Name = e.Name,
+                }).ToList();
 
+                var li = new List<SelectListItem>();
+
+                foreach (var item in result)
+                {
+                    li.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString() });
+                }
+                
+                
+                var project = projectManager.GetById(id);
+                ProjectViewModel model = new ProjectViewModel
+                {
+                    Name = project.Name,
+                    Description = project.Description,
+                    StartDate = project.StartDate,
+                    EndDate = project.EndDate,
+                    Template = project.Template,
+                    Client = project.Client,
+                    ClientId = project.ClientId,
+                    Status = project.Status,
+                    ProjectType = project.ProjectType,
+                    ItemList = li
                 };
                 return View(model);
             }

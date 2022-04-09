@@ -45,7 +45,8 @@ namespace Cervantes.Web
                         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                         var vulnCategoryManager = serviceProvider.GetRequiredService<Contracts.IVulnCategoryManager>();
-                        DataInitializer.SeedData(userManager, roleManager, vulnCategoryManager);
+                        var organizationManager = serviceProvider.GetRequiredService<Contracts.IOrganizationManager>();
+                        DataInitializer.SeedData(userManager, roleManager, vulnCategoryManager, organizationManager);
                     }
                     catch (Exception ex)
                     {

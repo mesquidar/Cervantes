@@ -1,26 +1,24 @@
-﻿@using System.Net
 @using Cervantes.CORE
-@model Cervantes.Web.Areas.Workspace.Models.TargetServiceViewModel
+@model ProjectViewModel 
 
 @{
-    ViewData["Title"] = "Create Service";
+    ViewData["Title"] = "Edit Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
-@{
 
-}
-
+    <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-bullseye"></i> Create Service</h1>
+            <h1 localize-content><i class="fas fa-folder"></i> Create Project</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item" localize-content>Workspace</li>
-              <li class="breadcrumb-item" localize-content>Target</li>
+              <li class="breadcrumb-item"><a asp-controller="Project" asp-action="Index" localize-content>Projects</a></li>
               <li class="breadcrumb-item active" localize-content>Create</li>
             </ol>
           </div>
@@ -31,68 +29,66 @@
     
     <!-- Main content -->
     <section class="content">
-    
-          <div class="card">
+         <div class="card">
     <div class="card-body">
-
-<div class="row justify-content-center">
-    <div class="col-md-12">
-        <form asp-area="Workspace" asp-controller="Target" asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                 <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Target.Id" />
-            <div class="form-group">
-                <label asp-for="TargetService.Name" class="control-label"></label>
-                <input asp-for="TargetService.Name" class="form-control" />
-                <span asp-validation-for="TargetService.Name" class="text-danger"></span>
+                        <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Template" /> @Html.DisplayNameFor(model => model.Template)
+                </label>
             </div>
             <div class="form-group">
-                <label asp-for="TargetService.Version" class="control-label"></label>
-                <textarea id="description" asp-for="TargetService.Version" class="form-control" rows="4"></textarea>
-                <span asp-validation-for="TargetService.Version" class="text-danger"></span>
+                <label asp-for="Name" class="control-label">Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TargetService.Port" class="control-label"></label>
-                <textarea id="description" asp-for="TargetService.Port" class="form-control" rows="4"></textarea>
-                <span asp-validation-for="TargetService.Port" class="text-danger"></span>
+                <label asp-for="Description" class="control-label">Description</label>
+                <textarea id="description" asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TargetService.Description" class="control-label"></label>
-                <textarea id="description" asp-for="TargetService.Description" class="form-control" rows="4"></textarea>
-                <span asp-validation-for="TargetService.Description" class="text-danger"></span>
+                <label asp-for="StartDate" class="control-label">Start Date</label>
+                <input asp-for="StartDate" class="form-control"/>
+                <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TargetService.Note" class="control-label"></label>
-                <textarea id="description" asp-for="TargetService.Note" class="form-control" rows="4"></textarea>
-                <span asp-validation-for="TargetService.Note" class="text-danger"></span>
+                <label asp-for="EndDate" class="control-label">End Date</label>
+                <input asp-for="EndDate" class="form-control" data-date-format="mm/dd/yyyy hh:mm:ss" />
+                <span asp-validation-for="EndDate" class="text-danger" ></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientId" class="control-label">Client</label>
+                @Html.DropDownListFor(m => m.ClientId, Model.ItemList, "--Select--", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientId" class="control-label">Project Status</label>
+                @Html.DropDownListFor(model => model.Status, Html.GetEnumSelectList<ProjectStatus>(),new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientId" class="control-label">Project Type</label>
+                @Html.DropDownListFor(model => model.ProjectType, Html.GetEnumSelectList<ProjectType>(),new { @class = "form-control" })
             </div>
 
             <div class="form-group">
-                  <a class="btn btn-default" asp-area="Workspace" asp-controller="Target" asp-action="Index" localize-content>Back</a>
-                <input type="submit" class="btn btn-dark" localize-content></input>
+                <a class="btn btn-default" asp-action="Index">Back</a>
+                <input type="submit" value="Create" class="btn btn-dark" />
             </div>
         </form>
-    </div>
-</div>
-    </div>
-</div>
+            </div>
+        </div>
+           </div>
+        </div>
+    </section>
 
-
-</section>
-
-           
-  @section Scripts{
-<script>
-
-    $(document).ready(function () {
-        $('#servicesResults').DataTable({
-            "responsive": true
-        });
-
-        });
-        $('.dataTables_length').addClass('bs-select');
-    });
-
-     var useDarkMode = window.matchMedia('(prefers-color-scheme: light)').matches;
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+     <script src="~/lib/theme/plugins/bs-customfile-input/bs-custom-file-input.min.js"></script>
+    <script>
+    var useDarkMode = window.matchMedia('(prefers-color-scheme: light)').matches;
 
         tinymce.init({
           selector: 'textarea#description',
@@ -156,8 +152,10 @@
 
 
          $(document).ready(function () {
-          bsCustomFileInput.init();
-            });
+  bsCustomFileInput.init();
+});
 
-</script>
-}                       
+
+         </script>
+}
+

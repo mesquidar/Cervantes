@@ -36,7 +36,7 @@ namespace Cervantes.Web.Controllers
             try
             {
 
-                var org = organizationManager.GetAll().FirstOrDefault();
+                var org = organizationManager.GetById(1);
 
 
 
@@ -81,7 +81,7 @@ namespace Cervantes.Web.Controllers
         {
             try
             {
-                var result = organizationManager.GetAll().FirstOrDefault();
+                var result = organizationManager.GetById(1);
 
                 if (result != null)
                 {

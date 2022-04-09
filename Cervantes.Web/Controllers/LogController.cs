@@ -55,20 +55,7 @@ namespace Cervantes.Web.Controllers
 
 
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
 
         public ActionResult Export()
         {

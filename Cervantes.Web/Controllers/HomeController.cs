@@ -98,7 +98,7 @@ namespace Cervantes.Web.Controllers
             return LocalRedirect(returnUrl);
         }
 
-        public IActionResult Workspaces()
+        /*public IActionResult Workspaces()
         {
             try
             {
@@ -120,6 +120,6 @@ namespace Cervantes.Web.Controllers
                 _logger.LogError(ex, "An error ocurred loading MyWorkspaces. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
-        }
+        }*/
     }
 }

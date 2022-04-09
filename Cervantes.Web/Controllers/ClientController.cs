@@ -145,8 +145,8 @@ namespace Cervantes.Web.Controllers
                     ContactName = model.ContactName,
                     ContactEmail = model.ContactEmail,
                     Url = model.Url,
-                    ImagePath = "/Attachments/Images/Clients" + uniqueName,
-                    CreatedDate = DateTime.Now,
+                    ImagePath = "/Attachments/Images/Clients/" + uniqueName,
+                    CreatedDate = DateTime.UtcNow,
                     UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
                 clientManager.AddAsync(client);
