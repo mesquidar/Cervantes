@@ -63,7 +63,7 @@ namespace Cervantes.Web.Controllers
             try
             {
 
-                var model = projectManager.GetAll().Select(e => new ProjectViewModel
+                var model = projectManager.GetAll().Where(x => x.Template == false).Select(e => new ProjectViewModel
                 {
                     Id = e.Id,
                     Name = e.Name,
@@ -150,6 +150,7 @@ namespace Cervantes.Web.Controllers
         /// Method sheo create form
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Create()
         {
             try
@@ -226,6 +227,7 @@ namespace Cervantes.Web.Controllers
         /// </summary>
         /// <param name="id">Project Id</param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Edit(int id)
         {
             try
@@ -276,26 +278,40 @@ namespace Cervantes.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [Authorize(Roles = "Admin,SuperUser")]
+        public ActionResult Edit(int id, ProjectViewModel model)
         {
             try
             {
+                var result = projectManager.GetById(id);
+                result.Name = model.Name;
+                result.Status = model.Status;
+                result.Description = model.Description;
+                result.Template = model.Template;
+                result.ClientId = model.ClientId;
+                result.StartDate = model.StartDate.ToUniversalTime();
+                result.EndDate = model.EndDate.ToUniversalTime();
+                result.ProjectType = model.ProjectType;
+                projectManager.Context.SaveChanges();
+
                 _logger.LogInformation("User: {0} Edited project. Id: {1}", User.FindFirstValue(ClaimTypes.Name), id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Project",new {id = id});
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error ocurred editing project Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
-                return View();
-            }
+                return RedirectToAction("Details", "Project",new {id = id});            }
         }
 
         // GET: ProjectController/Delete/5
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Delete(int id)
         {
             try
             {
-                return View();
+                var model = projectManager.GetById(id);
+                
+                return View(model);
             }
             catch (Exception ex)
             {
@@ -308,10 +324,17 @@ namespace Cervantes.Web.Controllers
         // POST: ProjectController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
+                var project = projectManager.GetById(id);
+                if (project != null)
+                {
+                    projectManager.Remove(project);
+                    projectManager.Context.SaveChanges();
+                }
                 _logger.LogInformation("User: {0} deleted Project Id: {1}", User.FindFirstValue(ClaimTypes.Name), id);
                 return RedirectToAction(nameof(Index));
             }
@@ -341,20 +364,8 @@ namespace Cervantes.Web.Controllers
                     StartDate = e.StartDate,
                     EndDate = e.EndDate,
                     ClientId = e.ClientId,
-
-
                 });
-
-                if (model != null)
-                {
-                    return View(model);
-                }
-                else
-                {
-                    TempData["empty"] = "No clients introduced";
-                    return View();
-                }
-
+                return View(model);
 
             }
             catch (Exception ex)
@@ -372,18 +383,36 @@ namespace Cervantes.Web.Controllers
         public ActionResult Template(int id)
         {
             try
-            {
-                var template = projectManager.GetById(id);
-                if (template.Template == true)
                 {
+                    var result = clientManager.GetAll().Select(e => new ClientViewModel
+                    {
+                        Id = e.Id,
+                        Name = e.Name,
+                    }).ToList();
 
-                }
-                else
-                {
-                    TempData["errorTemplate"] = "added";
-                    return View("Templates");
-                }
-                return View();
+                    var li = new List<SelectListItem>();
+
+                    foreach (var item in result)
+                    {
+                        li.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString() });
+                    }
+                
+                
+                    var project = projectManager.GetById(id);
+                    ProjectViewModel model = new ProjectViewModel
+                    {
+                        Name = project.Name,
+                        Description = project.Description,
+                        StartDate = project.StartDate,
+                        EndDate = project.EndDate,
+                        Template = project.Template,
+                        Client = project.Client,
+                        ClientId = project.ClientId,
+                        Status = project.Status,
+                        ProjectType = project.ProjectType,
+                        ItemList = li
+                    };
+                    return View(model);
 
             }
             catch (Exception ex)
@@ -391,6 +420,36 @@ namespace Cervantes.Web.Controllers
                 _logger.LogError(ex, "An error ocurred loading template Project Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,SuperUser")]
+        public ActionResult Template(int id, ProjectViewModel model)
+        {
+            try
+            {
+                var result = projectManager.GetById(id);
+                result.Name = model.Name;
+                result.Status = model.Status;
+                result.Description = model.Description;
+                result.Template = model.Template;
+                result.ClientId = model.ClientId;
+                result.StartDate = model.StartDate.ToUniversalTime();
+                result.EndDate = model.EndDate.ToUniversalTime();
+                result.ProjectType = model.ProjectType;
+                result.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                projectManager.Add(result);
+                projectManager.Context.SaveChanges();
+
+                _logger.LogInformation("User: {0} created project. Id: {1}", User.FindFirstValue(ClaimTypes.Name), id);
+                return RedirectToAction("Details", "Project",new {id = id});
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error ocurred creating project Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
+                return RedirectToAction("Details", "Project",new {id = id});            }
         }
 
 

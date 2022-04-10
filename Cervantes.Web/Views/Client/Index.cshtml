@@ -97,6 +97,12 @@
                                 </td>
 
                             }
+                         else
+                         {
+                             <td>
+                                 <a class="btn btn-tool" asp-controller="Client" asp-action="Details" asp-route-id="@client.Id" localize-content><i class="fas fa-eye"></i></a>
+                             </td>
+                         }
 
                     </tr>
                 }

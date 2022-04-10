@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using Cervantes.CORE;
 
 namespace Cervantes.Web.Controllers
 {
@@ -38,8 +39,6 @@ namespace Cervantes.Web.Controllers
 
                 var org = organizationManager.GetById(1);
 
-
-
                 if (org != null)
                 {
                     var model = new CORE.Organization
@@ -55,13 +54,8 @@ namespace Cervantes.Web.Controllers
                     };
                     return View(model);
                 }
-                else
-                {
-                    TempData["org"] = "No clients introduced";
-                    return RedirectToAction("Edit");
-                }
-
-
+                return View();
+                
             }
             catch (Exception ex)
             {
@@ -69,50 +63,7 @@ namespace Cervantes.Web.Controllers
                 return View();
             }
         }
-
-
-
-        /// <summary>
-        /// Method show edit organization form
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult Edit(int id)
-        {
-            try
-            {
-                var result = organizationManager.GetById(1);
-
-                if (result != null)
-                {
-                    var model = new OrganizationViewModel
-                    {
-                        Id = result.Id,
-                        Name = result.Name,
-                        ContactEmail = result.ContactEmail,
-                        ContactName = result.ContactName,
-                        ContactPhone = result.ContactPhone,
-                        Url = result.Url,
-                        ImagePath = result.ImagePath,
-                        Description = result.Description,
-
-                    };
-
-                    return View(model);
-                }
-                else
-                {
-                    return View();
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "An error ocurred loading editing Organization form. User: {0}", User.FindFirstValue(ClaimTypes.Name));
-                Redirect("Error");
-            }
-
-            return View();
-        }
+        
 
         /// <summary>
         /// Method save organization form
@@ -122,12 +73,12 @@ namespace Cervantes.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, OrganizationViewModel model)
+        public ActionResult Index(Organization model)
         {
 
             try
             {
-                var result = organizationManager.GetById(id);
+                var result = organizationManager.GetById(1);
                 result.Name = model.Name;
                 result.Description = model.Description;
                 result.ContactEmail = model.ContactEmail;
@@ -182,12 +133,12 @@ namespace Cervantes.Web.Controllers
 
                 TempData["avatar_deleted"] = "avatar deleted";
                 _logger.LogInformation("User: {0} Organization Logo Deleted", User.FindFirstValue(ClaimTypes.Name));
-                return RedirectToAction("Edit", "Organization", new { id = id });
+                return RedirectToAction("Index", "Organization", new { id = id });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error ocurred deleting Organization Logo. User: {0}", User.FindFirstValue(ClaimTypes.Name));
-                return RedirectToAction("Edit", "Organization", new { id = id });
+                return RedirectToAction("Index", "Organization", new { id = id });
             }
         }
 

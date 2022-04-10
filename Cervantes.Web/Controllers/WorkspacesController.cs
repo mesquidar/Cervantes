@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Cervantes.Web.Controllers
 {
@@ -27,14 +28,15 @@ namespace Cervantes.Web.Controllers
             {
                 if (User.FindFirstValue(ClaimTypes.Role) == "Admin" | User.FindFirstValue(ClaimTypes.Role) == "SuperUser")
                 {
-                    var model = projectManager.GetAll();
+                    var model = projectManager.GetAll().Where(x => x.Template == false).ToList();
+                    
                     return View(model);
                 }
                 else
                 {
-                    var projects = projectUserManager.GetAll().Where(x => x.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier)).Select(y => y.ProjectId);
-                    var model = projectManager.GetAll().Where(x => projects.Contains(x.Id));
-                    return View(model);
+                    //var projects = projectUserManager.GetAll().Where(x => x.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier)).Select(y => y.ProjectId);
+                    //var model = projectManager.GetAll().Where(x => projects.Contains(x.Id));
+                    return View();
                 }
 
             }

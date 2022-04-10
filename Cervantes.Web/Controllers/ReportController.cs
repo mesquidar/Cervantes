@@ -132,7 +132,7 @@ namespace Cervantes.Web.Controllers
                     Name = form["reportName"],
                     ProjectId = Int32.Parse(form["project"]),
                     UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.Now.ToUniversalTime(),
                     Description = form["description"],
                     Version = form["version"],
                     FilePath = "Attachments/Reports/" + form["project"] + "/" + uniqueName
@@ -199,7 +199,7 @@ namespace Cervantes.Web.Controllers
                     UserId = report.UserId,
                     User = report.User,
                     FilePath = report.FilePath,
-                    CreatedDate = report.CreatedDate,
+                    CreatedDate = report.CreatedDate.ToUniversalTime(),
                     Version = report.Version,
                 };
                 return View(model);

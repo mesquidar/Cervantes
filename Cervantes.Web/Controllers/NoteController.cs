@@ -36,7 +36,7 @@ namespace Cervantes.Web.Controllers
                     Description = e.Description,
                     User = e.User,
                     UserId = e.UserId,
-                    CreatedDate = e.CreatedDate
+                    CreatedDate = e.CreatedDate.ToUniversalTime()
 
                 });
 
@@ -79,8 +79,8 @@ namespace Cervantes.Web.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    CreatedDate = DateTime.Now,
-                    UserId = User.FindFirstValue(ClaimTypes.Name)
+                    CreatedDate = DateTime.Now.ToUniversalTime(),
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
                 noteManager.AddAsync(note);
                 noteManager.Context.SaveChanges();
@@ -127,12 +127,16 @@ namespace Cervantes.Web.Controllers
             try
             {
                 var result = noteManager.GetById(id);
-                result.Name = model.Name;
-                result.Description = model.Description;
+                if (result.UserId == User.FindFirstValue(ClaimTypes.Name))
+                {
+                    result.Name = model.Name;
+                    result.Description = model.Description;
 
-                noteManager.Context.SaveChanges();
-                TempData["edited"] = "edited";
-                _logger.LogInformation("User: {0} edited Note: {1}", User.FindFirstValue(ClaimTypes.Name), result.Name);
+                    noteManager.Context.SaveChanges();
+                    TempData["edited"] = "edited";
+                    _logger.LogInformation("User: {0} edited Note: {1}", User.FindFirstValue(ClaimTypes.Name), result.Name);
+                    return RedirectToAction("Details", new {id = result.Id});
+                }
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -181,7 +185,7 @@ namespace Cervantes.Web.Controllers
                 var note = noteManager.GetById(id);
                 if (note != null)
                 {
-                    if (note.UserId == User.FindFirstValue(ClaimTypes.Name))
+                    if (note.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
                     {
                         noteManager.Remove(note);
                         noteManager.Context.SaveChanges();
@@ -201,6 +205,31 @@ namespace Cervantes.Web.Controllers
                 _logger.LogError(ex, "An error ocurred deleteing Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
+        }
+
+        public ActionResult Details(int id)
+        {
+            try
+            {
+                var result = noteManager.GetById(id);
+
+                if (result != null)
+                {
+                    if (result.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    {
+                        return View("Details", result);
+                    }
+
+                    return View("Index");
+                }
+                return View("Index");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error ocurred obtaining Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
+                return View("Index");
+            }
+            
         }
     }
 }

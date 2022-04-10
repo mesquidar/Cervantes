@@ -73,40 +73,45 @@
             <!--Table head-->
             <!--Table body-->
             <tbody>
-
-                @foreach (var doc in Model)
+                @if (Model != null)
                 {
-                    <tr>
-                        <td>                  
-                             @doc.Name                    
-                        </td>
-                        <td>@Html.Raw(@WebUtility.HtmlDecode(doc.Description))</td>
-                        <td>@doc.User.FullName</td>
-                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                    @foreach (var doc in Model)
+                    {
+                        <tr>
+                            <td>                  
+                                @doc.Name                    
+                            </td>
+                            <td>@Html.Raw(@WebUtility.HtmlDecode(doc.Description))</td>
+                            <td>@doc.User.FullName</td>
+                            @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
                                 <td>
                                     <a asp-area="" asp-controller="Document" asp-action="Details" asp-route-id="@doc.Id" class="btn btn-tool">
-                                    <i class="fas fa-eye"></i>
-                                  </a>
-                                   <a asp-area="" asp-controller="Document" asp-action="Edit" asp-route-id="@doc.Id" class="btn btn-tool">
-                                    <i class="fas fa-pen"></i>
-                                  </a>
-                                   <a asp-area="" asp-controller="Document" asp-action="Delete" asp-route-id="@doc.Id" class="btn btn-tool">
-                                    <i class="fas fa-trash"></i>
-                                  </a>
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a asp-area="" asp-controller="Document" asp-action="Edit" asp-route-id="@doc.Id" class="btn btn-tool">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a asp-area="" asp-controller="Document" asp-action="Delete" asp-route-id="@doc.Id" class="btn btn-tool">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                     
                                 </td>
 
                             }
                             else
                             {
-                                <a asp-area="" asp-controller="Document" asp-action="View" asp-route-id="@doc.Id" class="btn btn-tool">
-                                    <i class="fas fa-eye"></i>
-                                  </a>
+                                <td>
+                            <a asp-area="" asp-controller="Document" asp-action="Details" asp-route-id="@doc.Id" class="btn btn-tool">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            </td>
                             }
 
-                    </tr>
+                        </tr>
+                    }
                 }
+                
 
             </tbody>
             <!--Table body-->

@@ -39,7 +39,7 @@
                 <div class="card card-primary card-outline">
                   <div class="card-body box-profile">
                     <div class="text-center">
-                      
+                      <span class="img-fluid img-circle"><i class="fas fa-file"></i></span>
                     </div>
     
                     <h3 class="profile-username text-center">@Model.Name</h3>
@@ -51,7 +51,7 @@
                     <dd>@Html.DisplayFor(model => model.CreatedDate)</dd>
                     <dt> <p localize-content>Description</p></dt>
                     <hr>
-                    <dd>@Html.DisplayFor(model => model.Description)</dd> 
+                    <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Description))</dd> 
                     <dt> <p localize-content>Visibility</p></dt>
                     <hr>
                     <dd>@Html.DisplayFor(model => model.Visibility)</dd>  

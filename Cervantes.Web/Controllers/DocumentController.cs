@@ -74,7 +74,7 @@ namespace Cervantes.Web.Controllers
                     User = doc.User,
                     FilePath = doc.FilePath,
                     Visibility = doc.Visibility,
-                    CreatedDate = doc.CreatedDate,
+                    CreatedDate = doc.CreatedDate.ToUniversalTime(),
                 };
                 return View(model);
             }
@@ -99,29 +99,51 @@ namespace Cervantes.Web.Controllers
         {
             try
             {
+
                 var file = Request.Form.Files["upload"];
-                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Documents");
-                var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
 
+                if (file.Length > 0)
+                {
+                    var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Documents");
+                    var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+
+                    }
+
+                    Document doc = new Document
+                    {
+                        Name = model.Name,
+                        Description = model.Description,
+                        FilePath = "/Attachments/Documents/" + uniqueName,
+                        CreatedDate = DateTime.Now.ToUniversalTime(),
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        Visibility = Visibility.Public
+                    };
+                    documentManager.AddAsync(doc);
+                    documentManager.Context.SaveChanges();
+                    TempData["created"] = "created";
+                    _logger.LogInformation("User: {0} Created a new Document: {1}", User.FindFirstValue(ClaimTypes.Name), doc.Name);
+                    return RedirectToAction("Details","Document",new {id = doc.Id});
                 }
-
-                Document doc = new Document
+                else
                 {
-                    Name = model.Name,
-                    Description = model.Description,
-                    FilePath = "/Attachments/Documents/" + uniqueName,
-                    CreatedDate = DateTime.Now,
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                    Visibility = Visibility.Public
-                };
-                documentManager.AddAsync(doc);
-                documentManager.Context.SaveChanges();
-                TempData["created"] = "created";
-                _logger.LogInformation("User: {0} Created a new Document: {1}", User.FindFirstValue(ClaimTypes.Name), doc.Name);
-                return RedirectToAction("Index");
+                    Document doc = new Document
+                    {
+                        Name = model.Name,
+                        Description = model.Description,
+                        CreatedDate = DateTime.Now.ToUniversalTime(),
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        Visibility = Visibility.Public
+                    };
+                    documentManager.AddAsync(doc);
+                    documentManager.Context.SaveChanges();
+                    TempData["created"] = "created";
+                    _logger.LogInformation("User: {0} Created a new Document: {1}", User.FindFirstValue(ClaimTypes.Name), doc.Name);
+                    return RedirectToAction("Index","Document");
+                }
+                
             }
             catch (Exception ex)
             {

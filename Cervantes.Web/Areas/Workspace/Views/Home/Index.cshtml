@@ -34,7 +34,7 @@
                 <div class="card card-primary card-outline">
                   <div class="card-body box-profile">
                     <div class="text-center">
-                      <img class="profile-user-img img-fluid img-circle"
+                      <img class="img-fluid img-circle"
                            src="@Url.Content(Model.Project.Client.ImagePath)"
                            alt="LogoClient">
                     </div>
@@ -42,7 +42,7 @@
                     <h3 class="profile-username text-center">@Model.Project.Name</h3>
                     <dt><p localize-content>Client</p></dt>
                     <hr>
-                    <dd><a asp-controller="Client" asp-action="Details" asp-route-id="@Model.Project.Client.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @Model.Project.Client.Name</span></a></dd>
+                    <dd><a asp-area="" asp-controller="Client" asp-action="Details" asp-route-id="@Model.Project.Client.Id" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @Model.Project.Client.Name</span></a></dd>
                     <dt> <p localize-content>Start Date</p></dt>
                     <hr>
                     <dd>@Html.DisplayFor(model => model.Project.StartDate)</dd>      
