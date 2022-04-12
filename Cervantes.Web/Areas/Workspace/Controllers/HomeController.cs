@@ -47,7 +47,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 DashboardViewModel model = new DashboardViewModel
                 {
                     Project = projectManager.GetById(project),
-                    Members = projectUserManager.GetAll().Where(x => x.ProjectId == project),
+                    Members = projectUserManager.GetAll().Where(x => x.ProjectId == project).ToList(),
                     Vulns = vulnManager.GetAll().Where(x => x.ProjectId == project).OrderByDescending(x => x.CreatedDate).Take(10),
                     Tasks = taskManager.GetAll().Where(x => x.AsignedUserId == User.FindFirstValue(ClaimTypes.NameIdentifier) && x.ProjectId == project),
                     Targets = targetManager.GetAll().Where(x => x.ProjectId == project),

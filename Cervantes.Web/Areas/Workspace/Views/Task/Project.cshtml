@@ -98,10 +98,7 @@
         }
     else
     {
-        
-    
-    foreach(var task in Model.Tasks){
-        <div class="row justify-content-center">
+      <div class="row justify-content-center">
             <div class="col-md-2">
                 <div class="card card-row card-secondary">
                     <div class="card-header">
@@ -110,7 +107,7 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        @if (task.Status == Cervantes.CORE.TaskStatus.Backlog)
+                        @foreach (var task in Model.Tasks.Where( x=> x.Status == Cervantes.CORE.TaskStatus.Backlog))
                         {
                               <div class="card card-primary card-outline">
                               <div class="card-header">
@@ -142,8 +139,8 @@
             </h3>
           </div>
           <div class="card-body">
-                        @if (task.Status == Cervantes.CORE.TaskStatus.ToDo)
-                        {
+            @foreach (var task in Model.Tasks.Where( x=> x.Status == Cervantes.CORE.TaskStatus.ToDo))
+            {
                               <div class="card card-primary card-outline">
                               <div class="card-header">
                                 <h5 class="card-title">@task.Name</h5>
@@ -171,8 +168,8 @@
             </h3>
           </div>
           <div class="card-body">
-                        @if (task.Status == Cervantes.CORE.TaskStatus.InProgress)
-                        {
+            @foreach (var task in Model.Tasks.Where( x=> x.Status == Cervantes.CORE.TaskStatus.InProgress))
+            {
                               <div class="card card-primary card-outline">
                               <div class="card-header">
                                 <h5 class="card-title">@task.Name</h5>
@@ -200,8 +197,8 @@
             </h3>
           </div>
           <div class="card-body">
-                        @if (task.Status == Cervantes.CORE.TaskStatus.Blocked)
-                        {
+            @foreach (var task in Model.Tasks.Where( x=> x.Status == Cervantes.CORE.TaskStatus.Blocked))
+            {
                               <div class="card card-primary card-outline">
                               <div class="card-header">
                                 <h5 class="card-title">@task.Name</h5>
@@ -229,8 +226,8 @@
             </h3>
           </div>
           <div class="card-body">
-                        @if (task.Status == Cervantes.CORE.TaskStatus.Done)
-                        {
+            @foreach (var task in Model.Tasks.Where( x=> x.Status == Cervantes.CORE.TaskStatus.Done))
+            {
                               <div class="card card-primary card-outline">
                               <div class="card-header">
                                 <h5 class="card-title">@task.Name</h5>
@@ -250,7 +247,7 @@
           </div>
         </div>
         </div>
-        }
+        
         }
     </section>
   @section Scripts{

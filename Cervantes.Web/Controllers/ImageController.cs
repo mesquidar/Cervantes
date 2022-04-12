@@ -94,5 +94,105 @@ namespace Cervantes.Web.Controllers
             }  
             return Json(Convert.ToString(vReturnImagePath));  
         }
+        
+        [HttpPost]  
+        public JsonResult UploadOrg(IFormFile image)  
+        {  
+            var vReturnImagePath = string.Empty;  
+            if (image.Length > 0)  
+            {  
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Organization");
+                var uniqueName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+                vReturnImagePath = "/Attachments/Images/Organization/"+uniqueName;
+                //here to add Image Path to You Database ,  
+                TempData["message"] = string.Format("Image was Added Successfully");  
+            }  
+            return Json(Convert.ToString(vReturnImagePath));  
+        }
+        
+        [HttpPost]  
+        public JsonResult UploadUser(IFormFile image)  
+        {  
+            var vReturnImagePath = string.Empty;  
+            if (image.Length > 0)  
+            {  
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Avatars");
+                var uniqueName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+                vReturnImagePath = "/Attachments/Images/Avatars/"+uniqueName;
+                //here to add Image Path to You Database ,  
+                TempData["message"] = string.Format("Image was Added Successfully");  
+            }  
+            return Json(Convert.ToString(vReturnImagePath));  
+        }
+        
+        [HttpPost]  
+        public JsonResult UploadTask(IFormFile image)  
+        {  
+            var vReturnImagePath = string.Empty;  
+            if (image.Length > 0)  
+            {  
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Tasks");
+                var uniqueName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+                vReturnImagePath = "/Attachments/Images/Tasks/"+uniqueName;
+                //here to add Image Path to You Database ,  
+                TempData["message"] = string.Format("Image was Added Successfully");  
+            }  
+            return Json(Convert.ToString(vReturnImagePath));  
+        }
+        
+        [HttpPost]  
+        public JsonResult UploadTarget(IFormFile image)  
+        {  
+            var vReturnImagePath = string.Empty;  
+            if (image.Length > 0)  
+            {  
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Targets");
+                var uniqueName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+                vReturnImagePath = "/Attachments/Images/Targets/"+uniqueName;
+                //here to add Image Path to You Database ,  
+                TempData["message"] = string.Format("Image was Added Successfully");  
+            }  
+            return Json(Convert.ToString(vReturnImagePath));  
+        }
+        
+        [HttpPost]  
+        public JsonResult UploadVuln(IFormFile image)  
+        {  
+            var vReturnImagePath = string.Empty;  
+            if (image.Length > 0)  
+            {  
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Vulns");
+                var uniqueName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+                vReturnImagePath = "/Attachments/Images/Vulns/"+uniqueName;
+                //here to add Image Path to You Database ,  
+                TempData["message"] = string.Format("Image was Added Successfully");  
+            }  
+            return Json(Convert.ToString(vReturnImagePath));  
+        }
     }
 }

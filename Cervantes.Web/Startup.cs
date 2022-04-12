@@ -103,7 +103,7 @@ namespace Cervantes.Web
                     };
                 }); ;
             
-            services.AddWkhtmltopdf();
+            //services.AddWkhtmltopdf();
 
         }
         
@@ -152,18 +152,18 @@ namespace Cervantes.Web
 
             });
             
-            /*if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "..\\Rotativa\\Windows\\");
+                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "Rotativa\\Windows\\");
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "..\\Rotativa\\MacOS\\");
+                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "Rotativa/MacOS/");
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "..\\Rotativa\\Linux\\");
-            }*/
+                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "Rotativa/Linux\/");
+            }
             
         }
     }

@@ -125,12 +125,12 @@ namespace Cervantes.Web.Controllers
                     ProjectDetailsViewModel model = new ProjectDetailsViewModel
                     {
                         Project = project,
-                        ProjectUsers = projectUserManager.GetAll().Where(x => x.ProjectId == id),
+                        ProjectUsers = projectUserManager.GetAll().Where(x => x.ProjectId == id).ToList(),
                         ProjectNotes = projectNoteManager.GetAll().Where(x => x.ProjectId == id),
                         ProjectAttachments = projectAttachmentManager.GetAll().Where(x => x.ProjectId == id),
                         Targets = targetManager.GetAll().Where(x => x.ProjectId == id),
                         Tasks = taskManager.GetAll().Where(x => x.ProjectId == id),
-                        Users = users,
+                        Users = users.ToList(),
                         Vulns = vulnManager.GetAll().Where(x => x.ProjectId == id),
                         Reports = reportManager.GetAll().Where(x => x.ProjectId == id),
                     };

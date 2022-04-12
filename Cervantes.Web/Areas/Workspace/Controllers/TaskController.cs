@@ -47,7 +47,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 TaskViewModel model = new TaskViewModel
                 {
                     Project = projectManager.GetById(project),
-                    Tasks = taskManager.GetAll().Where(x => x.AsignedUserId == User.FindFirstValue(ClaimTypes.NameIdentifier) && x.ProjectId == project),
+                    Tasks = taskManager.GetAll().Where(x => x.AsignedUserId == User.FindFirstValue(ClaimTypes.NameIdentifier) && x.ProjectId == project).ToList(),
                 };
                 return View(model);
             }
@@ -149,8 +149,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                     Description = model.Description,
                     ProjectId = project,
                     TargetId = model.TargetId,
-                    StartDate = model.StartDate,
-                    EndDate = model.EndDate,
+                    StartDate = model.StartDate.ToUniversalTime(),
+                    EndDate = model.EndDate.ToUniversalTime(),
                     Status = model.Status,
                     AsignedUserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                     CreatedUserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
@@ -226,8 +226,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                     Description = model.Description,
                     ProjectId = project,
                     TargetId = model.TargetId,
-                    StartDate = model.StartDate,
-                    EndDate = model.EndDate,
+                    StartDate = model.StartDate.ToUniversalTime(),
+                    EndDate = model.EndDate.ToUniversalTime(),
                     Status = model.Status,
                     AsignedUserId = model.AsignedUserId,
                     CreatedUserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
@@ -276,8 +276,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                     TargetId = result.TargetId,
                     AsignedUserId = result.AsignedUserId,
                     CreatedUserId = result.CreatedUserId,
-                    StartDate = result.StartDate,
-                    EndDate = result.EndDate,
+                    StartDate = result.StartDate.ToUniversalTime(),
+                    EndDate = result.EndDate.ToUniversalTime(),
                     Status = result.Status,
                     TargetList = li,
                     ProjectId = project,
@@ -304,9 +304,9 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 result.Name = model.Name;
                 result.Description = model.Description;
                 result.TargetId = model.TargetId;
-                result.EndDate = model.EndDate;
+                result.EndDate = model.EndDate.ToUniversalTime();
                 result.Status = model.Status;
-                result.StartDate = model.StartDate;
+                result.StartDate = model.StartDate.ToUniversalTime();
 
                 taskManager.Context.SaveChanges();
                 TempData["edited"] = "edited";
@@ -357,8 +357,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                     Description = result.Description,
                     TargetId = result.TargetId,
                     AsignedUserId = result.AsignedUserId,
-                    StartDate = result.StartDate,
-                    EndDate = result.EndDate,
+                    StartDate = result.StartDate.ToUniversalTime(),
+                    EndDate = result.EndDate.ToUniversalTime(),
                     Status = result.Status,
                     TargetList = li,
                     ProjectId = project,
@@ -386,9 +386,9 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 result.Name = model.Name;
                 result.Description = model.Description;
                 result.TargetId = model.TargetId;
-                result.EndDate = model.EndDate;
+                result.EndDate = model.EndDate.ToUniversalTime();
                 result.Status = model.Status;
-                result.StartDate = model.StartDate;
+                result.StartDate = model.StartDate.ToUniversalTime();
                 result.AsignedUserId = model.AsignedUserId;
 
                 taskManager.Context.SaveChanges();

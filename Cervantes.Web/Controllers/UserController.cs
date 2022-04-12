@@ -111,7 +111,7 @@ namespace Cervantes.Web.Controllers
                         Position = user.Position,
                         PhoneNumber = user.PhoneNumber,
                         Option = rolUser.Result.FirstOrDefault().ToString(),
-                        Project = projectManager.GetAll().Where(x => x.UserId == user.Id)
+                        Project = projectManager.GetAll().Where(x => x.UserId == user.Id).ToList()
                     };
                     return View(model);
                 }

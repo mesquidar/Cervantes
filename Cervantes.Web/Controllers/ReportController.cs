@@ -78,15 +78,16 @@ namespace Cervantes.Web.Controllers
             try
             {
 
+                var pro = projectManager.GetById(Int32.Parse(form["project"]));
 
                 ReportViewModel model = new ReportViewModel
                 {
                     Organization = organizationManager.GetById(1),
-                    Project = projectManager.GetById(Int32.Parse(form["project"])),
-                    Vulns = vulnManager.GetAll().Where(x => x.ProjectId == Int32.Parse(form["project"])),
-                    Targets = targetManager.GetAll().Where(x => x.ProjectId == Int32.Parse(form["project"])),
-                    Users = projectUserManager.GetAll().Where(x => x.ProjectId == Int32.Parse(form["project"])),
-                    Reports = reportManager.GetAll().Where(x => x.ProjectId == Int32.Parse(form["project"])),
+                    Project = pro,
+                    Vulns = vulnManager.GetAll().Where(x => x.ProjectId == Int32.Parse(form["project"])).ToList(),
+                    Targets = targetManager.GetAll().Where(x => x.ProjectId == Int32.Parse(form["project"])).ToList(),
+                    Users = projectUserManager.GetAll().Where(x => x.ProjectId == Int32.Parse(form["project"])).ToList(),
+                    Reports = reportManager.GetAll().Where(x => x.ProjectId == Int32.Parse(form["project"])).ToList(),
                 };
 
 
@@ -98,8 +99,10 @@ namespace Cervantes.Web.Controllers
                 {
                     using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create, FileAccess.Write))
                     {
-                        var pdfResult = new ViewAsPdf(model)
+                        var pdfResult = new ViewAsPdf
                         {
+                            ViewName = "Generate",
+                            Model = model,
                             FileName = uniqueName,
                             CustomSwitches =
             "--footer-center \"  " + "Page: [page]/[toPage]\"" +

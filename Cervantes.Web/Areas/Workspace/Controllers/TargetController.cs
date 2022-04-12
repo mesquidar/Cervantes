@@ -44,7 +44,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 TargetViewModel model = new TargetViewModel
                 {
                     Project = projectManager.GetById(project),
-                    Target = targetManager.GetAll().Where(x => x.ProjectId == project)
+                    Target = targetManager.GetAll().Where(x => x.ProjectId == project).ToList()
                 };
                 return View(model);
             }
