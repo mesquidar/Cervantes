@@ -56,6 +56,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error loading documents!";
+
                 _logger.LogError(ex, "An error ocurred loading Document Index. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -80,6 +82,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading document!";
+
                 _logger.LogError(e, "An error ocurred loading Document Details. User: {0}. Document: {1}", User.FindFirstValue(ClaimTypes.Name), id);
                 return RedirectToAction("Index");
             }
@@ -147,7 +151,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
-                //guardamo log si hay un excepcion
+                TempData["error"] = "Error creating document!";
+
                 _logger.LogError(ex, "An error ocurred adding a new Document. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View("Index");
 
@@ -171,6 +176,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error loading document!";
+
                 _logger.LogError(ex, "An error ocurred loading edit form on Document Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
 
@@ -196,7 +203,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
-                //guardamos log si hay excepcion
+                TempData["error"] = "Error editing document!";
+
                 _logger.LogError(ex, "An error ocurred editing Document Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -222,6 +230,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading document!";
+
                 _logger.LogError(e, "An error ocurred loading delet form on Document Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
@@ -251,6 +261,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error deleting document!";
                 _logger.LogError(ex, "An error ocurred deleteing Document Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }

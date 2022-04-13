@@ -5,8 +5,23 @@
     ViewData["Title"] = "Organization";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible">
+            <strong localize-content>Error updating organization information!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
 
-  <!-- Content Header (Page header) -->
+@if (TempData["error"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Organization information updated successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+
+<!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">

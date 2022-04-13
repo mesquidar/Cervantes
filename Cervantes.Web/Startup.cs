@@ -162,7 +162,7 @@ namespace Cervantes.Web
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "Rotativa/Linux\/");
+                Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, "Rotativa/Linux/");
             }
             
         }

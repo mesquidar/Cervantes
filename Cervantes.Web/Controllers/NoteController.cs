@@ -54,6 +54,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error obtaining notes!";
                 _logger.LogError(ex, "An error ocurred loading Note Index. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -90,7 +91,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
-                //guardamo log si hay un excepcion
+                TempData["error"] = "Error loading note create form";
                 _logger.LogError(ex, "An error ocurred adding a new Note. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View("Index");
 
@@ -113,6 +114,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error loading edit form!";
                 _logger.LogError(ex, "An error ocurred loading edit form on Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
 
@@ -141,7 +143,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
-                //guardamos log si hay excepcion
+                TempData["error"] = "Error editing note!";
                 _logger.LogError(ex, "An error ocurred editing Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -168,6 +170,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading note!";
                 _logger.LogError(e, "An error ocurred loading delet form on Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
@@ -202,6 +205,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error deleting note!";
                 _logger.LogError(ex, "An error ocurred deleteing Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -226,6 +230,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading note!";
                 _logger.LogError(e, "An error ocurred obtaining Note Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View("Index");
             }

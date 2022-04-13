@@ -69,6 +69,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error loading clients!";
+
                 _logger.LogError(ex, "An error ocurred loading Client Index. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -97,7 +99,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
-                // guarda log si ocurre excepcion
+                TempData["error"] = "Error loading client!";
+
                 _logger.LogError(e, "An error ocurred loading Client Details. Client: {0} User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
@@ -157,7 +160,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
-                //guardamo log si hay un excepcion
+                TempData["error"] = "Error creating client!";
+
                 _logger.LogError(ex, "An error ocurred adding a new Client. User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -189,6 +193,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error loading client!";
+
                 _logger.LogError(ex, "An error ocurred loading edit form on Client Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
 
@@ -223,7 +229,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
-                //guardamos log si hay excepcion
+                TempData["error"] = "Error editing client!";
+
                 _logger.LogError(ex, "An error ocurred editing Client Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -259,6 +266,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading client!";
+
                 _logger.LogError(e, "An error ocurred loading delet form on Client Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
@@ -293,6 +302,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error deleting client!";
+
                 _logger.LogError(ex, "An error ocurred deleteing Client Id: {0}. User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }

@@ -88,6 +88,14 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }
+    
+    if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible">
+            <strong localize-content>An error was produced @TempData["error"].ToString() Project!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
 }
 
     <section class="content-header">

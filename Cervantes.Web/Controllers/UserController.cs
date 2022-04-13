@@ -80,6 +80,8 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error loading users!";
+
                 _logger.LogError(ex, "An error ocurred loading User Index. by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -118,6 +120,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading user!";
                 _logger.LogError(e, "An error ocurred loading User Id: {0}. by User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
@@ -157,6 +160,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error loading user!";
                 _logger.LogError(ex, "An error ocurred loading user cration form. by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View("Index");
             }
@@ -217,6 +221,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error creating user!";
                 _logger.LogError(ex, "An error ocurred adding a new user. by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -281,6 +286,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading user!";
                 _logger.LogError(e, "An error ocurred adding a new user. by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
@@ -338,6 +344,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error editing user!";
                 _logger.LogError(ex, "An error ocurred Editing user: {0}. by User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -369,6 +376,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading user!";
                 _logger.LogError(e, "An error ocurred loading user deletion form,by User: {0}", User.FindFirstValue(ClaimTypes.Name));
                 Redirect("Error");
             }
@@ -402,6 +410,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error deleting user!";
                 _logger.LogError(ex, "An error ocurred deleting user: {0}. by User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -429,6 +438,7 @@ namespace Cervantes.Web.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error deleting avatar user!";
                 _logger.LogError(ex, "An error ocurred deleting user avatar: {0}. by User: {1}", id, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Edit", "User", new { id = id });
             }

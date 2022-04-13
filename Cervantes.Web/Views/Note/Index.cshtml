@@ -9,7 +9,7 @@
     {
 <div class="alert alert-success alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <strong localize-content>Client deleted successfully!</strong>
+            <strong localize-content>Note deleted successfully!</strong>
             
         </div>
     }
@@ -18,7 +18,7 @@
     {
         <div class="alert alert-success alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <strong localize-content>Client created successfully!</strong>
+            <strong localize-content>Note created successfully!</strong>
             
         </div>
     }
@@ -26,7 +26,15 @@
     if (TempData["edited"] != null)
     {
         <div class="alert alert-success alert-dismissible">
-            <strong localize-content>Client edited successfully!</strong>
+            <strong localize-content>Note edited successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible">
+            <strong localize-content>@TempData["error"].ToString()</strong>
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }

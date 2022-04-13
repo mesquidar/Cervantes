@@ -29,13 +29,24 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }
+    
+    if (TempData["avatar_deleted"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>User avatar deleted successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible">
+            <strong localize-content>@TempData["error"].ToString()</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
 
-    if (TempData["vacio"] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @Html.Encode(TempData["empty"])
-    </div>
-}
+
 }
     <!-- Content Header (Page header) -->
     <section class="content-header">
