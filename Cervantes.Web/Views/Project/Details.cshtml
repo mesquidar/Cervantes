@@ -200,14 +200,14 @@
                 <div class="card">
                   <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                      <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#members" data-toggle="tab">Members <span class="badge badge-danger">@Model.ProjectUsers.Count()</span></a></li>
-                      <li class="nav-item"><a class="nav-link" href="#targets" data-toggle="tab">Targets <span class="badge badge-danger">@Model.Targets.Count()</span></a></li>
-                      <li class="nav-item"><a class="nav-link" href="#tasks" data-toggle="tab">Tasks <span class="badge badge-danger">@Model.Tasks.Count()</span></a></li>
-                      <li class="nav-item"><a class="nav-link" href="#vulns" data-toggle="tab">Vulnerabilities <span class="badge badge-danger">@Model.Vulns.Count()</span></a></li>
-                      <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes <span class="badge badge-danger">@Model.ProjectNotes.Count()</span></a></li>
-                       <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments <span class="badge badge-danger">@Model.ProjectAttachments.Count()</span></a></li>
-                       <li class="nav-item"><a class="nav-link" href="#reports" data-toggle="tab">Reports <span class="badge badge-danger">@Model.Reports.Count()</span></a></li>
+                      <li class="nav-item" localize-content><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#members" data-toggle="tab"><span localize-content>Members</span> <span class="badge badge-danger">@Model.ProjectUsers.Count()</span></a></li>
+                      <li class="nav-item" localize-content><a class="nav-link" href="#targets" data-toggle="tab"> <span localize-content>Targets</span> <span class="badge badge-danger">@Model.Targets.Count()</span></a></li>
+                      <li class="nav-item" localize-content><a class="nav-link" href="#tasks" data-toggle="tab"><span localize-content>Tasks</span> <span class="badge badge-danger">@Model.Tasks.Count()</span></a></li>
+                      <li class="nav-item" localize-content><a class="nav-link" href="#vulns" data-toggle="tab"><span localize-content>Vulnerabilities</span> <span class="badge badge-danger">@Model.Vulns.Count()</span></a></li>
+                      <li class="nav-item" localize-content><a class="nav-link" href="#notes" data-toggle="tab"><span localize-content>Notes</span> <span class="badge badge-danger">@Model.ProjectNotes.Count()</span></a></li>
+                       <li class="nav-item" localize-content><a class="nav-link" href="#attachments" data-toggle="tab"><span localize-content>Attachments</span> <span class="badge badge-danger">@Model.ProjectAttachments.Count()</span></a></li>
+                       <li class="nav-item" localize-content><a class="nav-link" href="#reports" data-toggle="tab"><span localize-content>Reports</span> <span class="badge badge-danger">@Model.Reports.Count()</span></a></li>
                       
                     </ul>
                   </div><!-- /.card-header -->
@@ -268,7 +268,7 @@
                           @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                           {
                               <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addMemberModal">
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addMemberModal" localize-content>
                               Add Member
                             </button>
 
@@ -277,7 +277,7 @@
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="addMemberModalLabel">Add Member to Project</h5>
+                                    <h5 class="modal-title" id="addMemberModalLabel" localize-content>Add Member to Project</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -286,14 +286,14 @@
                                   <div class="modal-body">
                                     <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
                                     <div class="form-group">
-                                        <label asp-for="ProjectUsers" class="control-label">User</label>
+                                        <label asp-for="ProjectUsers" class="control-label" localize-content>User</label>
                                         @Html.DropDownListFor(m => m.Users, Model.Users, new { @class = "form-control", id = "users", name="users" })
                                     </div>
                                 
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" localize-content>Close</button>
+                                    <button type="submit" class="btn btn-dark" localize-content>Add</button>
                                   </div>
                                    </form>
                                 </div>
@@ -375,7 +375,7 @@
                           {
 
                               <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addTargetModal">
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addTargetModal" localize-content>
                               Add Target
                             </button>
 
@@ -384,7 +384,7 @@
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="addTargetModalLabel">Add Target to Project</h5>
+                                    <h5 class="modal-title" id="addTargetModalLabel" localize-content>Add Target to Project</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -395,24 +395,24 @@
                                     <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
 
                                      <div class="form-group">
-                                        <label class="control-label">Name / IP / CIDR / URL</label>
+                                        <label class="control-label" localize-content>Name / IP / CIDR / URL</label>
                                         <input type="text" class="form-control" id="name" name="name"/>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label">Description</label>
+                                        <label class="control-label" localize-content>Description</label>
                                         <textarea class="form-control" name="description" rows="10" cols="50"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label">Target Type</label>
+                                        <label class="control-label" localize-content>Target Type</label>
                                         @Html.DropDownListFor(model => model.TargetType, Html.GetEnumSelectList<TargetType>(),new { @class = "form-control" })
                                     </div>  
                                     
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Close</button>
+                                      <button type="submit" class="btn btn-success" localize-content>Add</button>
                                   </div>
                                    </form>
                                 </div>
@@ -701,7 +701,7 @@
                             @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                           {
                               <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addAttachmentModal">
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addAttachmentModal" localize-content>
                               Add Attachment
                             </button>
 
@@ -710,7 +710,7 @@
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="addAttachmentModalLabel">Add Attachment to Project</h5>
+                                    <h5 class="modal-title" id="addAttachmentModalLabel" localize-content>Add Attachment to Project</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -738,8 +738,9 @@
                                     
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Close</button>
+                                      <button type="submit" class="btn btn-success" localize-content>Add</button>
+
                                   </div>
                                    </form>
                                 </div>
@@ -762,7 +763,7 @@
                                     <th localize-content>Version</th>
                                     <th localize-content>Description</th>
                                     <th localize-content>Creation Date</th>
-                                    <th localize-content>Created By</th>
+                                    <th localize-content>Created by</th>
                                     <th localize-content>Options</th>
                             
                                 </tr>
@@ -799,7 +800,7 @@
                             @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                           {
                               <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#reportModal">
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#reportModal" localize-content>
                               Generate Report
                             </button>
 
@@ -808,7 +809,7 @@
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="reportModalLabel">Generate Report</h5>
+                                    <h5 class="modal-title" id="reportModalLabel" localize-content>Generate Report</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -820,23 +821,28 @@
                                         <input asp-for="Project.Id" type="hidden" id="project" name="project"/>
 
                                          <div class="form-group">
-                                            <label class="control-label">Name</label>
+                                            <label class="control-label" localize-content>Name</label>
                                             <input type="text" class="form-control"  id="reportName" name="reportName"/>
                                         </div>
                                          <div class="form-group">
-                                        <label class="control-label">Version</label>
+                                        <label class="control-label" localize-content>Version</label>
                                         <input type="text" class="form-control" id="verion" name="version"/>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="control-label">Description</label>
-                                        <textarea class="form-control" name="description" id="description" rows="10" cols="50"></textarea>
-                                    </div>
+                                        <div class="form-group">
+                                            <label class="control-label" localize-content>Description</label>
+                                            <textarea class="form-control" name="description" id="description" rows="10" cols="50"></textarea>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                                                                <label class="control-label" localize-content>Language</label>
+                                                                                @Html.DropDownListFor(model => model.Language, Html.GetEnumSelectList<Language>(),new { @class = "form-control" })
+                                                                                </div> 
                                     
                                       </div>
                                       <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <input type="submit" value="Generate" class="btn btn-success" />
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Close</button>
+                                          <button type="submit" class="btn btn-success" localize-content>Generate</button>
                                       </div>
                                     </form>
                                    </div>

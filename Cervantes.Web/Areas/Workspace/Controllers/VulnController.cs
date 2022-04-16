@@ -52,6 +52,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading vulns!";
+
                 _logger.LogError(e, "An error ocurred loading Vuln Workspace Index. Project: {1} User: {2}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -75,6 +77,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading vuln!";
                 _logger.LogError(e, "An error ocurred loading Vuln Workspace Details.Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -122,6 +125,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading create form!";
                 _logger.LogError(e, "An error ocurred loading Task Workspace create form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -157,6 +161,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 };
                 vulnManager.Add(vuln);
                 vulnManager.Context.SaveChanges();
+                TempData["added"] = "added";
                 _logger.LogInformation("User: {0} Created a new Vuln on Project {1}", User.FindFirstValue(ClaimTypes.Name), project);
                 return RedirectToAction(nameof(Index));
             }
@@ -230,6 +235,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading vuln!";
                 _logger.LogError(e, "An error ocurred loading Vuln Workspace edit PROJECT form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -268,6 +274,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error editing vuln!";
                 _logger.LogError(e, "An error ocurred editing a Vuln Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -310,6 +317,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error deleting vulns!";
                 _logger.LogError(e, "An error ocurred deleting a Vuln Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -346,6 +354,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error adding note vuln!";
                 _logger.LogError(ex, "An error ocurred adding a Note on Vuln: {1}. User: {2}", Int32.Parse(form["vulnId"]), User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Vuln", new { id = Int32.Parse(form["vulnId"]) });
             }
@@ -375,6 +384,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error deleting vuln note!";
                 _logger.LogError(ex, "An error ocurred deleting a Note on Project: {1}. User: {2}", project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Vuln", new { id = vuln });
 
@@ -439,6 +449,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error adding attachment to vuln!";
                 _logger.LogError(ex, "An error ocurred adding an Attachment on Vuln: {1}. User: {2}", Int32.Parse(form["project"]), User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Vuln", new { id = Int32.Parse(form["vulnId"]) });
             }
@@ -474,6 +485,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error deleting attachment from vuln!";
                 _logger.LogError(ex, "An error ocurred deleting an Attachment on Vuln: {1}. User: {2}", vuln, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Vuln", new { id = vuln });
 

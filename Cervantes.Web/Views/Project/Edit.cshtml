@@ -37,45 +37,45 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Template" /> @Html.DisplayNameFor(model => model.Template)
+                    <input class="form-check-input" asp-for="Template" /> <strong localize-content>Template</strong>
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Name</label>
+                <label asp-for="Name" class="control-label" localize-content>Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label">Description</label>
+                <label asp-for="Description" class="control-label" localize-content>Description</label>
                 <textarea id="description" asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartDate" class="control-label">Start Date</label>
+                <label asp-for="StartDate" class="control-label" localize-content>Start Date</label>
                 <input asp-for="StartDate" class="form-control"/>
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDate" class="control-label">End Date</label>
+                <label asp-for="EndDate" class="control-label" localize-content>End Date</label>
                 <input asp-for="EndDate" class="form-control" data-date-format="mm/dd/yyyy hh:mm:ss" />
                 <span asp-validation-for="EndDate" class="text-danger" ></span>
             </div>
             <div class="form-group">
-                <label asp-for="ClientId" class="control-label">Client</label>
+                <label asp-for="ClientId" class="control-label" localize-content>Client</label>
                 @Html.DropDownListFor(m => m.ClientId, Model.ItemList, "--Select--", new { @class = "form-control" })
             </div>
             <div class="form-group">
-                <label asp-for="ClientId" class="control-label">Project Status</label>
+                <label asp-for="ClientId" class="control-label" localize-content>Project Status</label>
                 @Html.DropDownListFor(model => model.Status, Html.GetEnumSelectList<ProjectStatus>(),new { @class = "form-control" })
             </div>
             <div class="form-group">
-                <label asp-for="ClientId" class="control-label">Project Type</label>
+                <label asp-for="ClientId" class="control-label" localize-content>Project Type</label>
                 @Html.DropDownListFor(model => model.ProjectType, Html.GetEnumSelectList<ProjectType>(),new { @class = "form-control" })
             </div>
 
             <div class="form-group">
-                <a class="btn btn-default" asp-action="Index">Back</a>
-                <input type="submit" value="Create" class="btn btn-dark" />
+                <a class="btn btn-default" asp-action="Index" localize-content>Back</a>
+                <button type="submit" class="btn btn-dark" localize-content>Edit</button>
             </div>
         </form>
             </div>

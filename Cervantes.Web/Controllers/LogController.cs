@@ -31,14 +31,14 @@ namespace Cervantes.Web.Controllers
             {
                 var logs = logManager.GetAll().Select(e => new Log
                 {
-                    Id = e.Id,
-                    Level = e.Level,
-                    StackTrace = e.StackTrace,
-                    Message = e.Message,
-                    CreatedOn = e.CreatedOn,
-                    Exception = e.Exception,
-                    Url = e.Url,
-                    Logger = e.Logger
+                    id = e.id,
+                    level = e.level,
+                    stack_trace = e.stack_trace,
+                    message = e.message,
+                    created_on = e.created_on,
+                    exception = e.exception,
+                    url = e.url,
+                    logger = e.logger
                 });
 
                 LogViewModel model = new LogViewModel
@@ -61,14 +61,14 @@ namespace Cervantes.Web.Controllers
         {
             var logs = logManager.GetAll().Select(e => new Log
             {
-                Id = e.Id,
-                Level = e.Level,
-                StackTrace = e.StackTrace,
-                Message = e.Message,
-                CreatedOn = e.CreatedOn,
-                Exception = e.Exception,
-                Url = e.Url,
-                Logger = e.Logger
+                id = e.id,
+                level = e.level,
+                stack_trace = e.stack_trace,
+                message = e.message,
+                created_on = e.created_on,
+                exception = e.exception,
+                url = e.url,
+                logger = e.logger
             });
 
             string jsonString = JsonSerializer.Serialize(logs);

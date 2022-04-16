@@ -710,4 +710,196 @@
   <data name="Created on" xml:space="preserve">
     <value>Creado el</value>
   </data>
+  <data name="&lt;span class=&quot;info-box-text&quot;&gt;Projects&lt;/span&gt;" xml:space="preserve">
+    <value>&lt;span class="info-box-text"&gt;Proyectos&lt;/span&gt;</value>
+  </data>
+  <data name="&lt;span class=&quot;info-box-text&quot;&gt;Vulnerabilities&lt;/span&gt;" xml:space="preserve">
+    <value>&lt;span class="info-box-text"&gt;Vulnerabilidades&lt;/span&gt;</value>
+  </data>
+  <data name="&lt;span class=&quot;info-box-text&quot;&gt;Tasks&lt;/span&gt;" xml:space="preserve">
+    <value>&lt;span class="info-box-text"&gt;Tareas&lt;/span&gt;</value>
+  </data>
+  <data name="&lt;span class=&quot;info-box-text&quot;&gt;Clients&lt;/span&gt;" xml:space="preserve">
+    <value>&lt;span class="info-box-text"&gt;Clientes&lt;/span&gt;</value>
+  </data>
+  <data name="&lt;h3 class=&quot;card-title&quot;&gt;Projects Percentages&lt;/h3&gt;" xml:space="preserve">
+    <value>&lt;h3 class="card-title"&gt;Porcentajes Proyectos&lt;/h3&gt;</value>
+  </data>
+  <data name="&lt;h3 class=&quot;card-title&quot;&gt;Active Projects&lt;/h3&gt;" xml:space="preserve">
+    <value>&lt;h3 class="card-title"&gt;Proyectos Activos&lt;/h3&gt;</value>
+  </data>
+  <data name="&lt;h3 class=&quot;card-title&quot;&gt;Recent Clients&lt;/h3&gt;" xml:space="preserve">
+    <value>&lt;h3 class="card-title"&gt;Clientes Recientes&lt;/h3&gt;</value>
+  </data>
+  <data name="&lt;h3 class=&quot;card-title&quot;&gt;Recent Documents&lt;/h3&gt;" xml:space="preserve">
+    <value>&lt;h3 class="card-title"&gt;Documentos Recientes&lt;/h3&gt;</value>
+  </data>
+  <data name="&lt;h3 class=&quot;card-title&quot;&gt;Recent Vulnerabilities&lt;/h3&gt;" xml:space="preserve">
+    <value>&lt;h3 class="card-title"&gt;Vulnerabilidades Recientes&lt;/h3&gt;</value>
+  </data>
+  <data name="&lt;h3 class=&quot;card-title&quot;&gt;Vulnerabilities Status&lt;/h3&gt;" xml:space="preserve">
+    <value>&lt;h3 class="card-title"&gt;Estado Vulnerabilidades&lt;/h3&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-building&quot;&gt;&lt;/i&gt;&lt;p&gt;My Workspaces&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-building"&gt;&lt;/i&gt;&lt;p&gt;Mi Esapcio de Trabajo&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-clone nav-icon&quot;&gt;&lt;/i&gt;&lt;p&gt;Templates&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="fas fa-clone nav-icon"&gt;&lt;/i&gt;&lt;p&gt;Plantillas&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-file&quot;&gt;&lt;/i&gt;&lt;p&gt;Documents&lt;i class=&quot;right fas fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-file"&gt;&lt;/i&gt;&lt;p&gt;Documentos&lt;i class="right fas fa-angle-left"&gt;&lt;/i&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-users&quot;&gt;&lt;/i&gt;&lt;p&gt;Users&lt;i class=&quot;right fas fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-users"&gt;&lt;/i&gt;&lt;p&gt;Usuarios&lt;i class="right fas fa-angle-left"&gt;&lt;/i&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-sitemap&quot;&gt;&lt;/i&gt;&lt;p&gt;Organization&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-sitemap"&gt;&lt;/i&gt;&lt;p&gt;Organización&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-eye&quot;&gt;&lt;/i&gt;&lt;p&gt;System Logs&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-eye"&gt;&lt;/i&gt;&lt;p&gt;Logs de Sistema&lt;/p&gt;</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tareas</value>
+  </data>
+  <data name="Vulnerabilities" xml:space="preserve">
+    <value>Vulnerabilidades</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-building&quot;&gt;&lt;/i&gt; My Workspaces" xml:space="preserve">
+    <value>&lt;i class="fas fa-building"&gt;&lt;/i&gt; Mi Espacio de Trabajo</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-folder&quot;&gt;&lt;/i&gt; Projects" xml:space="preserve">
+    <value>&lt;i class="fas fa-folder"&gt;&lt;/i&gt; Proyectos</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="Start Date" xml:space="preserve">
+    <value>Fecha Inicio</value>
+  </data>
+  <data name="End Date" xml:space="preserve">
+    <value>Fecha Final</value>
+  </data>
+  <data name="Project Status" xml:space="preserve">
+    <value>Estado del Proyecto</value>
+  </data>
+  <data name="Project Type" xml:space="preserve">
+    <value>Tipo de Proyecto</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Plantilla</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-folder&quot;&gt;&lt;/i&gt; Create Project" xml:space="preserve">
+    <value>&lt;i class="fas fa-folder"&gt;&lt;/i&gt; Crear Proyecto</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-briefcase&quot;&gt;&lt;/i&gt; Delete Project" xml:space="preserve">
+    <value>&lt;i class="fas fa-briefcase"&gt;&lt;/i&gt; Borrar proyecto</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="Add Member" xml:space="preserve">
+    <value>Añadir Miembro</value>
+  </data>
+  <data name="Add Member to Project" xml:space="preserve">
+    <value>Añadir Miembro al Proyecto</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="&lt;a class=&quot;nav-link active&quot; href=&quot;#details&quot; data-toggle=&quot;tab&quot;&gt;Details&lt;/a&gt;" xml:space="preserve">
+    <value>&lt;a class="nav-link active" href="#details" data-toggle="tab"&gt;Detalles&lt;/a&gt;</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notas</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Adjuntos</value>
+  </data>
+  <data name="Targets" xml:space="preserve">
+    <value>Objetivos</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Informes</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Miembros</value>
+  </data>
+  <data name="Add Target" xml:space="preserve">
+    <value>Añadir Objetivo</value>
+  </data>
+  <data name="Add Target to Project" xml:space="preserve">
+    <value>Añadir Objetivo al Proyecto</value>
+  </data>
+  <data name="Target Type" xml:space="preserve">
+    <value>Tipo de Objetivo</value>
+  </data>
+  <data name="Name / IP / CIDR / URL" xml:space="preserve">
+    <value>Nombre / IP / CIDR / URL</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Objetivo</value>
+  </data>
+  <data name="Asigned To" xml:space="preserve">
+    <value>Asignado a</value>
+  </data>
+  <data name="Risk" xml:space="preserve">
+    <value>Riesgo</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="CVSS3 Score" xml:space="preserve">
+    <value>Calificación CVSS3</value>
+  </data>
+  <data name="Visibility" xml:space="preserve">
+    <value>Visibilidad</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Archivo</value>
+  </data>
+  <data name="Uploaded by" xml:space="preserve">
+    <value>Subido por</value>
+  </data>
+  <data name="Add Attachment" xml:space="preserve">
+    <value>Añadir Adjunto</value>
+  </data>
+  <data name="Add Attachment to Project" xml:space="preserve">
+    <value>Añadir adjunto al Proyecto</value>
+  </data>
+  <data name="Select File" xml:space="preserve">
+    <value>Seleccionar Archivo</value>
+  </data>
+  <data name="Creation Date" xml:space="preserve">
+    <value>Fecha de Creación</value>
+  </data>
+  <data name="Generate Report" xml:space="preserve">
+    <value>Generar Informe</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Generar</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-folder&quot;&gt;&lt;/i&gt; Project Templates" xml:space="preserve">
+    <value>&lt;i class="fas fa-folder"&gt;&lt;/i&gt; Plantillas de Proyectos</value>
+  </data>
+  <data name="Select Document" xml:space="preserve">
+    <value>Seleccionar Documento</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-briefcase&quot;&gt;&lt;/i&gt; Create Document" xml:space="preserve">
+    <value>&lt;i class="fas fa-briefcase"&gt;&lt;/i&gt; Crear Documento</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-briefcase&quot;&gt;&lt;/i&gt; Edit Document" xml:space="preserve">
+    <value>&lt;i class="fas fa-briefcase"&gt;&lt;/i&gt; Editar Documento</value>
+  </data>
 </root>

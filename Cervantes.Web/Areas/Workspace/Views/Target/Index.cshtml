@@ -1,23 +1,23 @@
 ﻿@model TargetViewModel
 
 @{
-    ViewData["Title"] = "Clients";
+    ViewData["Title"] = "Targets";
 }
 @{
     if (TempData["deleted"] != null)
     {
 <div class="alert alert-success alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <strong localize-content>Client deleted successfully!</strong>
+            <strong localize-content>Target deleted successfully!</strong>
             
         </div>
     }
 
-    if (TempData["created"] != null)
+    if (TempData["addedTarget"] != null)
     {
         <div class="alert alert-success alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <strong localize-content>Client created successfully!</strong>
+            <strong localize-content>Target created successfully!</strong>
             
         </div>
     }
@@ -25,7 +25,39 @@
     if (TempData["edited"] != null)
     {
         <div class="alert alert-success alert-dismissible">
-            <strong localize-content>Client edited successfully!</strong>
+            <strong localize-content>Target edited successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible">
+            <strong localize-content>@TempData["error"].ToString()</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["editedService"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Target edited successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["addedService"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Target edited successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["deletedService"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Target edited successfully!</strong>
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         </div>
     }

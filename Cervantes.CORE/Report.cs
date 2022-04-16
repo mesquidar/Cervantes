@@ -43,5 +43,7 @@ namespace Cervantes.CORE
         public string Version { get; set; }
 
         public string FilePath { get; set; }
+        
+        public Language Language { get; set; }
     }
 }

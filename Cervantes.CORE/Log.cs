@@ -10,27 +10,21 @@ namespace Cervantes.CORE
         /// Porject Note Id
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public int id { get; set; }
 
         /// <summary>
         /// Created Date
         /// </summary>
-        public DateTime CreatedOn { get; set; }
-        [Column(TypeName = "nvarchar(10)")]
-        public string Level { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
-        public string Message { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
-        public string StackTrace { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
-        public string Exception { get; set; }
-        [Column(TypeName = "nvarchar(255)")]
-        public string Logger { get; set; }
+        public DateTime created_on { get; set; }
+        public string level { get; set; }
+        public string message { get; set; }
+        public string stack_trace { get; set; }
+        public string exception { get; set; }
+        public string logger { get; set; }
         /// <summary>
         /// Note Name
         /// </summary>
-        [Column(TypeName = "nvarchar(255)")]
-        public string Url { get; set; }
+        public string url { get; set; }
 
     }
 }

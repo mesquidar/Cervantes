@@ -14,9 +14,9 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item" localize-content>Workspace</li>
-              <li class="breadcrumb-item" localize-content>Target</li>
-              <li class="breadcrumb-item active" localize-content>Delete</li>
+              <li class="breadcrumb-item" localize-content><a asp-area="" asp-controller="Workspaces" asp-action="Index" localize-content>Workspaces</a></li>
+                                          <li class="breadcrumb-item" localize-content><a asp-area="Workspace" asp-controller="Target" asp-action="Index" localize-content>Target</a></li>
+                                          <li class="breadcrumb-item active" localize-content>Delete Service</li>
             </ol>
           </div>
         </div>

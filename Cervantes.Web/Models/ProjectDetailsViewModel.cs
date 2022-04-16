@@ -22,6 +22,8 @@ namespace Cervantes.Web.Models
 
         public TargetType TargetType { get; set; }
         public Visibility Visibility { get; set; }
+        
+        public Language Language { get; set; }
 
         /// <summary>
         /// File Uploaded

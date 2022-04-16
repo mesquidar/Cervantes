@@ -3,7 +3,7 @@
 @model Cervantes.Web.Areas.Workspace.Models.TargetDetailsViewModel
 
 @{
-    ViewData["Title"] = "Task Details";
+    ViewData["Title"] = "Target Details";
 }
 
 @{
@@ -58,11 +58,9 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item" localize-content>Workspace</li>
-              <li class="breadcrumb-item" localize-content>@Model.Project.Name</li>
-              <li class="breadcrumb-item" localize-content>Task</li>
-              <li class="breadcrumb-item" localize-content>Details</li>
-              <li class="breadcrumb-item active" localize-content></li>
+              <li class="breadcrumb-item" localize-content><a asp-area="" asp-controller="Workspaces" asp-action="Index" localize-content>Workspaces</a></li>
+                                          <li class="breadcrumb-item" localize-content><a asp-area="Workspace" asp-controller="Target" asp-action="Index" localize-content>Target</a></li>
+                                          <li class="breadcrumb-item active" localize-content>Details</li>
             </ol>
           </div>
         </div>

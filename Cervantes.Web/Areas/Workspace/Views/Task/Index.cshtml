@@ -6,7 +6,95 @@
     ViewData["Title"] = "My Tasks";
 }
 
-    <!-- Content Header (Page header) -->
+@{
+    ViewData["Title"] = "Clients";
+}
+@{
+    if (TempData["deleted"] != null)
+    {
+<div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <strong localize-content>Task deleted successfully!</strong>
+            
+        </div>
+    }
+
+    if (TempData["created"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <strong localize-content>Task created successfully!</strong>
+            
+        </div>
+    }
+
+    if (TempData["edited"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Task edited successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible">
+            <strong localize-content>@TempData["error"].ToString()</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["editedNote"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Task note edited successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["addedNote"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Task note added successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+    
+    if (TempData["deletedNote"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <strong localize-content>Task note edited successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        </div>
+    }
+  
+  if (TempData["editedAttachment"] != null)
+  {
+    <div class="alert alert-success alert-dismissible">
+      <strong localize-content>Task attachment edited successfully!</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    </div>
+  }
+    
+  if (TempData["addedAttachment"] != null)
+  {
+    <div class="alert alert-success alert-dismissible">
+      <strong localize-content>Task attachment added successfully!</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    </div>
+  }
+    
+  if (TempData["deletedAttachment"] != null)
+  {
+    <div class="alert alert-success alert-dismissible">
+      <strong localize-content>Task attachment edited successfully!</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    </div>
+  }
+
+}
+
+<!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">

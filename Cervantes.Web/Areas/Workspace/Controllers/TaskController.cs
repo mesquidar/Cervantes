@@ -53,6 +53,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading tasks!";
+
                 _logger.LogError(e, "An error ocurred loading Task Workspace Index. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -72,6 +74,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading tasks!";
+
                 _logger.LogError(e, "An error ocurred loading Task Workspace Project Index. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -95,6 +99,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading task details!";
+
                 _logger.LogError(e, "An error ocurred loading Task Workspace Details.Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -130,6 +136,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading task form!";
+
                 _logger.LogError(e, "An error ocurred loading Task Workspace create form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -158,11 +166,14 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
                 taskManager.Add(task);
                 taskManager.Context.SaveChanges();
+                TempData["added"] = "added";
                 _logger.LogInformation("User: {0} Created a new Task on Project {1}", User.FindFirstValue(ClaimTypes.Name), project);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error creating task!";
+
                 _logger.LogError(e, "An error ocurred adding a new Task Workspace.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -206,6 +217,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading task form!";
+
                 _logger.LogError(e, "An error ocurred loading Task Workspace create project form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -235,11 +248,14 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
                 taskManager.Add(task);
                 taskManager.Context.SaveChanges();
+                TempData["added"] = "added";
                 _logger.LogInformation("User: {0} Created a new Task Project on Project {1}", User.FindFirstValue(ClaimTypes.Name), project);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error creating task!";
+
                 _logger.LogError(e, "An error ocurred adding a new Task Project Workspace on.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -288,6 +304,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading task!";
+
                 _logger.LogError(e, "An error ocurred loading Task Workspace edit form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -316,6 +334,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error editing task!";
+
                 _logger.LogError(e, "An error ocurred editing a Task Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -370,6 +390,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading task details!";
+
                 _logger.LogError(e, "An error ocurred loading Task Workspace edit PROJECT form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -398,6 +420,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error editing task!";
+
                 _logger.LogError(e, "An error ocurred editing a Task project Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -415,6 +439,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error loading task details!";
+
                 _logger.LogError(e, "An error ocurred loading Task Workspace delete form. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View("Index");
             }
@@ -440,6 +466,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error deleting task details!";
+
                 _logger.LogError(e, "An error ocurred deleting a Task  Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
                 return View();
             }
@@ -475,6 +503,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error adding task note!";
+
                 _logger.LogError(e, "An error ocurred adding a Task Note Workspace on. Task: {0} Project: {1} User: {2}", Int32.Parse(form["task"]), project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Project", new { project = project, id = Int32.Parse(form["task"]) });
             }
@@ -503,6 +533,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception e)
             {
+                TempData["error"] = "Error deleting task note!";
+
                 _logger.LogError(e, "An error ocurred deleting a Task Note Workspace on. Task: {0} Project: {1} User: {2}", task, project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Task", new { project = project, id = task });
             }
@@ -566,6 +598,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error adding task attachment!";
+
                 _logger.LogError(ex, "An error ocurred adding a Task Attachement Workspace on. Task: {0} Project: {1} User: {2}", Int32.Parse(form["task"]), project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Task", new { project = project, id = Int32.Parse(form["task"]) });
             }
@@ -601,6 +635,8 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = "Error deleting task attachment!";
+
                 _logger.LogError(ex, "An error ocurred deleting a Task Attachement Workspace on. Task: {0} Project: {1} User: {2}", task, project, User.FindFirstValue(ClaimTypes.Name));
                 return RedirectToAction("Details", "Task", new { project = project, id = task });
             }
