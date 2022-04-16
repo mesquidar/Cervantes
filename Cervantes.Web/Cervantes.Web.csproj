@@ -41,17 +41,10 @@
     <Folder Include="Areas\Workspace\Data\" />
     <Folder Include="Rotativa\Linux\" />
     <Folder Include="Rotativa\MacOS" />
-    <Folder Include="wwwroot\Attachments\Documents" />
-    <Folder Include="wwwroot\Attachments\Images\Avatars" />
     <Folder Include="wwwroot\Attachments\Images\Clients\" />
-    <Folder Include="wwwroot\Attachments\Images\Documents" />
-    <Folder Include="wwwroot\Attachments\Images\Note" />
-    <Folder Include="wwwroot\Attachments\Images\Organization" />
     <Folder Include="wwwroot\Attachments\Images\Projects" />
     <Folder Include="wwwroot\Attachments\Images\Targets" />
     <Folder Include="wwwroot\Attachments\Images\Vulns" />
-    <Folder Include="wwwroot\Attachments\Project" />
-    <Folder Include="wwwroot\Attachments\Task" />
   </ItemGroup>
 
   <ItemGroup>

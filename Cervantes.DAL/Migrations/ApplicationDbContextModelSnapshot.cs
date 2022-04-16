@@ -175,34 +175,34 @@ namespace Cervantes.DAL.Migrations
 
             modelBuilder.Entity("Cervantes.CORE.Log", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime>("created_on")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Exception")
-                        .HasColumnType("nvarchar(MAX)");
+                    b.Property<string>("exception")
+                        .HasColumnType("text");
 
-                    b.Property<string>("Level")
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<string>("level")
+                        .HasColumnType("text");
 
-                    b.Property<string>("Logger")
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<string>("logger")
+                        .HasColumnType("text");
 
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(MAX)");
+                    b.Property<string>("message")
+                        .HasColumnType("text");
 
-                    b.Property<string>("StackTrace")
-                        .HasColumnType("nvarchar(MAX)");
+                    b.Property<string>("stack_trace")
+                        .HasColumnType("text");
 
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<string>("url")
+                        .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Logs");
                 });
@@ -412,6 +412,9 @@ namespace Cervantes.DAL.Migrations
 
                     b.Property<string>("FilePath")
                         .HasColumnType("text");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
