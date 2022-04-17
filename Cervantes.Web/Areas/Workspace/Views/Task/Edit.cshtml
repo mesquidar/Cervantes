@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-folder"></i> Create Task</h1>
+            <h1 localize-content><i class="fas fa-folder"></i> Edit Task</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -36,38 +36,38 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Name</label>
+                <label asp-for="Name" class="control-label" localize-content>Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Description" class="control-label">Description</label>
+                <label asp-for="Description" class="control-label" localize-content>Description</label>
                 <textarea id="description" asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
                         <div class="form-group">
-                <label asp-for="StartDate" class="control-label">Start Date</label>
+                <label asp-for="StartDate" class="control-label" localize-content>Start Date</label>
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDate" class="control-label">End Date</label>
+                <label asp-for="EndDate" class="control-label" localize-content>End Date</label>
                 <input asp-for="EndDate" class="form-control"  />
                 <span asp-validation-for="EndDate" class="text-danger" ></span>
             </div>
             <div class="form-group">
-                <label asp-for="TargetId" class="control-label">Target</label>
+                <label asp-for="TargetId" class="control-label" localize-content>Target</label>
                 @Html.DropDownListFor(m => m.TargetId, Model.TargetList, "--Select--", new { @class = "form-control" })
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label">Task Status</label>
+                <label asp-for="Status" class="control-label" localize-content>Task Status</label>
                 @Html.DropDownListFor(model => model.Status, Html.GetEnumSelectList<Cervantes.CORE.TaskStatus>(),new { @class = "form-control" })
             </div>
 
             <div class="form-group">
                 <a class="btn btn-default" asp-area="Workspace" asp-controller="Task" asp-action="Index" asp-route-project="@Model.Project.Id">Back</a>
-                <input type="submit" value="Edit" class="btn btn-dark" />
+                <button type="submit" class="btn btn-dark" localize-content>Edit</button>
             </div>
         </form>
             </div>

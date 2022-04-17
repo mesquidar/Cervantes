@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-briefcase"></i> Delete Client</h1>
+            <h1 localize-content><i class="fas fa-tasks"></i> Delete Task</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -33,38 +33,38 @@
 <div>
  
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class = "col-sm-2" localize-content>
+            Name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+        <dt class = "col-sm-2" localize-content>
+            Description
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedUser.FullName)
+        <dt class = "col-sm-2" localize-content>
+            Created by
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CreatedUser.FullName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AsignedUser.FullName)
+        <dt class = "col-sm-2" localize-content>
+            Asigned To
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.AsignedUser.FullName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
+        <dt class = "col-sm-2" localize-content>
+            Start Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.StartDate)
         </dd>
-                <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
+                <dt class = "col-sm-2" localize-content>
+            End Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EndDate)

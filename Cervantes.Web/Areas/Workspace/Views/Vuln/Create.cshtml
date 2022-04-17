@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 localize-content><i class="fas fa-bug"></i> Create Vuln</h1>
+            <h1 localize-content><i class="fas fa-bug"></i> Create Vulnerability</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -33,9 +33,9 @@
             <div class="card">
                 <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Vuln Details</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#poc" data-toggle="tab">Exploitation</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#remediation" data-toggle="tab">Remediation</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab"><span localize-content>Details</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#poc" data-toggle="tab"><span localize-content>Exploitation</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#remediation" data-toggle="tab"><span localize-content>Remediation</span></a></li>
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
@@ -43,12 +43,12 @@
                         <div class="active tab-pane" id="details">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
-                                <label asp-for="Template" class="control-label"></label>
+                                <label asp-for="Template" class="control-label" localize-content>Template</label>
                                 <input asp-for="Template" class="form-control" />
                                 <span asp-validation-for="Template" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
+                                <label asp-for="Name" class="control-label" localize-content>Name</label>
                                 <input asp-for="Name" class="form-control" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
@@ -58,30 +58,34 @@
                                 <span asp-validation-for="cve" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Description" class="control-label"></label>
+                                <label asp-for="Description" class="control-label" localize-content>Description</label>
                                 <textarea id="descriptionTxt" asp-for="Description" class="form-control" rows="4"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Vuln Category</label>
+                                <label class="control-label" localize-content>Category</label>
                                 @Html.DropDownListFor(m => m.VulnCategoryId, Model.VulnCatList, "--Select--", new { @class = "form-control" })
+                                <span asp-validation-for="VulnCategory" class="text-danger"></span>
                             </div> 
                             <div class="form-group">
-                                <label class="control-label">Vuln Risk</label>
+                                <label class="control-label" localize-content>Risk</label>
                                 @Html.DropDownListFor(model => model.Risk, Html.GetEnumSelectList<VulnRisk>(),new { @class = "form-control" })
+                                <span asp-validation-for="Risk" class="text-danger"></span>
                             </div> 
                             <div class="form-group">
-                                <label class="control-label">Vuln Status</label>
+                                <label class="control-label" localize-content>Status</label>
                                 @Html.DropDownListFor(model => model.Status, Html.GetEnumSelectList<VulnStatus>(),new { @class = "form-control" })
+                                <span asp-validation-for="Status" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Impact" class="control-label"></label>
+                                <label asp-for="Impact" class="control-label" localize-content>Impact</label>
                                 <textarea id="impact" asp-for="Impact" class="form-control" rows="4"></textarea>
                                 <span asp-validation-for="Impact" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="TargetId" class="control-label">Target</label>
+                                <label asp-for="TargetId" class="control-label" localize-content>Target</label>
                                 @Html.DropDownListFor(m => m.TargetId, Model.TargetList, "--Select--", new { @class = "form-control" })
+                                <span asp-validation-for="Target" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="CVSS3" class="control-label"></label>
@@ -97,7 +101,7 @@
 
                         <div class="tab-pane" id="poc">
                             <div class="form-group">
-                                <label asp-for="ProofOfConcept" class="control-label"></label>
+                                <label asp-for="ProofOfConcept" class="control-label" localize-content>Proof Of Concept</label>
                                 <textarea id="pocTxt" asp-for="ProofOfConcept" class="form-control" rows="4"></textarea>
                                 <span asp-validation-for="ProofOfConcept" class="text-danger"></span>
                             </div>
@@ -107,17 +111,19 @@
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="remediation">
                             <div class="form-group">
-                                <label asp-for="Remediation" class="control-label"></label>
+                                <label asp-for="Remediation" class="control-label" localize-content>Remediation</label>
                                 <textarea id="remediationTxt" asp-for="Remediation" class="form-control" rows="4"></textarea>
                                 <span asp-validation-for="Remediation" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Remediation Complexity</label>
+                                <label class="control-label" localize-content>Complexity</label>
                                 @Html.DropDownListFor(model => model.RemediationComplexity, Html.GetEnumSelectList<RemediationComplexity>(),new { @class = "form-control" })
+                                <span asp-validation-for="RemediationComplexity" class="text-danger"></span>
                             </div> 
                             <div class="form-group">
-                                <label class="control-label">Remediation Priority</label>
+                                <label class="control-label" localize-content>Priority</label>
                                 @Html.DropDownListFor(model => model.RemediationPriority, Html.GetEnumSelectList<RemediationPriority>(),new { @class = "form-control" })
+                                <span asp-validation-for="RemediationPriority" class="text-danger"></span>
                             </div>
                         </div>
                         <!-- /.tab-pane -->
@@ -133,7 +139,8 @@
             <!-- /.card -->
             <div class="form-group">
                 <a class="btn btn-default" asp-area="Workspace" asp-controller="Target" asp-action="Index" localize-content>Back</a>
-                <input type="submit" class="btn btn-dark" localize-content>Create</input>
+                <button type="submit" class="btn btn-dark" localize-content>Create</button>
+             
             </div>
         </form>
     </div>
@@ -143,7 +150,7 @@
 {
     <script>
     $(document).ready(function() {
-          $('#description').summernote({
+          $('#descriptionTxt').summernote({
           height: 300,
           callbacks: {
                   onImageUpload: function(image) {

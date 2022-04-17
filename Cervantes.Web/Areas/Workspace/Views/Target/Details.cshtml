@@ -82,19 +82,19 @@
                     @switch(Model.Target.Type)
                     {
                         case TargetType.IP:
-                            <span class="profile-user-img img-fluid img-circle"><i class="fas fa-ethernet"></i></span>
+                            <span class="img-fluid img-circle"><i class="fas fa-ethernet fa-3x"></i></span>
                             break;
                         case TargetType.Hostname:
-                             <span class="profile-user-img img-fluid img-circle"><i class="fas fa-compass"></i></span>
+                             <span class="img-fluid img-circle"><i class="fas fa-compass fa-3x"></i></span>
                             break;
                         case TargetType.CIDR:
-                            <span class="profile-user-img img-fluid img-circle"><i class="fas fa-network-wired"></i></span>
+                            <span class="img-fluid img-circle"><i class="fas fa-network-wired fa-3x"></i></span>
                             break;
                         case TargetType.URL:
-                            <span class="profile-user-img img-fluid img-circle"><i class="fas fa-at"></i></span>
+                            <span class="img-fluid img-circle"><i class="fas fa-at fa-3x"></i></span>
                             break;
                         case TargetType.Binary:
-                            <span class="profile-user-img img-fluid img-circle"><i class="fas fa-file-alt"></i></span>
+                            <span class="mg-fluid img-circle"><i class="fas fa-file-alt fa-3x"></i></span>
                             break;
                         default:
                             <span class="profile-user-img img-fluid img-circle"></span>
@@ -120,7 +120,7 @@
                 <div class="card">
                   <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                      <li class="nav-item"><a class="nav-link active" href="#services" data-toggle="tab">Services</a></li>                      
+                      <li class="nav-item"><a class="nav-link active" href="#services" data-toggle="tab"><span localize-content>Services</span></a></li>                      
                     </ul>
                   </div><!-- /.card-header -->
                   <div class="card-body">
@@ -135,7 +135,7 @@
                                     <th localize-content>Name</th>
                                     <th localize-content>Port</th>
                                     <th localize-content>Version</th>
-                                    <th localize-content>Added By</th>
+                                    <th localize-content>Added by</th>
                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                                         {
                                             <th localize-content>Options</th>

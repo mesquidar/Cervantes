@@ -46,7 +46,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 VulnViewModel model = new VulnViewModel
                 {
                     Project = projectManager.GetById(project),
-                    Vulns = vulnManager.GetAll().Where(x => x.ProjectId == project)
+                    Vulns = vulnManager.GetAll().Where(x => x.ProjectId == project).ToList()
                 };
                 return View(model);
             }
@@ -156,7 +156,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                     Remediation = model.Remediation,
                     RemediationComplexity = model.RemediationComplexity,
                     RemediationPriority = model.RemediationPriority,
-                    CreatedDate = model.CreatedDate,
+                    CreatedDate = DateTime.Now.ToUniversalTime(),
                     UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
                 vulnManager.Add(vuln);

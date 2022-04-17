@@ -39,8 +39,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Workspace\Data\" />
-    <Folder Include="Rotativa\Linux\" />
-    <Folder Include="Rotativa\MacOS" />
     <Folder Include="wwwroot\Attachments\Images\Clients\" />
     <Folder Include="wwwroot\Attachments\Images\Projects" />
     <Folder Include="wwwroot\Attachments\Images\Targets" />

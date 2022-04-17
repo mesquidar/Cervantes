@@ -132,7 +132,7 @@ namespace Cervantes.Web.Controllers
                         Targets = targetManager.GetAll().Where(x => x.ProjectId == id),
                         Tasks = taskManager.GetAll().Where(x => x.ProjectId == id),
                         Users = users.ToList(),
-                        Vulns = vulnManager.GetAll().Where(x => x.ProjectId == id),
+                        Vulns = vulnManager.GetAll().Where(x => x.ProjectId == id).ToList(),
                         Reports = reportManager.GetAll().Where(x => x.ProjectId == id),
                     };
                     return View(model);

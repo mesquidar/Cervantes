@@ -1,11 +1,14 @@
 ﻿using Cervantes.Contracts;
-using Cervantes.Web.Areas.Workspace.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
+using Cervantes.Web.Models;
+using Microsoft.AspNetCore.Localization;
+using DashboardViewModel = Cervantes.Web.Areas.Workspace.Models.DashboardViewModel;
 
 namespace Cervantes.Web.Areas.Workspace.Controllers
 {
@@ -71,6 +74,23 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 _logger.LogError(e, "An error ocurred loading Home Workspace Dashboard. Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
                 return View("Error");
             }
+        }
+        
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult OnGetSetCultureCookie(string cltr, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(cltr)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
     }
 }

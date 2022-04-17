@@ -40,23 +40,23 @@
         <form asp-area="Workspace" asp-controller="Target" asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label" localize-content>Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label" localize-content>Description</label>
                 <textarea id="description" asp-for="Description" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                                        <label class="control-label">Target Type</label>
+                                        <label class="control-label" localize-content>Target Type</label>
                                         @Html.DropDownListFor(model => model.Type, Html.GetEnumSelectList<TargetType>(),new { @class = "form-control" })
                                     </div> 
 
             <div class="form-group">
-                  <a class="btn btn-default" asp-area="Workspace" asp-controller="Target" asp-action="Index" localize-content>Back</a>
-                <input type="submit" class="btn btn-dark" localize-content></input>
+                <a class="btn btn-default" asp-area="Workspace" asp-controller="Target" asp-action="Index" localize-content>Back</a>
+                <button type="submit" class="btn btn-dark" localize-content>Create</button>
             </div>
         </form>
     </div>

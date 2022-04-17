@@ -1,4 +1,5 @@
-﻿@model TargetViewModel
+﻿@using System.Net
+@model TargetViewModel
 
 @{
     ViewData["Title"] = "Targets";
@@ -89,7 +90,6 @@
     <div class="card-body">
 
     
-         @if(Model.Target.FirstOrDefault() != null){
         <!--Table-->
         <table id="clientResults" class="table table-bordered table-hover" width="100%">
             <!--Table head-->
@@ -97,7 +97,7 @@
                 <tr>
                     <th localize-content>Name</th>
                     <th localize-content>Description</th>
-                    <th localize-content>Added By</th>
+                    <th localize-content>Added by</th>
                     <th localize-content>Options</th>
                                                     
                 </tr>
@@ -111,7 +111,7 @@
                     <tr>
 
                         <td>@target.Name</td>
-                        <td>@target.Description</td>
+                        <td>@Html.Raw(@WebUtility.HtmlDecode(@target.Description))</td>
                         <td>@target.User.FullName</td>
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
@@ -136,7 +136,7 @@
             <!--Table body-->
         </table>
         <!--Table-->
-        }
+        
 
         </div>
         </div>

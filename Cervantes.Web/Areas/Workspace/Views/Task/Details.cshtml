@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 localize-content><i class="fas fa-briefcase"></i> @Model.Task.Name</h1>
+                <h1 localize-content><i class="fas fa-tasks"></i> @Model.Task.Name</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -44,7 +44,7 @@
                         <dt><p localize-content>Created by</p></dt>
                         <hr>
                         <dd>@Html.DisplayFor(model => model.Task.CreatedUser.FullName)</dd>
-                        <dt> <p localize-content>Asigned to</p></dt>
+                        <dt> <p localize-content>Asigned To</p></dt>
                         <hr>
                         <dd>@Html.DisplayFor(model => model.Task.AsignedUser.FullName)</dd>
                         <dt><p localize-content>Start Date</p></dt>
@@ -65,9 +65,9 @@
                 <div class="card">
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab">Details</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab">Notes <span class="badge badge-danger">@Model.Notes.Count()</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab">Attachments <span class="badge badge-danger">@Model.Attachments.Count()</span></a></li>
+                            <li class="nav-item"><a class="nav-link active" href="#details" data-toggle="tab"><span localize-content>Details</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="#notes" data-toggle="tab"><span localize-content>Notes</span> <span class="badge badge-danger">@Model.Notes.Count()</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="#attachments" data-toggle="tab"><span localize-content>Attachments</span> <span class="badge badge-danger">@Model.Attachments.Count()</span></a></li>
 
                         </ul>
                     </div><!-- /.card-header -->
@@ -127,7 +127,7 @@
                             @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                           {
                               <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addNoteModal">
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addNoteModal" localize-content>
                               Add Note
                             </button>
 
@@ -136,7 +136,7 @@
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="addNoteModalLabel">Add Note to Task</h5>
+                                    <h5 class="modal-title" id="addNoteModalLabel" localize-content>Add Note to Task</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -147,19 +147,20 @@
                                     <input asp-for="Task.Id" type="hidden" id="task" name="task"/>
 
                                      <div class="form-group">
-                                        <label class="control-label">Name</label>
+                                        <label class="control-label" localize-content>Name</label>
                                         <input type="text" class="form-control"  id="noteName" name="noteName"/>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label">Note Description</label>
+                                        <label class="control-label" localize-content>Description</label>
                                         <textarea class="form-control" id="noteDescription" name="noteDescription"></textarea>
                                     </div>
                                     
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Close</button>
+                                      <button type="submit" class="btn btn-success" localize-content>Add</button>
+                                   
                                   </div>
                                    </form>
                                 </div>
@@ -219,7 +220,7 @@
                             @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                           {
                               <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addAttachmentModal">
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addAttachmentModal" localize-content>
                               Add Attachment
                             </button>
 
@@ -228,7 +229,7 @@
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="addAttachmentModalLabel">Add Attachment to Task</h5>
+                                    <h5 class="modal-title" id="addAttachmentModalLabel" localize-content>Add Attachment to Task</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -239,7 +240,7 @@
                                     <input asp-for="Task.Id" type="hidden" id="task" name="task"/>
 
                                      <div class="form-group">
-                                        <label class="control-label">Name</label>
+                                        <label class="control-label" localize-content>Name</label>
                                         <input type="text" class="form-control"  id="attachmentName" name="attachmentName"/>
                                     </div>
 
@@ -256,8 +257,8 @@
                                     
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Add" class="btn btn-success" />
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Close</button>
+                                      <button type="submit" class="btn btn-success" localize-content>Add</button>
                                   </div>
                                    </form>
                                 </div>
@@ -307,68 +308,6 @@
         });
         $('.dataTables_length').addClass('bs-select');
     });
-
-     var useDarkMode = window.matchMedia('(prefers-color-scheme: light)').matches;
-
-        tinymce.init({
-          selector: 'textarea#noteDescription',
-          plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
-          imagetools_cors_hosts: ['picsum.photos'],
-          menubar: 'file edit view insert format tools table help',
-          toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
-          toolbar_sticky: true,
-          autosave_ask_before_unload: true,
-          autosave_interval: '30s',
-          autosave_prefix: '{path}{query}-{id}-',
-          autosave_restore_when_empty: false,
-          autosave_retention: '2m',
-          image_advtab: true,
-          link_list: [
-            { title: 'My page 1', value: 'https://www.tiny.cloud' },
-            { title: 'My page 2', value: 'http://www.moxiecode.com' }
-          ],
-          image_list: [
-            { title: 'My page 1', value: 'https://www.tiny.cloud' },
-            { title: 'My page 2', value: 'http://www.moxiecode.com' }
-          ],
-          image_class_list: [
-            { title: 'None', value: '' },
-            { title: 'Some class', value: 'class-name' }
-          ],
-          importcss_append: true,
-          file_picker_callback: function (callback, value, meta) {
-            /* Provide file and text for the link dialog */
-            if (meta.filetype === 'file') {
-              callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
-            }
-
-            /* Provide image and alt text for the image dialog */
-            if (meta.filetype === 'image') {
-              callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
-            }
-
-            /* Provide alternative source and posted for the media dialog */
-            if (meta.filetype === 'media') {
-              callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
-            }
-          },
-          templates: [
-                { title: 'New Table', description: 'creates a new table', content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>' },
-            { title: 'Starting my story', description: 'A cure for writers block', content: 'Once upon a time...' },
-            { title: 'New list with dates', description: 'New List with dates', content: '<div class="mceTmpl"><span class="cdate">cdate</span><br /><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>' }
-          ],
-          template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
-          template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
-          height: 600,
-          image_caption: true,
-          quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
-          noneditable_noneditable_class: 'mceNonEditable',
-          toolbar_mode: 'sliding',
-          contextmenu: 'link image imagetools table',
-          skin: useDarkMode ? 'oxide-dark' : 'oxide',
-          content_css: useDarkMode ? 'dark' : 'default',
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-         });
 
 
          $(document).ready(function () {

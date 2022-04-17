@@ -902,4 +902,121 @@
   <data name="&lt;i class=&quot;fas fa-briefcase&quot;&gt;&lt;/i&gt; Edit Document" xml:space="preserve">
     <value>&lt;i class="fas fa-briefcase"&gt;&lt;/i&gt; Editar Documento</value>
   </data>
+  <data name="&lt;i class=&quot;fas fa-building&quot;&gt;&lt;/i&gt; View" xml:space="preserve">
+    <value>&lt;i class="fas fa-building"&gt;&lt;/i&gt; Ver</value>
+  </data>
+  <data name="My Tasks" xml:space="preserve">
+    <value>Mis Tareas</value>
+  </data>
+  <data name="Vulnerabilities by Severity" xml:space="preserve">
+    <value>Vulnerabilidades por Severidad</value>
+  </data>
+  <data name="Recent Notes" xml:space="preserve">
+    <value>Notas recientes</value>
+  </data>
+  <data name="Recent Vulnerabilities" xml:space="preserve">
+    <value>Vulnerabilidades Recientes</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-bullseye&quot;&gt;&lt;/i&gt;&lt;p&gt;Targets&lt;i class=&quot;right fas fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-bullseye"&gt;&lt;/i&gt;&lt;p&gt;Objetivos&lt;i class="right fas fa-angle-left"&gt;&lt;/i&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-tasks&quot;&gt;&lt;/i&gt;&lt;p&gt;Tasks&lt;i class=&quot;right fas fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-tasks"&gt;&lt;/i&gt;&lt;p&gt;Tareas&lt;i class="right fas fa-angle-left"&gt;&lt;/i&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-bug&quot;&gt;&lt;/i&gt;&lt;p&gt;Vulnerabilities&lt;i class=&quot;right fas fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-bug"&gt;&lt;/i&gt;&lt;p&gt;Vulnerabilidades&lt;i class="right fas fa-angle-left"&gt;&lt;/i&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="Added by" xml:space="preserve">
+    <value>Añadido por</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-bullseye&quot;&gt;&lt;/i&gt; Create Target" xml:space="preserve">
+    <value>&lt;i class="fas fa-bullseye"&gt;&lt;/i&gt; Crear Objetivo</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-bullseye&quot;&gt;&lt;/i&gt; Targets" xml:space="preserve">
+    <value>&lt;i class="fas fa-bullseye"&gt;&lt;/i&gt; Objetivos</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-bullseye&quot;&gt;&lt;/i&gt; Edit Target" xml:space="preserve">
+    <value>&lt;i class="fas fa-bullseye"&gt;&lt;/i&gt; Editar Objetivo</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-bullseye&quot;&gt;&lt;/i&gt; Delete Target" xml:space="preserve">
+    <value>&lt;i class="fas fa-bullseye"&gt;&lt;/i&gt; Eliminar Objetivo</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Puerto</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Servicios</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-tasks&quot;&gt;&lt;/i&gt; My Tasks" xml:space="preserve">
+    <value>&lt;i class="fas fa-tasks"&gt;&lt;/i&gt; Mis Tareas</value>
+  </data>
+  <data name="No Tasks" xml:space="preserve">
+    <value>Sin Tareas</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Hecho</value>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Bloqueado</value>
+  </data>
+  <data name="In Progress" xml:space="preserve">
+    <value>En Progreso</value>
+  </data>
+  <data name="Task Status" xml:space="preserve">
+    <value>Estado de la Tarea</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-folder&quot;&gt;&lt;/i&gt; Create Task" xml:space="preserve">
+    <value>&lt;i class="fas fa-folder"&gt;&lt;/i&gt;  Crear Tarea</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-folder&quot;&gt;&lt;/i&gt; Edit Task" xml:space="preserve">
+    <value>&lt;i class="fas fa-folder"&gt;&lt;/i&gt; Editar Tarea</value>
+  </data>
+  <data name="Add Note to Task" xml:space="preserve">
+    <value>Añadir Nota a la Tarea</value>
+  </data>
+  <data name="Add Attachment to Task" xml:space="preserve">
+    <value>Añadir Adjunto a la Nota</value>
+  </data>
+  <data name="Add Note" xml:space="preserve">
+    <value>Añadir Nota</value>
+  </data>
+  <data name="Created Date" xml:space="preserve">
+    <value>Fecha de Creación</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-tasks&quot;&gt;&lt;/i&gt; Delete Task" xml:space="preserve">
+    <value>&lt;i class="fas fa-tasks"&gt;&lt;/i&gt; Eliminar Tarea</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-bug&quot;&gt;&lt;/i&gt; Create Vulnerability" xml:space="preserve">
+    <value>&lt;i class="fas fa-bug"&gt;&lt;/i&gt; Crear Vulnerabilidad</value>
+  </data>
+  <data name="Exploitation" xml:space="preserve">
+    <value>Explotación</value>
+  </data>
+  <data name="Remediation" xml:space="preserve">
+    <value>Remediación</value>
+  </data>
+  <data name="Impact" xml:space="preserve">
+    <value>Impacto</value>
+  </data>
+  <data name="Proof Of Concept" xml:space="preserve">
+    <value>Prueba de Concepto</value>
+  </data>
+  <data name="Complexity" xml:space="preserve">
+    <value>Complejidad</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Prioridad</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-bug&quot;&gt;&lt;/i&gt; Vulnerabilities" xml:space="preserve">
+    <value>&lt;i class="fas fa-bug"&gt;&lt;/i&gt; Vulnerabilidades</value>
+  </data>
+  <data name="&lt;i class=&quot;fas fa-bug&quot;&gt;&lt;/i&gt; Edit Vulnerability" xml:space="preserve">
+    <value>&lt;i class="fas fa-bug"&gt;&lt;/i&gt; Editar Vulnerabilidad</value>
+  </data>
+  <data name="Add Note to Vuln" xml:space="preserve">
+    <value>Añadir Nota a la Vulnerabilidad</value>
+  </data>
+  <data name="Add Attachment to Vuln" xml:space="preserve">
+    <value>Añadir Adjunto a la Vulnerabilidad</value>
+  </data>
 </root>

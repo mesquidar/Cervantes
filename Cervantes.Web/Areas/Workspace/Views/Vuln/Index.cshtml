@@ -144,7 +144,7 @@
                                 <td>@vuln.Risk</td>
                                 <td>@vuln.Status</td>
                                 <td>@vuln.VulnCategory.Name</td>
-                                <td>@vuln.CreatedDate</td>
+                                <td>@vuln.CreatedDate.ToUniversalTime()</td>
                                 @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                                 {
                                     <td>
