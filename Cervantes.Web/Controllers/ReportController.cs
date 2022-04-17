@@ -99,17 +99,35 @@ namespace Cervantes.Web.Controllers
                 {
                     using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create, FileAccess.Write))
                     {
-                        var pdfResult = new ViewAsPdf
+                        if (form["language"] == "0")
                         {
-                            ViewName = "Generate",
-                            Model = model,
-                            FileName = uniqueName,
-                            CustomSwitches =
-            "--footer-center \"  " + "Page: [page]/[toPage]\"" +
-          " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Segoe UI\""
-                        };
-                        byte[] pdfData = pdfResult.BuildFile(ControllerContext).Result;
-                        fileStream.Write(pdfData, 0, pdfData.Length);
+                            var pdfResult = new ViewAsPdf
+                            {
+                                ViewName = "TemplateEN",
+                                Model = model,
+                                FileName = uniqueName,
+                                CustomSwitches =
+                                    "--footer-center \"  " + "Page: [page]/[toPage]\"" +
+                                    " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Segoe UI\""
+                            };
+                            byte[] pdfData = pdfResult.BuildFile(ControllerContext).Result;
+                            fileStream.Write(pdfData, 0, pdfData.Length);
+                        }
+                        else if (form["language"] == "1")
+                        {
+                            var pdfResult = new ViewAsPdf
+                            {
+                                ViewName = "TemplateES",
+                                Model = model,
+                                FileName = uniqueName,
+                                CustomSwitches =
+                                    "--footer-center \"  " + "Page: [page]/[toPage]\"" +
+                                    " --footer-line --footer-font-size \"8\" --footer-spacing 1 --footer-font-name \"Segoe UI\""
+                            };
+                            byte[] pdfData = pdfResult.BuildFile(ControllerContext).Result;
+                            fileStream.Write(pdfData, 0, pdfData.Length);
+                        }
+                        
                     }
                 }
                 else
@@ -138,7 +156,8 @@ namespace Cervantes.Web.Controllers
                     CreatedDate = DateTime.Now.ToUniversalTime(),
                     Description = form["description"],
                     Version = form["version"],
-                    FilePath = "Attachments/Reports/" + form["project"] + "/" + uniqueName
+                    FilePath = "Attachments/Reports/" + form["project"] + "/" + uniqueName,
+                    Language = (Language)Int32.Parse(form["language"])
                 };
 
                 reportManager.Add(rep);

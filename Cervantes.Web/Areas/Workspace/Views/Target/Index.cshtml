@@ -1,4 +1,5 @@
 ﻿@using System.Net
+@using Cervantes.CORE
 @model TargetViewModel
 
 @{
@@ -96,6 +97,7 @@
             <thead>
                 <tr>
                     <th localize-content>Name</th>
+                    <th localize-content>Type</th>
                     <th localize-content>Description</th>
                     <th localize-content>Added by</th>
                     <th localize-content>Options</th>
@@ -111,6 +113,28 @@
                     <tr>
 
                         <td>@target.Name</td>
+                         @switch(@target.Type)
+                                                                {
+                                                                    case TargetType.IP:
+                                                                        <td><span class="badge badge-success">@target.Type</span></td>
+                                                                        break;
+                                                                    case TargetType.Hostname:
+                                                                         <td><span class="badge badge-secondary">@target.Type</span></td>
+                                                                        break;
+                                                                    case TargetType.CIDR:
+                                                                        <td><span class="badge badge-light">@target.Type</span></td>
+                                                                        break;
+                                                                    case TargetType.URL:
+                                                                        <td><span class="badge badge-info">@target.Type</span></td>
+                                                                        break;
+                                                                    case TargetType.Binary:
+                                                                        <td><span class="badge badge-dark">@target.Type</span></td>
+                                                                        break;
+                                                                    default:
+                                                                        <td><span class="badge badge-light">@target.Type</span></td>
+                                                                        break;
+                        
+                                                                }
                         <td>@Html.Raw(@WebUtility.HtmlDecode(@target.Description))</td>
                         <td>@target.User.FullName</td>
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))

@@ -244,19 +244,27 @@
 
                                 @foreach (var members in Model.ProjectUsers)
                                 {
-                             <tr>
-                                        <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
+                                    <tr>
+                                        @if (@members.User.Avatar != null)
+                                        {
+                                            <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
+                                        }
+                                        else
+                                        {
+                                            <td><i class="fas fa-user"></i></td>
+                                        }
+                                     
                                         <td>@members.User.FullName</td>
                                         <td>@members.User.Email</td>
-                                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                            {
-                                                <td>
-                                                    <form asp-action="DeleteMember" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-tool" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@members.ProjectId" asp-route-user="@members.UserId" localize-content><i class="fas fa-trash"></i></button>
-                                                    </form>
-                                                </td>
+                                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                                        {
+                                            <td>
+                                                <form asp-action="DeleteMember" method="post" enctype="multipart/form-data">
+                                                    <button type="submit" class="btn btn-tool" asp-controller="Project" asp-action="DeleteMember" asp-route-project="@members.ProjectId" asp-route-user="@members.UserId" localize-content><i class="fas fa-trash"></i></button>
+                                                </form>
+                                            </td>
 
-                                            }
+                                        }
 
                                     </tr>
                                 }
@@ -353,7 +361,7 @@
                                                 break;
 
                                         }
-                                        <td>@targets.Description</td>
+                                        <td>@Html.Raw(@WebUtility.HtmlDecode(@targets.Description))</td>
                                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                                             {
                                                 <td>
@@ -450,7 +458,7 @@
                                 {
                              <tr>
                                         <td>@tasks.Name</td>
-                                        <td>@tasks.Description</td>
+                                        <td>@Html.Raw(@WebUtility.HtmlDecode(@tasks.Description))</td>
                                         <td>@tasks.StartDate</td>
                                         <td>@tasks.EndDate</td>
                                         <td>@tasks.AsignedUser.FullName</td>
@@ -514,25 +522,25 @@
                                         
                                         @if(vulns.CVSS3 < 2)
                                         {
-                                                    <td><span class="badge badge-info"><i class="fas fa-info-circle"></i> @vulns.Risk</span></td>
+                                                    <td><span class="badge badge-info"><i class="fas fa-info-circle"></i> @vulns.CVSS3</span></td>
 
                                                 }
                                                 else if (vulns.CVSS3 > 2 && vulns.CVSS3 < 4)
                                                 {
                                                 
-                                                    <td><span class="badge badge-success"><i class="fas fa-exclamation"></i> @vulns.Risk</span></td>
+                                                    <td><span class="badge badge-success"><i class="fas fa-exclamation"></i> @vulns.CVSS3</span></td>
                                                 }
                                                 else if (vulns.CVSS3 > 4 && vulns.CVSS3 < 6)
                                                 {
-                                                    <td><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @vulns.Risk</span></td>
+                                                    <td><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @vulns.CVSS3</span></td>
                                                 }
                                                 else if (vulns.CVSS3 > 6 && vulns.CVSS3 < 8)
                                                 {
-                                                    <td><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @vulns.Risk</span></td>
+                                                    <td><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @vulns.CVSS3</span></td>
                                                 }
                                                  else if (vulns.CVSS3 > 8 && vulns.CVSS3 < 11)
                                                 {
-                                                    <td><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @vulns.Risk</span></td>
+                                                    <td><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @vulns.CVSS3</span></td>
                                                 }
                                         
 
@@ -762,6 +770,7 @@
                                     <th localize-content>Name</th>
                                     <th localize-content>Version</th>
                                     <th localize-content>Description</th>
+                                    <th localize-content>Language</th>
                                     <th localize-content>Creation Date</th>
                                     <th localize-content>Created by</th>
                                     <th localize-content>Options</th>
@@ -777,7 +786,8 @@
                              <tr>
                                         <td>@report.Name</td>
                                         <td>@report.Version</td>
-                                        <td>@report.Description</td>
+                                         <td>@report.Description</td>
+                                         <td>@report.Language</td>
                                         <td>@report.CreatedDate</td>
                                         <td>@report.User.FullName</td>
                                         <td>
@@ -836,7 +846,7 @@
                                         
                                         <div class="form-group">
                                                                                 <label class="control-label" localize-content>Language</label>
-                                                                                @Html.DropDownListFor(model => model.Language, Html.GetEnumSelectList<Language>(),new { @class = "form-control" })
+                                                                                @Html.DropDownListFor(model => model.Language, Html.GetEnumSelectList<Language>(),new { @class = "form-control", @name="language", @id="language" })
                                                                                 </div> 
                                     
                                       </div>

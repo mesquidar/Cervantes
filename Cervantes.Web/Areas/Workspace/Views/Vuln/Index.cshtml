@@ -140,8 +140,50 @@
                             <tr>
                                 <td>@vuln.Name</td>
                                 <td>@vuln.cve</td>
-                                <td>@vuln.CVSS3</td>
-                                <td>@vuln.Risk</td>
+                                @if(@vuln.CVSS3 < 2)
+                                                                        {
+                                                                                    <td><span class="badge badge-info"><i class="fas fa-info-circle"></i> @vuln.CVSS3</span></td>
+                                
+                                                                                }
+                                                                                else if (vuln.CVSS3 > 2 && vuln.CVSS3 < 4)
+                                                                                {
+                                                                                
+                                                                                    <td><span class="badge badge-success"><i class="fas fa-exclamation"></i> @vuln.CVSS3</span></td>
+                                                                                }
+                                                                                else if (vuln.CVSS3 > 4 && vuln.CVSS3 < 6)
+                                                                                {
+                                                                                    <td><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @vuln.CVSS3</span></td>
+                                                                                }
+                                                                                else if (vuln.CVSS3 > 6 && vuln.CVSS3 < 8)
+                                                                                {
+                                                                                    <td><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @vuln.CVSS3</span></td>
+                                                                                }
+                                                                                 else if (vuln.CVSS3 > 8 && vuln.CVSS3 < 11)
+                                                                                {
+                                                                                    <td><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @vuln.CVSS3</span></td>
+                                                                                }
+                                @switch(@vuln.Risk)
+                                {
+                                    case VulnRisk.Info:
+                                        <td><span class="badge badge-info"><i class="fas fa-info-circle"></i> @vuln.Risk</span></td>
+                                        break;
+                                    case VulnRisk.Low:
+                                        <td><span class="badge badge-success"><i class="fas fa-exclamation"></i> @vuln.Risk</span></td>
+                                        break;
+                                    case VulnRisk.Medium:
+                                        <td><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @vuln.Risk</span></td>
+                                        break;
+                                    case VulnRisk.High:
+                                        <td><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @vuln.Risk</span></td>
+                                        break;
+                                    case VulnRisk.Critical:
+                                        <td><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @vuln.Risk</span></td>
+                                        break;
+                                    default:
+                                        <td><span class="badge badge-light">@vuln.Risk</span></td>
+                                        break;
+
+                                }
                                 <td>@vuln.Status</td>
                                 <td>@vuln.VulnCategory.Name</td>
                                 <td>@vuln.CreatedDate.ToUniversalTime()</td>

@@ -1,4 +1,4 @@
-﻿@model Cervantes.CORE.Vuln
+@model Cervantes.CORE.Vuln
 
 @{
     ViewData["Title"] = "Delete Vulnerability";
@@ -14,8 +14,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item" localize-content>Workspace</li>
-              <li class="breadcrumb-item" localize-content>Vulnerabilities</li>
+                <li class="breadcrumb-item" localize-content><a asp-controller="Vuln" asp-action="Index" localize-content>Vulnerability</a></li>
               <li class="breadcrumb-item active" localize-content>Delete</li>
             </ol>
           </div>
@@ -39,6 +38,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt class = "col-sm-2" localize-content>
+                    Project
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Project.Name)
+                </dd>
         <dt class = "col-sm-2" localize-content>
             CVSS3 Score
         </dt>
@@ -65,10 +70,9 @@
         </dd>
     </dl>
     
-    <form asp-area="Workspace" asp-controller="Vuln" asp-action="Delete" method="post" enctype="multipart/form-data">
+    <form asp-controller="Vuln" asp-action="Delete" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="ProjectId" />
-         <a class="btn btn-light" asp-action="Index" localize-content>Back</a>
+        <a class="btn btn-light" asp-action="Index" localize-content>Back</a>
         <button type="submit" class="btn btn-outline-danger" localize-content>Delete</button>
     </form>
 </div>

@@ -1,4 +1,4 @@
-﻿@using System.Net
+@using System.Net
 @using Cervantes.CORE
 @model VulnDetailsViewModel
 
@@ -58,11 +58,8 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item" localize-content>Workspace</li>
-              <li class="breadcrumb-item" localize-content>@Model.Project.Name</li>
-              <li class="breadcrumb-item" localize-content>Vuln</li>
-              <li class="breadcrumb-item" localize-content>Details</li>
-              <li class="breadcrumb-item active" localize-content></li>
+                <li class="breadcrumb-item" localize-content><a asp-controller="Vuln" asp-action="Index" localize-content><span localize-content>Vulnerability</span></a></li>
+              <li class="breadcrumb-item active" localize-content>Details</li>
             </ol>
           </div>
         </div>
@@ -79,96 +76,100 @@
     
                 <!-- Profile Image -->
                 <div class="card card-primary card-outline">
-                  <div class="card-body box-profile">
-                    <div class="text-center">
-                        <span class="img-fluid img-circle"><i class="fas fa-bug fa-3x"></i></span>
-                    </div>
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <span class="img-fluid img-circle"><i class="fas fa-bug fa-3x"></i></span>
+                        </div>
     
-                    <h3 class="profile-username text-center">@Model.Vuln.Name</h3>              
-                    <dt> <p localize-content>Created by</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Vuln.User.FullName)</dd>
+                        <h3 class="profile-username text-center">@Model.Vuln.Name</h3>    
+                        <dt> <p localize-content>Project</p></dt>
+                        <hr>
+                        <dd>@Model.Vuln.Project.Name</dd>
+                        <dt> <p localize-content>Created by</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.Vuln.User.FullName)</dd>
 
-                    <dt> <p localize-content>Category</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Vuln.VulnCategory.Name)</dd>
+                        <dt> <p localize-content>Category</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.Vuln.VulnCategory.Name)</dd>
 
-                    <dt> <p localize-content>CVE</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Vuln.cve)</dd>
+                        <dt> <p localize-content>CVE</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.Vuln.cve)</dd>
 
-                    <dt> <p localize-content>CVSS3 Score</p></dt>
-                    <hr>
-                     @if(Model.Vuln.CVSS3 < 2)
-                     {
-                         <dd><span class="badge badge-info"><i class="fas fa-info-circle"></i> @Model.Vuln.CVSS3</span></dd>
-                                
-                     }
-                     else if (Model.Vuln.CVSS3 > 2 && Model.Vuln.CVSS3 < 4)
-                     {
-                         <dd><span class="badge badge-success"><i class="fas fa-exclamation"></i> @Model.Vuln.CVSS3</span></dd>
-                     }
-                     else if (Model.Vuln.CVSS3 > 4 && Model.Vuln.CVSS3 < 6)
-                     {
-                         <dd><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @Model.Vuln.CVSS3</span></dd>
-                     }
-                     else if (Model.Vuln.CVSS3 > 6 && Model.Vuln.CVSS3 < 8)
-                     {
-                         <dd><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @Model.Vuln.CVSS3</span></dd>
-                     }
-                     else if (Model.Vuln.CVSS3 > 8 && Model.Vuln.CVSS3< 11)
-                     {
-                         <dd><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @Model.Vuln.CVSS3</span></dd>
-                     }
+                           <dt> <p localize-content>CVSS3 Score</p></dt>
+                                           <hr>
+                                            @if(Model.Vuln.CVSS3 < 2)
+                                            {
+                                                <dd><span class="badge badge-info"><i class="fas fa-info-circle"></i> @Model.Vuln.CVSS3</span></dd>
+                                                       
+                                            }
+                                            else if (Model.Vuln.CVSS3 > 2 && Model.Vuln.CVSS3 < 4)
+                                            {
+                                                <dd><span class="badge badge-success"><i class="fas fa-exclamation"></i> @Model.Vuln.CVSS3</span></dd>
+                                            }
+                                            else if (Model.Vuln.CVSS3 > 4 && Model.Vuln.CVSS3 < 6)
+                                            {
+                                                <dd><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @Model.Vuln.CVSS3</span></dd>
+                                            }
+                                            else if (Model.Vuln.CVSS3 > 6 && Model.Vuln.CVSS3 < 8)
+                                            {
+                                                <dd><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @Model.Vuln.CVSS3</span></dd>
+                                            }
+                                            else if (Model.Vuln.CVSS3 > 8 && Model.Vuln.CVSS3< 11)
+                                            {
+                                                <dd><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @Model.Vuln.CVSS3</span></dd>
+                                            }
+                       
+                                           <dt> <p localize-content>CVSS Vector</p></dt>
+                                           <hr>
+                                           <dd>@Html.DisplayFor(model => model.Vuln.CVSSVector)</dd>
+                       
+                                           <dt> <p localize-content>Risk</p></dt>
+                                           <hr>
+                                           @switch(@Model.Vuln.Risk)
+                                           {
+                                               case VulnRisk.Info:
+                                                   <dd><span class="badge badge-info"><i class="fas fa-info-circle"></i> @Model.Vuln.Risk</span></dd>
+                                                   break;
+                                               case VulnRisk.Low:
+                                                   <dd><span class="badge badge-success"><i class="fas fa-exclamation"></i> @Model.Vuln.Risk</span></dd>
+                                                   break;
+                                               case VulnRisk.Medium:
+                                                   <dd><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @Model.Vuln.Risk</span></dd>
+                                                   break;
+                                               case VulnRisk.High:
+                                                   <dd><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @Model.Vuln.Risk</span></dd>
+                                                   break;
+                                               case VulnRisk.Critical:
+                                                   <dd><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @Model.Vuln.Risk</span></dd>
+                                                   break;
+                                               default:
+                                                   <dd><span class="badge badge-light">@Model.Vuln.Risk</span></dd>
+                                                   break;
+                                           
+                                           }
 
-                    <dt> <p localize-content>CVSS Vector</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Vuln.CVSSVector)</dd>
+                        <dt> <p localize-content>Status</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.Vuln.cve)</dd>
 
-                    <dt> <p localize-content>Risk</p></dt>
-                    <hr>
-                    @switch(@Model.Vuln.Risk)
-                    {
-                        case VulnRisk.Info:
-                            <dd><span class="badge badge-info"><i class="fas fa-info-circle"></i> @Model.Vuln.Risk</span></dd>
-                            break;
-                        case VulnRisk.Low:
-                            <dd><span class="badge badge-success"><i class="fas fa-exclamation"></i> @Model.Vuln.Risk</span></dd>
-                            break;
-                        case VulnRisk.Medium:
-                            <dd><span class="badge badge-warning"><i class="fas fa-exclamation"></i> @Model.Vuln.Risk</span></dd>
-                            break;
-                        case VulnRisk.High:
-                            <dd><span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> @Model.Vuln.Risk</span></dd>
-                            break;
-                        case VulnRisk.Critical:
-                            <dd><span class="badge badge-danger"><i class="fas fa-exclamation-triangle"></i> @Model.Vuln.Risk</span></dd>
-                            break;
-                        default:
-                            <dd><span class="badge badge-light">@Model.Vuln.Risk</span></dd>
-                            break;
-                    
-                    }
-                    <dt> <p localize-content>Status</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Vuln.Status)</dd>
-
-                    <dt> <p localize-content>Target</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Vuln.Target.Name)</dd>
+                        <dt> <p localize-content>Target</p></dt>
+                        <hr>
+                        <dd>@Html.DisplayFor(model => model.Vuln.Target.Name)</dd>
 
 
 
-                  </div>
-                  <!-- /.card-body -->
+                    </div>
+                    <!-- /.card-body -->
                 </div>
+                  <a class="btn btn-default" asp-controller="Vuln" asp-action="Index" localize-content>Back</a>
+                @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
+                {
+                    <a class="btn btn-outline-warning" asp-area="" asp-controller="Vuln" asp-action="Edit" asp-route-id="@Model.Vuln.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
+                
+                }
                 <!-- /.card -->
-                 <a class="btn btn-default" asp-area="Workspace" asp-controller="Vuln" asp-action="Index" localize-content>Back</a>
-                  @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                  {
-                      <a class="btn btn-outline-warning" asp-area="Workspace" asp-controller="Vuln" asp-action="Edit" asp-route-project="@Model.Project.Id" asp-route-id="@Model.Vuln.Id" localize-content><i class="fas fa-edit"></i> Edit</a>
-                                
-                  }
               </div>
               <!-- /.col -->
               <div class="col-md-10">
@@ -249,7 +250,7 @@
                                             {
                                                 <td>
                                                     <form asp-action="DeleteNote" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Vuln" asp-action="DeleteNote" asp-route-project="@Model.Vuln.ProjectId" asp-route-id="@note.Id" asp-route-vuln="@Model.Vuln.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Vuln" asp-action="DeleteNote" asp-route-id="@note.Id" asp-route-vuln="@Model.Vuln.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
                                                     </form>
                                                 </td>
 
@@ -342,7 +343,7 @@
                                             {
                                                 <td>
                                                     <form asp-action="DeleteAttachment" method="post" enctype="multipart/form-data">
-                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Vuln" asp-action="DeleteAttachment" asp-route-project="@Model.Vuln.ProjectId" asp-route-id="@attachment.Id" asp-route-vuln="@Model.Vuln.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" asp-controller="Vuln" asp-action="DeleteAttachment" asp-route-id="@attachment.Id" asp-route-vuln="@Model.Vuln.Id" localize-content><i class="fas fa-trash"></i> Delete </button>
                                                     </form>
                                                 </td>
 
@@ -426,26 +427,27 @@
 </section>
 
            
-  @section Scripts{
-<script>
-
-    $(document).ready(function () {
+@section Scripts{
+    <script>
+            $(document).ready(function () {
+    
+                    $('#noteResults').DataTable({
+                        "responsive": true
+                    });
+                    $('#attachmentsResults').DataTable({
+                        "responsive": true
+                    });
+    $('.dataTables_length').addClass('bs-select');
+                    });
+                    
+                
         
-        $('#attachmentsResults').DataTable({
-            "responsive": true
-        });
-        
-        $('#noteResults').DataTable({
-                    "responsive": true
-                });
-     
-        $('.dataTables_length').addClass('bs-select');
+             $(document).ready(function () {
+      bsCustomFileInput.init();
     });
+    
+    </script>
+ 
 
-         $(document).ready(function () {
-  bsCustomFileInput.init();
-});
-
-</script>
 }                       
 

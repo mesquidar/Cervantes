@@ -1019,4 +1019,16 @@
   <data name="Add Attachment to Vuln" xml:space="preserve">
     <value>Añadir Adjunto a la Vulnerabilidad</value>
   </data>
+  <data name="&lt;i class=&quot;fas fa-briefcase&quot;&gt;&lt;/i&gt; Vulnerability Categories" xml:space="preserve">
+    <value>&lt;i class="fas fa-briefcase"&gt;&lt;/i&gt; Categorías de Vulenrabilidades</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categorías</value>
+  </data>
+  <data name="&lt;i class=&quot;nav-icon fas fa-bug&quot;&gt;&lt;/i&gt;&lt;p&gt;Vulnerabilities &lt;i class=&quot;right fas fa-angle-left&quot;&gt;&lt;/i&gt;&lt;/p&gt;" xml:space="preserve">
+    <value>&lt;i class="nav-icon fas fa-bug"&gt;&lt;/i&gt;&lt;p&gt;Vulnerabilidades &lt;i class="right fas fa-angle-left"&gt;&lt;/i&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="Vulnerability" xml:space="preserve">
+    <value>Vulnerabilidad</value>
+  </data>
 </root>

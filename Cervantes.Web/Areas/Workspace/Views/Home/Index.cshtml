@@ -263,11 +263,19 @@
 
                                 @foreach (var members in Model.Members)
                                 {
-                             <tr>
-                                        <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
-                                        <td>@members.User.FullName</td>
-                                        <td>@members.User.Email</td>
-                                    </tr>
+                                  <tr>
+                                    @if (@members.User.Avatar != null)
+                                    {
+                                      <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
+                                    }
+                                    else
+                                    {
+                                      <td><i class="fas fa-user"></i></td>
+                                    }
+                                    
+                                    <td>@members.User.FullName</td>
+                                    <td>@members.User.Email</td>
+                                  </tr>
                                 }
 
                             </tbody>
