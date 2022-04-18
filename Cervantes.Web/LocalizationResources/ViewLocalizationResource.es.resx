@@ -1031,4 +1031,55 @@
   <data name="Vulnerability" xml:space="preserve">
     <value>Vulnerabilidad</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="Archived" xml:space="preserve">
+    <value>Archivado</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>Esperando</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Abierto</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Confirmado</value>
+  </data>
+  <data name="Accepted" xml:space="preserve">
+    <value>Aceptado</value>
+  </data>
+  <data name="Resolved" xml:space="preserve">
+    <value>Resuelto</value>
+  </data>
+  <data name="Out Of Scope" xml:space="preserve">
+    <value>Fuera de Alcance</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Inválido</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Correo Electrónico</value>
+  </data>
+  <data name="My Notes" xml:space="preserve">
+    <value>Mis Notas</value>
+  </data>
+  <data name="Create Note" xml:space="preserve">
+    <value>Crear Nota</value>
+  </data>
+  <data name="Add Service" xml:space="preserve">
+    <value>Añadir Servicio</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="Add Service To Target" xml:space="preserve">
+    <value>Añadir Servicio al Objetivo</value>
+  </data>
+  <data name="Edit Service" xml:space="preserve">
+    <value>Editar Servicio</value>
+  </data>
+  <data name="Delete Service" xml:space="preserve">
+    <value>Eliminar Servicio</value>
+  </data>
 </root>

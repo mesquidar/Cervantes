@@ -471,6 +471,7 @@ namespace Cervantes.Web.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddMember(int project, string users)
         {
             try
@@ -521,6 +522,7 @@ namespace Cervantes.Web.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteMember(int project, string user)
         {
             try
@@ -546,6 +548,7 @@ namespace Cervantes.Web.Controllers
 
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddTarget(IFormCollection form)
         {
             try
@@ -584,6 +587,7 @@ namespace Cervantes.Web.Controllers
 
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteTarget(int target, int project)
         {
             try
@@ -613,6 +617,7 @@ namespace Cervantes.Web.Controllers
 
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddNote(IFormCollection form)
         {
             try
@@ -652,6 +657,7 @@ namespace Cervantes.Web.Controllers
 
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteNote(int id, int project)
         {
             try
@@ -685,6 +691,7 @@ namespace Cervantes.Web.Controllers
 
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddAttachment(IFormCollection form, IFormFile upload)
         {
             try
@@ -749,6 +756,7 @@ namespace Cervantes.Web.Controllers
 
         [Authorize(Roles = "Admin,SuperUser")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteAttachment(int id, int project)
         {
             try

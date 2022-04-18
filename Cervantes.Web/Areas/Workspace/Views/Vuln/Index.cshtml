@@ -184,7 +184,30 @@
                                         break;
 
                                 }
-                                <td>@vuln.Status</td>
+                                @switch (vuln.Status)
+                                                                {
+                                                                    case VulnStatus.Open:
+                                                                        <td><span class="badge badge-info">@vuln.Status</span></td>
+                                                                        break;
+                                                                    case VulnStatus.Confirmed:
+                                                                        <td><span class="badge badge-danger">@vuln.Status</span></td>
+                                                                        break;
+                                                                    case VulnStatus.Accepted:
+                                                                        <td><span class="badge badge-warning">@vuln.Status</span></td>
+                                                                        break;
+                                                                    case VulnStatus.Resolved:
+                                                                        <td><span class="badge badge-success">@vuln.Status</span></td>
+                                                                        break;
+                                                                    case VulnStatus.OutOfScope:
+                                                                        <td><span class="badge badge-indigo">@vuln.Status</span></td>
+                                                                        break;
+                                                                    case VulnStatus.Invalid:
+                                                                        <td><span class="badge badge-gray">@vuln.Status</span></td>
+                                                                        break;
+                                                                    default:
+                                                                        <td><span class="badge badge-light">@vuln.Status</span></td>
+                                                                        break;
+                                                                }
                                 <td>@vuln.VulnCategory.Name</td>
                                 <td>@vuln.CreatedDate.ToUniversalTime()</td>
                                 @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))

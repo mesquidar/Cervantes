@@ -98,7 +98,7 @@ $(document).ready(function() {
         var data = new FormData();
         data.append("image", image);
         $.ajax({
-            url: '@Url.Action("UploadTarget","Image")',
+            url: '@Url.Action("UploadTarget","Image",new { Area = "" })',
             cache: false,
             contentType: false,
             processData: false,

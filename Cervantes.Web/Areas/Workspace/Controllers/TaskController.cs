@@ -198,7 +198,7 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                     li.Add(new SelectListItem { Text = item.TargetName, Value = item.TargetId.ToString() });
                 }
 
-                var users = projectUserManager.GetAll().Where(x => x.ProjectId == project);
+                var users = projectUserManager.GetAll().Where(x => x.ProjectId == project).ToList();
                 var li2 = new List<SelectListItem>();
                 foreach (var item in users)
                 {

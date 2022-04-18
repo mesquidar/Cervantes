@@ -53,15 +53,12 @@ namespace Cervantes.Web.Controllers
                     ProjectPercetagesActive = projectManager.GetAll().Where(x => x.Status == CORE.ProjectStatus.Active).Count(),
                     ProjectPercetagesArchived = projectManager.GetAll().Where(x => x.Status == CORE.ProjectStatus.Archived).Count(),
                     ProjectPercetagesWaiting = projectManager.GetAll().Where(x => x.Status == CORE.ProjectStatus.Waiting).Count(),
-                    OpenReported = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.OpenReported).Count(),
-                    OpenUnresolved = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.OpenUnresolved).Count(),
-                    ConfirmedExploited = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ConfirmedExploited).Count(),
-                    ConfirmedUnexploited = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ConfirmedUnexploited).Count(),
-                    ResolvedMitigated = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ResolvedMitigated).Count(),
-                    ResolvedRemediated = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ResolvedRemediated).Count(),
-                    ClosedMitigated = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ClosedMitigated).Count(),
-                    ClosedRemedaited = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ClosedRemediated).Count(),
-                    ClosedRejected = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.ClosedRejected).Count()
+                    Open = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.Open).Count(),
+                    Confirmed = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.Confirmed).Count(),
+                    Accepted = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.Accepted).Count(),
+                    Resolved = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.Resolved).Count(),
+                    OutOfScope = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.OutOfScope).Count(),
+                    Invalid = vulnManager.GetAll().Where(x => x.Status == CORE.VulnStatus.Invalid).Count(),
 
                 };
 

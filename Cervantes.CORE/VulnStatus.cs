@@ -8,14 +8,11 @@ namespace Cervantes.CORE
 {
     public enum VulnStatus
     {
-        OpenReported = 0,
-        OpenUnresolved = 1,
-        ConfirmedExploited = 2,
-        ConfirmedUnexploited = 3,
-        ResolvedMitigated = 4,
-        ResolvedRemediated = 5,
-        ClosedMitigated = 6,
-        ClosedRemediated = 7,
-        ClosedRejected = 8
+        Open = 0,
+        Confirmed = 1,
+        Accepted = 2,
+        Resolved = 3,
+        OutOfScope = 4,
+        Invalid = 5,
     }
 }

@@ -15,9 +15,9 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" localize-content>Home</a></li>
-              <li class="breadcrumb-item" localize-content>Workspace</li>
-              <li class="breadcrumb-item" localize-content>@Model.Project.Name</li>
-              <li class="breadcrumb-item active" localize-content>Create Tasks</li>
+                <li class="breadcrumb-item" localize-content>Workspace</li>
+                <li class="breadcrumb-item" localize-content>Tasks</li>
+              <li class="breadcrumb-item active" localize-content>Create Task Project</li>
             </ol>
           </div>
         </div>
@@ -98,7 +98,7 @@
         var data = new FormData();
         data.append("image", image);
         $.ajax({
-            url: '@Url.Action("UploadTask","Image")',
+            url: '@Url.Action("UploadTask","Image",new { Area = "" })',
             cache: false,
             contentType: false,
             processData: false,

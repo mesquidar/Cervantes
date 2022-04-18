@@ -18,15 +18,13 @@ namespace Cervantes.Web.Models
         public int ProjectPercetagesArchived { get; set; }
         public int ProjectPercetagesWaiting { get; set; }
 
-        public int OpenReported { get; set; }
-        public int OpenUnresolved { get; set; }
-        public int ConfirmedExploited { get; set; }
-        public int ConfirmedUnexploited { get; set; }
-        public int ResolvedMitigated { get; set; }
-        public int ResolvedRemediated { get; set; }
-        public int ClosedMitigated { get; set; }
-        public int ClosedRemedaited { get; set; }
-        public int ClosedRejected { get; set; }
+        public int Open { get; set; }
+        public int Accepted { get; set; }
+        public int Confirmed { get; set; }
+        public int Resolved { get; set; }
+        public int OutOfScope { get; set; }
+        public int Invalid { get; set; }
+
 
     }
 }

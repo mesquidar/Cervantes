@@ -36,7 +36,7 @@
                     <div class="text-center">
                       <img class="img-fluid img-circle"
                            src="@Url.Content(Model.Project.Client.ImagePath)"
-                           alt="LogoClient">
+                           alt="LogoClient" style="height:200px;">
                     </div>
     
                     <h3 class="profile-username text-center">@Model.Project.Name</h3>
@@ -170,128 +170,135 @@
             </div>
             <!-- /.info-box -->
           </div>
-                     <div class="col-md-2">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-sticky-note"></i></span>
+             <div class="col-md-2">
+               <div class="info-box mb-3">
+                 <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-sticky-note"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text" localize-content>Attachments</span>
-                <span class="info-box-number">@Model.AttachmentsNumber</span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
+                 <div class="info-box-content">
+                   <span class="info-box-text" localize-content>Attachments</span>
+                   <span class="info-box-number">@Model.AttachmentsNumber</span>
+                 </div>
+                 <!-- /.info-box-content -->
+               </div>
+               <!-- /.info-box -->
+             </div>
+             </div>
+             
+             
+               <div class="row">
 
-            <div class="col-md-4">
-             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title" localize-content>My Tasks</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row">
+                 <div class="col-md-4">
+                   <div class="card h-100">
+                     <div class="card-header">
+                       <h3 class="card-title" localize-content>My Tasks</h3>
+                     </div>
+                     <!-- /.card-header -->
+                     <div class="card-body">
+                       <div class="row">
 
                          <table id="tasksResults" class="table table-bordered table-hover projects" width="100%">
-                            <!--Table head-->
-                            <tbody>
+                           <!--Table head-->
+                           <tbody>
 
-                                @foreach (var task in Model.Tasks)
-                                {
+                           @foreach (var task in Model.Tasks)
+                           {
                              <tr>
-                                        <td>@task.Name</td>
-                                        <td>@task.Status</td>
-                                    </tr>
-                                }
+                               <td>@task.Name</td>
+                               <td>@task.Status</td>
+                             </tr>
+                           }
 
-                            </tbody>
-                            <!--Table body-->
-                        </table>
+                           </tbody>
+                           <!--Table body-->
+                         </table>
 
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.footer -->
-            </div>
+                       </div>
+                       <!-- /.row -->
+                     </div>
+                     <!-- /.footer -->
+                   </div>
                  </div>
 
-              <div class="col-md-4">
-             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title" localize-content>Targets</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row">
+                 <div class="col-md-4">
+                   <div class="card h-100">
+                     <div class="card-header">
+                       <h3 class="card-title" localize-content>Targets</h3>
+                     </div>
+                     <!-- /.card-header -->
+                     <div class="card-body">
+                       <div class="row">
 
-                        <table id="targetResults" class="table table-bordered table-hover projects" width="100%">
-                            <!--Table head-->
-                            <tbody>
+                         <table id="targetResults" class="table table-bordered table-hover projects" width="100%">
+                           <!--Table head-->
+                           <tbody>
 
-                                @foreach (var target in Model.Targets)
-                                {
+                           @foreach (var target in Model.Targets)
+                           {
                              <tr>
-                                        <td>@target.Name</td>
-                                    </tr>
-                                }
+                               <td>@target.Name</td>
+                             </tr>
+                           }
 
-                            </tbody>
-                            <!--Table body-->
-                        </table>
+                           </tbody>
+                           <!--Table body-->
+                         </table>
 
 
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.footer -->
-            </div>
+                       </div>
+                       <!-- /.row -->
+                     </div>
+                     <!-- /.footer -->
+                   </div>
                  </div>
 
 
-             <div class="col-md-4">
-             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title" localize-content>Members</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row">
+                 <div class="col-md-4">
+                   <div class="card h-100">
+                     <div class="card-header">
+                       <h3 class="card-title" localize-content>Members</h3>
+                     </div>
+                     <!-- /.card-header -->
+                     <div class="card-body">
+                       <div class="row">
                     
-                        <table id="membersResults" class="table table-bordered table-hover projects" width="100%">
-                            <!--Table head-->
-                            <tbody>
+                         <table id="membersResults" class="table table-bordered table-hover projects" width="100%">
+                           <!--Table head-->
+                           <tbody>
 
-                                @foreach (var members in Model.Members)
-                                {
-                                  <tr>
-                                    @if (@members.User.Avatar != null)
-                                    {
-                                      <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
-                                    }
-                                    else
-                                    {
-                                      <td><i class="fas fa-user"></i></td>
-                                    }
+                           @foreach (var members in Model.Members)
+                           {
+                             <tr>
+                               @if (@members.User.Avatar != null)
+                               {
+                                 <td><img alt="Avatar" class="table-avatar" src="@Url.Content(members.User.Avatar)"></td>
+                               }
+                               else
+                               {
+                                 <td><i class="fas fa-user"></i></td>
+                               }
                                     
-                                    <td>@members.User.FullName</td>
-                                    <td>@members.User.Email</td>
-                                  </tr>
-                                }
+                               <td>@members.User.FullName</td>
+                               <td>@members.User.Email</td>
+                             </tr>
+                           }
 
-                            </tbody>
-                            <!--Table body-->
-                        </table>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.footer -->
-            </div>
-            </div>
-
+                           </tbody>
+                           <!--Table body-->
+                         </table>
+                         <!-- /.col -->
+                       </div>
+                       <!-- /.row -->
+                     </div>
+                     <!-- /.footer -->
+                   </div>
+                 </div>
+             
+               </div>
+               <br/>
+             <div class="row">
 
                         <div class="col-md-4">
-             <div class="card">
+             <div class="card h-100">
               <div class="card-header">
                 <h3 class="card-title" localize-content>Recent Vulnerabilities</h3>
               </div>
@@ -322,7 +329,7 @@
                  </div>
 
                              <div class="col-md-4">
-             <div class="card">
+             <div class="card h-100">
               <div class="card-header">
                 <h3 class="card-title" localize-content>Vulnerabilities by Severity</h3>
               </div>
@@ -355,7 +362,7 @@
 
 
              <div class="col-md-4">
-             <div class="card">
+             <div class="card h-100">
               <div class="card-header">
                 <h3 class="card-title" localize-content>Recent Notes</h3>
               </div>
@@ -384,7 +391,7 @@
               <!-- /.footer -->
             </div>
             </div>
-
+            </div>
 
             </div>
             </div>

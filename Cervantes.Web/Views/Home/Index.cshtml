@@ -86,7 +86,7 @@
 
         <div class="row">
             <div class="col-md-4">
-             <div class="card">
+             <div class="card h-100">
               <div class="card-header" localize-content>
                 <h3 class="card-title">Projects Percentages</h3>
               </div>
@@ -102,9 +102,9 @@
                   <!-- /.col -->
                   <div class="col-md-4">
                     <ul class="chart-legend clearfix">
-                      <li><i class="far fa-circle text-success"></i> Active</li>
-                      <li><i class="far fa-circle text-info"></i> Archived</li>
-                      <li><i class="far fa-circle text-warning"></i> Waiting</li>
+                      <li><i class="far fa-circle text-success"></i> <span localize-content>Active</span></li>
+                      <li><i class="far fa-circle text-info"></i> <span localize-content>Archived</span></li>
+                      <li><i class="far fa-circle text-warning"></i> <span localize-content>Waiting</span></li>
 
                     </ul>
                   </div>
@@ -121,7 +121,7 @@
 
 
             <div class="col-md-4">
-             <div class="card">
+             <div class="card h-100">
               <div class="card-header" localize-content>
                 <h3 class="card-title">Active Projects</h3>
               </div>
@@ -158,7 +158,7 @@
 
 
             <div class="col-md-4">
-                <div class="card">
+                <div class="card h-100">
               <div class="card-header" localize-content>
                 <h3 class="card-title">Recent Clients</h3>
               </div>
@@ -193,10 +193,10 @@
             </div>
             </div>
 
-
+<br/>
           <div class="row">
           <div class="col-md-4">
-             <div class="card">
+             <div class="card h-100">
               <div class="card-header" localize-content>
                 <h3 class="card-title">Recent Documents</h3>
               </div>
@@ -231,7 +231,7 @@
             </div>
 
             <div class="col-md-4">
-             <div class="card">
+             <div class="card h-100">
               <div class="card-header" localize-content>
                 <h3 class="card-title">Recent Vulnerabilities</h3>
               </div>
@@ -266,7 +266,7 @@
             </div>
             
             <div class="col-md-4">
-            <div class="card">
+            <div class="card h-100">
               <div class="card-header" localize-content>
                 <h3 class="card-title">Vulnerabilities Status</h3>
               </div>
@@ -282,15 +282,12 @@
                   <!-- /.col -->
                   <div class="col-md-4">
                     <ul class="chart-legend clearfix">
-                      <li><i class="far fa-circle text-info"></i> Open (Reported)</li>
-                      <li><i class="far fa-circle text-lightblue"></i> Open (Unresolved)</li>
-                      <li><i class="far fa-circle text-danger"></i> Confirmed (Exploited)</li>
-                      <li><i class="far fa-circle text-warning"></i> Confirmed (Unexploited)</li>
-                      <li><i class="far fa-circle text-lime"></i> Resolved (Mitigated)</li>
-                      <li><i class="far fa-circle text-teal"></i> Resolved (Remediated)</li>
-                      <li><i class="far fa-circle text-success"></i> Closed (Mitigated)</li>
-                      <li><i class="far fa-circle text-olive"></i> Closed (Remediated)</li>
-                      <li><i class="far fa-circle text-maroon"></i> Closed (Rejected)</li>
+                      <li><i class="far fa-circle text-info"></i> <span localize-content>Open</span></li>
+                      <li><i class="far fa-circle text-danger"></i> <span localize-content>Confirmed</span></li>
+                      <li><i class="far fa-circle text-warning"></i> <span localize-content>Accepted</span></li>
+                      <li><i class="far fa-circle text-success"></i> <span localize-content>Resolved</span></li>
+                      <li><i class="far fa-circle text-indigo"></i> <span localize-content>Out Of Scope</span></li>
+                      <li><i class="far fa-circle text-gray"></i> <span localize-content>Invalid</span></li>
                     </ul>
                   </div>
                   <!-- /.col -->
@@ -340,18 +337,15 @@ new Chart("projectPercentages", {
   }
 });
 
-var xVulnValues = ["Open (Reported)", "Open (Unresolved)", "Confirmed (Exploited)", "Confirmed (Unexploited)", "Resolved (Mitigated)", "Resolved (Remediated)", "Closed (Mitigated)", "Closed (Remediated)", "Closed (Rejected)"  ];
-var yVulnValues = [@Model.OpenReported, @Model.OpenUnresolved, @Model.ConfirmedExploited, @Model.ConfirmedUnexploited, @Model.ResolvedMitigated, @Model.ResolvedRemediated, @Model.ClosedMitigated, @Model.ClosedRemedaited, @Model.ClosedRejected];
+var xVulnValues = ["Open",  "Confirmed", "Accepted", "Resolved", "Out Of Scope", "Invalid"  ];
+var yVulnValues = [@Model.Open, @Model.Confirmed, @Model.Accepted, @Model.Resolved, @Model.OutOfScope, @Model.Invalid];
 var VulnColors = [
   "#17a2b8",
-  "#3c8dbc",
   "#dc3545",
   "#ffc107",
   "#01ff70",
-  "#39cccc",
-  "#28a745",
-  "#3d9970",
-  "#d81b60"
+  "#6610f2",
+  "#adb5bd",
 ];
 
 new Chart("vulnStatus", {

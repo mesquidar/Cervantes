@@ -99,7 +99,7 @@
           var data = new FormData();
           data.append("image", image);
           $.ajax({
-              url: '@Url.Action("UploadTask","Image")',
+              url: '@Url.Action("UploadTask","Image",new { Area = "" })',
               cache: false,
               contentType: false,
               processData: false,

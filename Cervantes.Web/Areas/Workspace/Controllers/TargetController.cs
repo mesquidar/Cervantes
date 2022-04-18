@@ -268,59 +268,45 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
             }
         }
 
-        public ActionResult AddService(int project, int id)
-        {
-            try
-            {
-                TargetServiceViewModel model = new TargetServiceViewModel
-                {
-                    Project = projectManager.GetById(project),
-                    Target = targetManager.GetById(id),
-
-                };
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                TempData["error"] = "Error loading form service!";
-
-                _logger.LogError(e, "An error ocurred loading Target Workspace Service create form. Project: {0} Target: {1} User: {2}", project, id, User.FindFirstValue(ClaimTypes.Name));
-                return View();
-            }
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddService(int project, TargetServiceViewModel model)
+        public ActionResult AddService(int project, int target, IFormCollection form)
         {
             try
             {
-                TargetServices result = new TargetServices
+                if (target != 0 && project != 0)
                 {
-                    Name = model.TargetService.Name,
-                    Version = model.TargetService.Version,
-                    Port = model.TargetService.Port,
-                    Description = model.TargetService.Description,
-                    Note = model.TargetService.Note,
-                    TargetId = model.Target.Id,
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
-                };
-                
-                TempData["addedService"] = "added service";
-                targetServicesManager.Add(result);
-                targetServicesManager.Context.SaveChanges();
-                _logger.LogInformation("User: {0} added a new target service on Target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name), model.Target.Name, project);
+                    TargetServices service = new TargetServices()
+                    {
+                        Name = form["name"],
+                        Version = form["version"],
+                        Port = Int32.Parse(form["port"]),
+                        Description = form["description"],
+                        Note = form["note"],
+                        UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        TargetId = target
+                        
+                    };
 
-                return View(model);
+                    targetServicesManager.Add(service);
+                    targetServicesManager.Context.SaveChanges();
+                    TempData["error"] = "Error adding service!";
+                    _logger.LogInformation("User: {0} added a new Target Service on Target {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), target, project);
+                    return RedirectToAction("Details", "Target", new {project = project, id = target});
+                }
+
+                return RedirectToAction("Details", "Target", new {project = project, id = target});
+
             }
             catch (Exception e)
             {
                 TempData["error"] = "Error adding service!";
 
-                _logger.LogError(e, "An error ocurred adding Target Workspace Service. Project: {0} Target: {1} User: {2}", project, model.Target.Name, User.FindFirstValue(ClaimTypes.Name));
-                return View();
+                _logger.LogError(e, "An error ocurred adding Target. Project: {0} Target: {1} User: {2}", project, target, User.FindFirstValue(ClaimTypes.Name));
+                return RedirectToAction("Details", "Target", new {project = project, id = target});
             }
         }
+        
 
         public ActionResult EditService(int project, int id, int target)
         {
@@ -346,20 +332,28 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditService(IFormCollection collection)
+        public ActionResult EditService(int project, TargetServiceViewModel model )
         {
             try
             {
+
+                var result = targetServicesManager.GetById(model.TargetService.Id);
+                result.Name = model.TargetService.Name;
+                result.Version = model.TargetService.Version;
+                result.Port = model.TargetService.Port;
+                result.Description = model.TargetService.Description;
+                result.Note = model.TargetService.Note;
+
+                targetServicesManager.Context.SaveChanges();
                 TempData["editedService"] = "edit service";
-                _logger.LogInformation("User: {0} edited target service on Target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name));
-                return View();
+                _logger.LogInformation("User: {0} edited target service on Target: {1} on Project: {2}", project, result.Target.Name,User.FindFirstValue(ClaimTypes.Name));
+                return RedirectToAction("Details","Target", new {project = result.Target.ProjectId, id = result.TargetId});
             }
             catch (Exception e)
             {
                 TempData["error"] = "Error editing service!";
-
-                _logger.LogError(e, "An error ocurred editing Target Workspace Service. Project: {0} Target: {1} User: {2}");
-                return View();
+                _logger.LogError(e, "An error ocurred editing Target Workspace Service. Project: {0} User: {1}",project, User.FindFirstValue(ClaimTypes.Name));
+                return RedirectToAction("Index","Target");
             }
 
         }
@@ -391,17 +385,18 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 {
                     targetServicesManager.Remove(result);
                     targetServicesManager.Context.SaveChanges();
+                    TempData["deletedService"] = "deleted service";
+                    _logger.LogInformation("User: {0} deleted target service on Target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
+                    return RedirectToAction("Details","Target",new {project = project, id = result.TargetId});
                 }
 
-                TempData["deletedService"] = "deleted service";
-                _logger.LogInformation("User: {0} deleted target service on Target: {1} on Project: {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
-                return RedirectToAction(nameof(Index));
+                return View("Index");
             }
             catch (Exception e)
             {
                 TempData["error"] = "Error deleting service!";
                 _logger.LogError(e, "An error ocurred deleting Target Workspace Service: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
-                return View();
+                return View("Index");
             }
         }
 

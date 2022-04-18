@@ -139,7 +139,7 @@
             <!-- /.card -->
             <div class="form-group">
                 <a class="btn btn-default" asp-area="Workspace" asp-controller="Target" asp-action="Index" localize-content>Back</a>
-                <button type="submit" class="btn btn-dark" localize-content>Create</button>
+                <button type="submit" class="btn btn-dark" localize-content>Edit</button>
                     
             </div>
         </form>
@@ -149,7 +149,7 @@
 @section Scripts
 {
     <script>
-    $(document).ready(function() {
+  $(document).ready(function() { 
           $('#descriptionTxt').summernote({
           height: 300,
           callbacks: {
@@ -158,41 +158,40 @@
                   }
                   }
           });
-          $('#impact').summernote({
-                    height: 300,
-                    callbacks: {
-                            onImageUpload: function(image) {
-                                uploadImage(image[0]);
-                            }
-                            }
-                    });
-          
-          $('#pocTxt').summernote({
-                    height: 300,
-                    callbacks: {
-                            onImageUpload: function(image) {
-                                uploadImage(image[0]);
-                            }
-                            }
-                    });
-          
-          $('#remediationTxt').summernote({
-                    height: 300,
-                    callbacks: {
-                            onImageUpload: function(image) {
-                                uploadImage(image[0]);
-                            }
-                            }
-                    });
-          
-          
+              $('#impact').summernote({
+                        height: 300,
+                        callbacks: {
+                                onImageUpload: function(image) {
+                                    uploadImage2(image[0]);
+                                }
+                                }
+                        });    
+              
+              $('#pocTxt').summernote({
+                        height: 300,
+                        callbacks: {
+                                onImageUpload: function(image) {
+                                    uploadImage3(image[0]);
+                                }
+                                }
+                        });
+              
+              $('#remediationTxt').summernote({
+                        height: 300,
+                        callbacks: {
+                                onImageUpload: function(image) {
+                                    uploadImage4(image[0]);
+                                }
+                                }
+                        });
           });
+  
         
         function uploadImage(image) {
             var data = new FormData();
             data.append("image", image);
             $.ajax({
-                url: '@Url.Action("UploadVuln","Image")',
+                url: '@Url.Action("UploadVuln","Image",new { Area = "" })',
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -201,13 +200,76 @@
                 success: function(FileUrl) {
                     var imgNode = document.createElement('img');  
                     imgNode.src = FileUrl;  
-                    $('#description').summernote('insertNode', imgNode); 
+                    $('#descriptionTxt').summernote('insertNode', imgNode); 
                 },
                 error: function(data) {
                     alert(data.responseText); 
                 }
             });
         }
+        
+        function uploadImage2(image) {
+                    var data = new FormData();
+                    data.append("image", image);
+                    $.ajax({
+                        url: '@Url.Action("UploadVuln","Image",new { Area = "" })',
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        type: "post",
+                        success: function(FileUrl) {
+                            var imgNode = document.createElement('img');  
+                            imgNode.src = FileUrl;  
+                            $('#impact').summernote('insertNode', imgNode); 
+                        },
+                        error: function(data) {
+                            alert(data.responseText); 
+                        }
+                    });
+                }
+                
+                function uploadImage3(image) {
+                                    var data = new FormData();
+                                    data.append("image", image);
+                                    $.ajax({
+                                        url: '@Url.Action("UploadVuln","Image",new { Area = "" })',
+                                        cache: false,
+                                        contentType: false,
+                                        processData: false,
+                                        data: data,
+                                        type: "post",
+                                        success: function(FileUrl) {
+                                            var imgNode = document.createElement('img');  
+                                            imgNode.src = FileUrl;  
+                                            $('#pocTxt').summernote('insertNode', imgNode); 
+                                        },
+                                        error: function(data) {
+                                            alert(data.responseText); 
+                                        }
+                                    });
+                                }
+                                
+                                function uploadImage4(image) {
+                                                                    var data = new FormData();
+                                                                    data.append("image", image);
+                                                                    $.ajax({
+                                                                        url: '@Url.Action("UploadVuln","Image",new { Area = "" })',
+                                                                        cache: false,
+                                                                        contentType: false,
+                                                                        processData: false,
+                                                                        data: data,
+                                                                        type: "post",
+                                                                        success: function(FileUrl) {
+                                                                            var imgNode = document.createElement('img');  
+                                                                            imgNode.src = FileUrl;  
+                                                                            $('#remediationTxt').summernote('insertNode', imgNode); 
+                                                                        },
+                                                                        error: function(data) {
+                                                                            alert(data.responseText); 
+                                                                        }
+                                                                    });
+                                                                }
        
     
     
