@@ -180,44 +180,80 @@ namespace Cervantes.Web.Controllers
             try
             {
                 var file = Request.Form.Files["upload"];
+                var hasher = new PasswordHasher();
 
-                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Avatars");
-                var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+
+                if (file != null)
                 {
-                    file.CopyTo(fileStream);
+                    var uploads = Path.Combine(_appEnvironment.WebRootPath, "Attachments/Images/Avatars");
+                    var uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    using (var fileStream = new FileStream(Path.Combine(uploads, uniqueName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
 
+                    }
+                    
+
+                    ApplicationUser user = new ApplicationUser
+                    {
+                        UserName = model.UserName,
+                        Email = model.Email,
+                        PasswordHash = hasher.HashPassword(model.Password),
+                        FullName = model.FullName,
+                        Avatar = "/Attachments/Images/Avatars/" + uniqueName,
+                        EmailConfirmed = true,
+                        NormalizedEmail = model.Email.ToUpper(),
+                        NormalizedUserName = model.UserName.ToUpper(),
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        PhoneNumber = model.PhoneNumber,
+                        Position = model.Position,
+                        Description = model.Description,
+
+                    };
+                    usrManager.Add(user);
+                    usrManager.Context.SaveChanges();
+                    _userManager.AddToRoleAsync(user, model.Option).Wait();
+
+
+
+
+                    TempData["created"] = "created";
+                    _logger.LogInformation("User: {0} Created a new User: {1}", User.FindFirstValue(ClaimTypes.Name), user.UserName);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ApplicationUser user = new ApplicationUser
+                    {
+                        UserName = model.UserName,
+                        Email = model.Email,
+                        PasswordHash = hasher.HashPassword(model.Password),
+                        FullName = model.FullName,
+                        Avatar = "",
+                        EmailConfirmed = true,
+                        NormalizedEmail = model.Email.ToUpper(),
+                        NormalizedUserName = model.UserName.ToUpper(),
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        PhoneNumber = model.PhoneNumber,
+                        Position = model.Position,
+                        Description = model.Description,
+                        
+
+                    };
+                    usrManager.Add(user);
+                    usrManager.Context.SaveChanges();
+                    _userManager.AddToRoleAsync(user, model.Option).Wait();
+
+
+
+
+                    TempData["created"] = "created";
+                    _logger.LogInformation("User: {0} Created a new User: {1}", User.FindFirstValue(ClaimTypes.Name), user.UserName);
+                    return RedirectToAction("Index");
                 }
 
 
-                var hasher = new PasswordHasher();
-
-                ApplicationUser user = new ApplicationUser
-                {
-                    UserName = model.UserName,
-                    Email = model.Email,
-                    PasswordHash = hasher.HashPassword(model.Password),
-                    FullName = model.FullName,
-                    Avatar = "/Attachments/Images/Avatars/" + uniqueName,
-                    EmailConfirmed = true,
-                    NormalizedEmail = model.Email.ToUpper(),
-                    NormalizedUserName = model.UserName.ToUpper(),
-                    SecurityStamp = Guid.NewGuid().ToString(),
-                    PhoneNumber = model.PhoneNumber,
-                    Position = model.Position,
-                    Description = model.Description,
-
-                };
-                usrManager.Add(user);
-                usrManager.Context.SaveChanges();
-                _userManager.AddToRoleAsync(user, model.Option).Wait();
-
-
-
-
-                TempData["created"] = "created";
-                _logger.LogInformation("User: {0} Created a new User: {1}", User.FindFirstValue(ClaimTypes.Name), user.UserName);
-                return RedirectToAction("Index");
+          
             }
             catch (Exception ex)
             {

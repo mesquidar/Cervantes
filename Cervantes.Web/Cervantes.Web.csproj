@@ -40,10 +40,7 @@
   <ItemGroup>
     <Folder Include="Areas\Workspace\Data\" />
     <Folder Include="wwwroot\Attachments\Images\Clients\" />
-    <Folder Include="wwwroot\Attachments\Images\Projects" />
-    <Folder Include="wwwroot\Attachments\Images\Targets" />
     <Folder Include="wwwroot\Attachments\Images\Tasks" />
-    <Folder Include="wwwroot\Attachments\Images\Vulns" />
   </ItemGroup>
 
   <ItemGroup>
