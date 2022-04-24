@@ -37,16 +37,29 @@
                     <div class="text-center">
                       <img class="img-fluid img-circle"
                            src="@Url.Content(Model.Client.ImagePath)"
-                           alt="LogoClient">
+                           alt="LogoClient" style="height: 200px;">
                     </div>
     
-                    <h3 class="profile-username text-center">@Model.Client.Name</h3>
-                    <dt><p localize-content>Created by</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Client.User.UserName)</dd>
-                    <dt> <p localize-content>Created on</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Client.CreatedDate)</dd>                    
+                      <h3 class="profile-username text-center">@Model.Client.Name</h3>
+                      <div class="info-box mb-3">
+                          <span class="info-box-icon bg-info"><i class="fas fa-user"></i></span>
+                      
+                          <div class="info-box-content">
+                              <span class="info-box-text" localize-content>Created by</span>
+                              <span class="info-box-number">@Model.Client.User.FullName</span>
+                          </div>
+                          <!-- /.info-box-content -->
+                      </div>
+                      <div class="info-box mb-3">
+                                                <span class="info-box-icon bg-teal"><i class="fas fa-calendar"></i></span>
+                                            
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text" localize-content>Created on</span>
+                                                    <span class="info-box-number">@Model.Client.CreatedDate</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                      
 
 
                   </div>
@@ -97,17 +110,14 @@
                             <!--Table-->
                             <table id="projectResults" class="table table-bordered table-hover" width="100%">
                                 <!--Table head-->
-                                <thead>
+                                <thead class="thead-dark">
                                     <tr>
-                                        <th localize-content>Name</th>
-                                        <th localize-content>Type</th>
-                                        <th localize-content>Status</th>
-                                        <th localize-content>Start Date</th>
-                                        <th localize-content>End Date</th>
-                                            @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                            {
-                                                <th localize-content>Options</th>
-                                            }                             
+                                        <th><i class="fas fa-folder"></i> <span localize-content>Name</span></th>
+                                        <th><i class="fas fa-project-diagram"></i> <span localize-content>Type</span></th>
+                                        <th><i class="fas fa-tasks"></i> <span localize-content>Status</span></th>
+                                        <th><i class="fas fa-calendar"></i> <span localize-content>Start Date</span></th>
+                                        <th><i class="fas fa-calendar-check"></i> <span localize-content>End Date</span></th>
+                                        <th><i class="fas fa-cog"></i> <span localize-content>Options</span></th>
                                     </tr>
                                 </thead>
                                 <!--Table head-->

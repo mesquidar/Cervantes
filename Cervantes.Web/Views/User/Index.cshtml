@@ -75,16 +75,14 @@
         <!--Table-->
         <table id="clientResults" class="table table-bordered table-hover" width="100%">
             <!--Table head-->
-            <thead>
+            <thead class="thead-dark">
                 <tr>
-                    <th localize-content>Full Name</th>
-                    <th localize-content>User Name</th>
-                    <th localize-content>Email Confirmed</th>
-                    <th localize-content>2FA Enabled</th>
-                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                        {
-                            <th localize-content>Options</th>
-                        }                             
+                    <th><i class="fas fa-address-book"></i> <span localize-content>Full Name</span></th>
+                    <th><i class="fas fa-user"></i> <span localize-content>User Name</span></th>
+                    <th><i class="fas fa-check-circle"></i> <span localize-content>Email Confirmed</span></th>
+                    <th><i class="fas fa-check-double"></i> <span localize-content>2FA Enabled</span></th>
+                    <th><i class="fas fa-cog"></i> <span localize-content>Options</span></th>
+                    
                 </tr>
             </thead>
             <!--Table head-->
@@ -98,8 +96,30 @@
                         <td>                  
                             @user.UserName                      
                         </td>
-                        <td>@user.EmailConfirmed</td>
-                        <td>@user.TwoFactorEnabled</td>
+                        
+                            @switch (@user.EmailConfirmed)
+                            {
+                                case false:
+                                    
+                                    <td><span class="badge badge-danger"><i class="fas fa-times-circle"></i></span></td>
+                                    break;
+                                case true:
+                                    <td><span class="badge badge-success"><i class="fas fa-check-circle"></i></span></td>
+                                    break;
+                                        
+                            }
+                       
+                         @switch (@user.TwoFactorEnabled)
+                                                    {
+                                                        case false:
+                                                            
+                                                            <td><span class="badge badge-danger"><i class="fas fa-times-circle"></i></span></td>
+                                                            break;
+                                                        case true:
+                                                            <td><span class="badge badge-success"><i class="fas fa-check-circle"></i></span></td>
+                                                            break;
+                                                                
+                                                    }
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                             {
                                 <td>

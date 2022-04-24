@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Cervantes.Web.Models.ProjectViewModel>
+﻿@using Cervantes.CORE
+@model IEnumerable<Cervantes.Web.Models.ProjectViewModel>
 
 @{
     ViewData["Title"] = "Projects";
@@ -66,18 +67,16 @@
         <!--Table-->
         <table id="projectResults" class="table table-bordered table-hover" width="100%">
             <!--Table head-->
-            <thead>
+            <thead class="thead-dark">
                 <tr>
-                    <th localize-content>Name</th>
-                    <th localize-content>Client</th>
-                    <th localize-content>Type</th>
-                    <th localize-content>Status</th>
-                    <th localize-content>Start Date</th>
-                    <th localize-content>End Date</th>
-                        @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                        {
-                            <th localize-content>Options</th>
-                        }                             
+                    <th><i class="fas fa-folder"></i> <span localize-content>Name</span></th>
+                    <th><i class="fas fa-briefcase"></i> <span localize-content>Client</span></th>
+                    <th><i class="fas fa-project-diagram"></i> <span localize-content>Type</span></th>
+                    <th><i class="fas fa-tasks"></i> <span localize-content>Status</span></th>
+                    <th><i class="fas fa-calendar"></i> <span localize-content>Start Date</span></th>
+                    <th><i class="fas fa-calendar-check"></i> <span localize-content>End Date</span></th>
+                    <th><i class="fas fa-cog"></i> <span localize-content>Options</span></th>
+                                                  
                 </tr>
             </thead>
             <!--Table head-->
@@ -91,8 +90,37 @@
                              @project.Name                      
                         </td>
                         <td><a asp-controller="Client" asp-action="Details" asp-route-id="@project.ClientId" localize-content><span class="btn btn-outline-dark btn-sm"><i class="fas fa-briefcase"></i> @project.Client.Name</span></a></td>
-                        <td>@project.ProjectType</td>
-                        <td>@project.Status</td>
+                         @switch(@project.ProjectType)
+                                                          {
+                                                              case ProjectType.BlackBox:
+                                                                  <td><span class="badge badge-dark">@project.ProjectType</span></td>
+                                                                  break;
+                                                              case ProjectType.GrayBox:
+                                                                  <td><span class="badge badge-secondary">@project.ProjectType</span></td>
+                                                                  break;
+                                                              case ProjectType.WhiteBox:
+                                                                  <td><span class="badge badge-light">@project.ProjectType</span></td>
+                                                                  break;
+                                                              default:
+                                                                  <td><span class="badge badge-light">@project.ProjectType</span></td>
+                                                                  break;
+                                                          
+                                                          }
+                        
+                            @switch (@project.Status)
+                            {
+                                case ProjectStatus.Active:
+                                    <td><span class="badge badge-success">@project.Status</span></td>
+                                    break;
+                                case ProjectStatus.Archived:
+                                    <td><span class="badge badge-info">@project.Status</span></td>
+                                    break;
+                                case ProjectStatus.Waiting:
+                                    <td><span class="badge badge-warning">@project.Status</span></td>
+                                    break;
+                                    
+                            }
+                        
                         <td>@project.StartDate</td>
                         <td>@project.EndDate</td>
                          @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))

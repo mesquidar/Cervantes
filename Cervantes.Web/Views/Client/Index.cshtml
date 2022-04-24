@@ -69,16 +69,16 @@
         <!--Table-->
         <table id="clientResults" class="table table-bordered table-hover" width="100%">
             <!--Table head-->
-            <thead>
+            <thead class="thead-dark">
                 <tr>
-                    <th localize-content>Name</th>
-                    <th localize-content>URL</th>
-                    <th localize-content>Contact Name</th>
-                    <th localize-content>Contact Email</th>
-                    <th localize-content>Contact Phone</th>
+                    <th localize-content><i class="fas fa-address-book"></i> <span localize-content>Name</span></th>
+                    <th localize-content><i class="fas fa-link"></i> <span localize-content>URL</span></th>
+                    <th localize-content><i class="fas fa-id-badge"></i> <span localize-content>Contact Name</span></th>
+                    <th localize-content><i class="fas fa-at"></i> <span localize-content>Contact Email</span></th>
+                    <th localize-content><i class="fas fa-phone"></i> <span localize-content>Contact Phone</span></th>
                         @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
                         {
-                            <th localize-content>Options</th>
+                            <th localize-content><i class="fas fa-cog"></i> <span localize-content>Options</span></th>
                         }                             
                 </tr>
             </thead>
@@ -120,14 +120,7 @@
         </table>
         <!--Table-->
         }
-        @if(Model.FirstOrDefault() == null)
-        {
-            <div class="alert alert-dismissible alert-info">
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              <h4 class="alert-heading">Warning!</h4>
-              <p class="mb-0">Best check yo self, you're not looking too good. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, <a href="#" class="alert-link">vel scelerisque nisl consectetur et</a>.</p>
-            </div>
-        }
+
 
         </div>
         </div>

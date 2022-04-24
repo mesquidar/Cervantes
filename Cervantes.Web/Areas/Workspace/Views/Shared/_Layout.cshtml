@@ -93,7 +93,7 @@
 
 <!-- Sidebar Menu -->
 <nav class="mt-2">
-<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-legacy" data-widget="treeview" role="menu" data-accordion="false">
 
 <li class="nav-header">GENERAL</li>
 <li class="nav-item">
@@ -284,6 +284,12 @@
 
             </a>
         </li>
+        <li class="nav-item">
+                    <a  asp-area="Workspace" asp-controller="Vuln" asp-action="Templates" localize-content class="nav-link">
+                        <i class="fas fa-clone"></i><p>Templates</p>
+        
+                    </a>
+                </li>
 		 
     </ul>
 </li>
@@ -305,7 +311,7 @@
 	
             <li class="nav-item">
                 <a asp-area="" asp-controller="User" asp-action="Create" localize-content class="nav-link">
-                    <i class="fas fa-plus nav-icon"></i><p>Create</p>
+                    <i class="fas fa-plus nav-icon"></i><p> Create</p>
 
                 </a>
             </li>

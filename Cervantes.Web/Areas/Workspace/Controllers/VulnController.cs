@@ -322,6 +322,135 @@ namespace Cervantes.Web.Areas.Workspace.Controllers
                 return View();
             }
         }
+        
+        public ActionResult Templates(int project)
+        {
+            try
+            {
+                VulnViewModel model = new VulnViewModel
+                {
+                    Project = projectManager.GetById(project),
+                    Vulns = vulnManager.GetAll().Where(x => x.ProjectId == project && x.Template == true).ToList()
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                TempData["error"] = "Error loading vulns!";
+
+                _logger.LogError(e, "An error ocurred loading Vuln Workspace Templates. Project: {1} User: {2}", project, User.FindFirstValue(ClaimTypes.Name));
+                return View();
+            }
+
+        }
+        
+         public ActionResult Template(int project, int id)
+        {
+            try
+            {
+                var vulnResult = vulnManager.GetById(id);
+
+
+                var result = targetManager.GetAll().Where(x => x.ProjectId == project).Select(e => new VulnCreateViewModel
+                {
+                    TargetId = e.Id,
+                    TargetName = e.Name,
+                }).ToList();
+
+                var targets = new List<SelectListItem>();
+
+                foreach (var item in result)
+                {
+                    targets.Add(new SelectListItem { Text = item.TargetName, Value = item.TargetId.ToString() });
+                }
+
+                var result2 = vulnCategoryManager.GetAll().Select(e => new VulnCreateViewModel
+                {
+                    VulnCategoryId = e.Id,
+                    VulnCategoryName = e.Name,
+                }).ToList();
+
+                var vulnCat = new List<SelectListItem>();
+
+                foreach (var item in result2)
+                {
+                    vulnCat.Add(new SelectListItem { Text = item.VulnCategoryName, Value = item.VulnCategoryId.ToString() });
+                }
+
+
+                VulnCreateViewModel model = new VulnCreateViewModel
+                {
+                    Name = vulnResult.Name,
+                    Project = projectManager.GetById(project),
+                    ProjectId = project,
+                    Template = vulnResult.Template,
+                    cve = vulnResult.cve,
+                    Description = vulnResult.Description,
+                    VulnCategoryId = vulnResult.VulnCategoryId,
+                    Risk = vulnResult.Risk,
+                    Status = vulnResult.Status,
+                    Impact = vulnResult.Impact,
+                    TargetId = vulnResult.TargetId,
+                    CVSS3 = vulnResult.CVSS3,
+                    CVSSVector = vulnResult.CVSSVector,
+                    ProofOfConcept = vulnResult.ProofOfConcept,
+                    Remediation = vulnResult.Remediation,
+                    RemediationComplexity = vulnResult.RemediationComplexity,
+                    RemediationPriority = vulnResult.RemediationPriority,
+                    CreatedDate = vulnResult.CreatedDate,
+                    UserId = vulnResult.UserId,
+                    TargetList = targets,
+                    VulnCatList = vulnCat
+                };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                TempData["error"] = "Error loading vuln!";
+                _logger.LogError(e, "An error ocurred loading Vuln Workspace edit PROJECT form.Project: {0} User: {1}", project, User.FindFirstValue(ClaimTypes.Name));
+                return View();
+            }
+        }
+
+        // POST: VulnController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Template(int project, VulnCreateViewModel model, int id)
+        {
+            try
+            {
+                var result = vulnManager.GetById(id);
+                result.Name = model.Name;
+                result.Template = model.Template;
+                result.cve = model.cve;
+                result.Description = model.Description;
+                result.VulnCategoryId = model.VulnCategoryId;
+                result.Risk = model.Risk;
+                result.Status = model.Status;
+                result.Impact = model.Impact;
+                result.TargetId = model.TargetId;
+                result.CVSS3 = model.CVSS3;
+                result.CVSSVector = model.CVSSVector;
+                result.ProofOfConcept = model.ProofOfConcept;
+                result.Remediation = model.Remediation;
+                result.RemediationComplexity = model.RemediationComplexity;
+                result.RemediationPriority = model.RemediationPriority;
+
+                vulnManager.Add(result);
+                vulnManager.Context.SaveChanges();
+                TempData["edited"] = "edited";
+                _logger.LogInformation("User: {0} added Vuln: {1} on Project {2}", User.FindFirstValue(ClaimTypes.Name), id, project);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                TempData["error"] = "Error editing vuln!";
+                _logger.LogError(e, "An error ocurred editing a Vuln Workspace on. Task: {0} Project: {1} User: {2}", id, project, User.FindFirstValue(ClaimTypes.Name));
+                return View();
+            }
+        }
 
         [HttpPost]
         public IActionResult AddNote(IFormCollection form)

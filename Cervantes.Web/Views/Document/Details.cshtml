@@ -43,19 +43,39 @@
                     </div>
     
                     <h3 class="profile-username text-center">@Model.Name</h3>
-                    <dt><p localize-content>Created by</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.User.UserName)</dd>
-                    <dt> <p localize-content>Created on</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.CreatedDate)</dd>
-                    <dt> <p localize-content>Description</p></dt>
-                    <hr>
-                    <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Description))</dd> 
-                    <dt> <p localize-content>Visibility</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Visibility)</dd>  
-
+                    <div class="info-box mb-3">
+                      <span class="info-box-icon bg-info"><i class="fas fa-user"></i></span>
+                      <div class="info-box-content">
+                        <span class="info-box-text" localize-content>Created by</span>
+                        <span class="info-box-number">@Model.User.FullName</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <div class="info-box mb-3">
+                      <span class="info-box-icon bg-teal"><i class="fas fa-calendar"></i></span>
+                      <div class="info-box-content">
+                        <span class="info-box-text" localize-content>Created on</span>
+                        <span class="info-box-number">@Model.CreatedDate</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <div class="info-box mb-3">
+                      <span class="info-box-icon bg-gray"><i class="far fa-align-left"></i></span>
+                      <div class="info-box-content">
+                        <span class="info-box-text" localize-content>Description</span>
+                        <span class="info-box-number">@Html.Raw(@WebUtility.HtmlDecode(@Model.Description))</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <div class="info-box mb-3">
+                      <span class="info-box-icon bg-warning"><i class="far fa-eye"></i></span>
+                      <div class="info-box-content">
+                        <span class="info-box-text" localize-content>Visibility</span>
+                        <span class="info-box-number">@Model.Visibility</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    
 
                   </div>
                   <!-- /.card-body -->

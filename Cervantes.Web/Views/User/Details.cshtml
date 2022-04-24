@@ -48,35 +48,55 @@
                         }
                   </div>
   
-                  <h3 class="profile-username text-center">@Model.FullName</h3>
-                  <dt><p localize-content>Username</p></dt>
-                  <hr>
-                  <dd>@Html.DisplayFor(model => model.UserName)</dd>
-                  <dt> <p localize-content>Email</p></dt>
-                  <hr>
-                  <dd>@Html.DisplayFor(model => model.Email)</dd>
-             
-                  <dt> <p localize-content>Role</p></dt>
-                  <hr />
-                  @switch(Model.Option)
-                    {
-                        case "Admin":
-                            <dd><span class="badge badge-danger">@Html.DisplayFor(model => model.Option)</span></dd>
-                            break;
-                        case "SuperUser":
-                             <dd><span class="badge badge-warning">@Html.DisplayFor(model => model.Option)</span></dd>
-                            break;
-                        case "User":
-                            <dd><span class="badge badge-info">@Html.DisplayFor(model => model.Option)</span></dd>
-                            break;
-                        case "Client":
-                            <dd><span class="badge badge-success">@Html.DisplayFor(model => model.Option)</span></dd>
-                            break;
-                        default:
-                            <dd><span class="badge badge-light">@Html.DisplayFor(model => model.Option)</span></dd>
-                            break;
-
-                    }                   
+                    <h3 class="profile-username text-center">@Model.FullName</h3>
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-info"><i class="fas fa-user"></i></span>
+                                                                  
+                        <div class="info-box-content">
+                            <span class="info-box-text" localize-content>Username</span>
+                            <span class="info-box-number">@Model.UserName</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-dark"><i class="fas fa-at"></i></span>
+                                                                                      
+                        <div class="info-box-content">
+                            <span class="info-box-text" localize-content>Email</span>
+                            <span class="info-box-number">@Model.Email</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning"><i class="fas fa-project-diagram"></i></span>
+                                                                                                          
+                        <div class="info-box-content">
+                            <span class="info-box-text" localize-content>Role</span>
+                            <span class="info-box-number">
+                                @switch(Model.Option)
+                                {
+                                    case "Admin":
+                                        <span class="badge badge-danger">@Html.DisplayFor(model => model.Option)</span>
+                                        break;
+                                    case "SuperUser":
+                                        <span class="badge badge-warning">@Html.DisplayFor(model => model.Option)</span>
+                                        break;
+                                    case "User":
+                                        <span class="badge badge-info">@Html.DisplayFor(model => model.Option)</span>
+                                        break;
+                                    case "Client":
+                                        <span class="badge badge-success">@Html.DisplayFor(model => model.Option)</span>
+                                        break;
+                                    default:
+                                        <span class="badge badge-light">@Html.DisplayFor(model => model.Option)</span>
+                                        break;
+                            
+                                } 
+                            
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
 
 
                 </div>
@@ -121,18 +141,15 @@
                             <!--Table-->
                             <table id="projectResults" class="table table-bordered table-hover" width="100%">
                                 <!--Table head-->
-                                <thead>
+                                <thead class="thead-dark">
                                     <tr>
-                                        <th localize-content>Name</th>
-                                        <th localize-content>Client</th>
-                                        <th localize-content>Type</th>
-                                        <th localize-content>Status</th>
-                                        <th localize-content>Start Date</th>
-                                        <th localize-content>End Date</th>
-                                            @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                            {
-                                                <th localize-content>Options</th>
-                                            }                             
+                                        <th><i class="fas fa-folder"></i> <span localize-content>Name</span></th>
+                                        <th><i class="fas fa-briefcase"></i> <span localize-content>Client</span></th>
+                                        <th><i class="fas fa-project-diagram"></i> <span localize-content>Type</span></th>
+                                        <th><i class="fas fa-tasks"></i> <span localize-content>Status</span></th>
+                                        <th><i class="fas fa-calendar"></i> <span localize-content>Start Date</span></th>
+                                        <th><i class="fas fa-calendar-check"></i> <span localize-content>End Date</span></th>
+                                        <th><i class="fas fa-cog"></i> <span localize-content>Options</span></th>
                                     </tr>
                                 </thead>
                                 <!--Table head-->

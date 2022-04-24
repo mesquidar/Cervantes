@@ -103,14 +103,26 @@
                     }
                     </div>
     
-                    <h3 class="profile-username text-center">@Model.Target.Name</h3>              
-                    <dt> <p localize-content>Created by</p></dt>
-                    <hr>
-                    <dd>@Html.DisplayFor(model => model.Target.User.FullName)</dd>
-                    <dt><p localize-content>Description</p></dt>
-                            <hr>
-                            <dd>@Html.Raw(@WebUtility.HtmlDecode(Model.Target.Description))</dd>
-                  </div>
+                      <h3 class="profile-username text-center">@Model.Target.Name</h3>  
+                      <div class="info-box mb-3">
+                          <span class="info-box-icon bg-info"><i class="fas fa-user"></i></span>
+                          <div class="info-box-content">
+                              <span class="info-box-text" localize-content>Created by</span>
+                              <span class="info-box-number">@Model.Target.User.FullName</span>
+                          </div>
+                      </div>
+                      
+                      <div class="info-box mb-3">
+                          <span class="info-box-icon bg-gray"><i class="fas fa-align-left"></i></span>
+                          <div class="info-box-content">
+                              <span class="info-box-text" localize-content>Description</span>
+                              <span class="info-box-number">@Html.Raw(@WebUtility.HtmlDecode(Model.Target.Description))</span>
+                          </div>
+                      </div>
+                      
+
+
+                          </div>
                   <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
@@ -132,16 +144,13 @@
                         
                           <table id="servicesResults" class="table table-bordered table-hover projects" width="100%">
                               <!--Table head-->
-                              <thead>
+                              <thead class="thead-dark">
                               <tr>
-                                  <th localize-content>Name</th>
-                                  <th localize-content>Port</th>
-                                  <th localize-content>Version</th>
-                                  <th localize-content>Added by</th>
-                                  @if (User.IsInRole("Admin") || User.IsInRole("SuperUser"))
-                                  {
-                                      <th localize-content>Options</th>
-                                  }                             
+                                  <th><i class="fas fa-server"></i> <span localize-content>Name</span></th>
+                                  <th><i class="fas fa-network-wired"></i> <span localize-content>Port</span></th>
+                                  <th><i class="fas fa-code-branch"></i> <span localize-content>Version</span></th>
+                                  <th><i class="fas fa-user"></i> <span localize-content>Added by</span></th>
+                                  <th><i class="fas fa-cog"></i> <span localize-content>Options</span></th>
                               </tr>
                               </thead>
                               <!--Table head-->
